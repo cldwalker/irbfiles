@@ -12,5 +12,5 @@ To simply try what I have setup, execute `irb -f -rirbrc` in this project's base
 Of course you can take out the -f if you want to also load up your custom irbrc but it may conflict
 with what I have setup.
 
-If you like this irb setup, modify symlink_files.rb and irbrc.rb to point to your preferred directories.
-Then run `ruby symlink_files.rb`.
+If you like this irb setup, modify symlink\_files.rb and irbrc.rb to point to your preferred directories.
+Then run `ruby symlink\_files.rb`.
