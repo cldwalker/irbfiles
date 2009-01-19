@@ -13,4 +13,4 @@ Of course you can take out the -f if you want to also load up your custom irbrc 
 with what I have setup.
 
 If you like this irb setup, modify symlink\_files.rb and irbrc.rb to point to your preferred directories.
-Then run `ruby symlink\_files.rb`.
+Then run `ruby symlink_files.rb`.
