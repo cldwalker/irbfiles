@@ -16,6 +16,10 @@ def irb_lib_utility_belt
 end
 
 def irb_lib_railsrc
+  IRB_PROCS[:railrc] = lambda { load_railsrc }
+end
+
+def load_railsrc
   #global railsrc
   load "#{ENV['HOME']}/.railsrc" if ENV['RAILS_ENV'] && File.exists?("#{ENV['HOME']}/.railsrc")
 
@@ -48,6 +52,10 @@ end
 
 def irb_lib_irb_options
   IRB.conf[:AUTO_INDENT] = true
+  Object.const_set("IRB_PROCS",{}) unless Object.const_defined?(:IRB_PROCS)
+  IRB.conf[:IRB_RC] = lambda do
+    IRB_PROCS.each {|key, proc| proc.call }
+  end
 end
 
 #from http://dotfiles.org/~localhost/.irbrc
