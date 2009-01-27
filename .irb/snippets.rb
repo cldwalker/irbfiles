@@ -5,7 +5,8 @@ IRB_METHOD_PREFIX = "irb_lib_"
 def irb_lib_wirble
   require 'wirble'
   Wirble.init :skip_history=>true
-  Wirble.colorize
+  #td: make better colorizing
+  #Wirble.colorize
 end
 
 def irb_lib_utility_belt
@@ -52,7 +53,9 @@ end
 
 def irb_lib_irb_options
   IRB.conf[:AUTO_INDENT] = true
+  require 'irb/completion'
   Object.const_set("IRB_PROCS",{}) unless Object.const_defined?(:IRB_PROCS)
+  IRB.conf[:PROMPT_MODE] = :SIMPLE
   IRB.conf[:IRB_RC] = lambda do
     IRB_PROCS.each {|key, proc| proc.call }
   end
