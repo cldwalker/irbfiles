@@ -1,7 +1,7 @@
 Description
 ===========
 
- Currently contains snippets (mine + others) and core class extensions when irb-ing.
+ Currently contains irb snippets (mine + others).
 Since I use irb enough as a shell, some kind of custom irb manager will come from here.
 This irb manager will at minimum manage commands (ruby methods) ie list, search and alias them.
 

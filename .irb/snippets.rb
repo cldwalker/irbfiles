@@ -42,7 +42,11 @@ def irb_lib_aliases
 end
 
 def irb_lib_misc_gems
-  %w{what_methods andand method_lister backports irb-history}.each {|e| require e }
+  %w{what_methods andand backports irb-history}.each {|e| require e }
+end
+
+def irb_lib_method_lister
+  require 'method_lister'
 end
 
 def irb_lib_duration
@@ -67,4 +71,14 @@ def irb_lib_separate_rails_history
   rails_running = ENV.include?('RAILS_ENV') && !(IRB.conf[:LOAD_MODULES] && IRB.conf[:LOAD_MODULES].include?('console_with_helpers'))
   irb_standalone_running = !script_console_running && !rails_running
   IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history_rails" unless irb_standalone_running
+end
+
+# load in my ruby extensions: http://github.com/cldwalker/core
+# gem install cldwalker-core
+def irb_lib_core_extensions
+  require 'core'
+  [Class, Dir, File, Hash, IO, Regexp, String].each do |e|
+    Core.adds_to e
+  end
+  #td: safely load Array, Symbol + Object
 end
