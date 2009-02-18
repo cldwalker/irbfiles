@@ -73,12 +73,41 @@ def irb_lib_separate_rails_history
   IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history_rails" unless irb_standalone_running
 end
 
-# load in my ruby extensions: http://github.com/cldwalker/core
-# gem install cldwalker-core
+def irb_lib_local_gem
+  # gem install cldwalker-local_gem
+  require 'local_gem'
+  include LocalGem
+end
+
+# load in my ruby extensions: http://github.com/cldwalker/my_core
+# use core to load extensions: http://github.com/cldwalker/core
 def irb_lib_core_extensions
-  require 'core'
-  [Class, Dir, File, Hash, IO, Regexp, String].each do |e|
-    Core.adds_to e
+  local_require 'my_core'
+  local_require 'core'
+  Core.default_library = MyCore
+  libraries = {
+    :activesupport=>{:base_class=>"ActiveSupport::CoreExtensions", :base_path=>"active_support/core_ext"},
+    :facets=>{:base_path=>"facets", :monkeypatch=>true},
+    :nuggets=>{:base_path=>"nuggets", :monkeypatch=>true}
+  }
+  libraries.each do |k,v|
+    Core.create_library(v)
   end
-  #td: safely load Array, Symbol + Object
+
+  eval %[module ::Util; end]
+  #Core.verbose = true
+  conf = {
+    Util =>{:with=>"MyCore::Object", :only=>:class},
+    Object=>{:only=>:instance},
+    Dir=>{:only=>:class},
+    File=>{:only=>:class},
+    IO=>{:only=>:class},
+  }
+  conf.each do |k,v|
+    Core.extends k, v
+  end
+
+  [Array, Class, Hash, Regexp, String].each do |e|
+    Core.extends e
+  end
 end

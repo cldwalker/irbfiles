@@ -42,4 +42,4 @@ def _load_irb_lib(library)
   end
 end
 
-load_irb_lib(:irb_options, :wirble, :railsrc, :aliases, :history, :core_extensions, :method_lister)
+load_irb_lib(:irb_options, :wirble, :railsrc, :aliases, :history, :local_gem, :core_extensions, :method_lister)
