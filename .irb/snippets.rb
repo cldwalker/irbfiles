@@ -25,7 +25,7 @@ def load_railsrc
   load "#{ENV['HOME']}/.railsrc" if ENV['RAILS_ENV'] && File.exists?("#{ENV['HOME']}/.railsrc")
 
   #local railsrc
-  load File.join(ENV['PWD'], '.railsrc') if $0 == 'irb' && ENV['RAILS_ENV']
+  load File.join(ENV['PWD'], '.railsrc') if $0 == 'irb' && ENV['RAILS_ENV'] && File.exists?(File.join(ENV['PWD'], '.railsrc'))
 end
 
 #prefer to use history already shipped with irb
