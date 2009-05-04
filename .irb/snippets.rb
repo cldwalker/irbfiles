@@ -42,7 +42,7 @@ def irb_lib_aliases
 end
 
 def irb_lib_misc_gems
-  %w{what_methods andand backports irb-history}.each {|e| require e }
+  %w{what_methods andand backports irb-history every}.each {|e| require e }
 end
 
 def irb_lib_method_lister
@@ -107,7 +107,7 @@ def irb_lib_core_extensions
     Core.extends k, v
   end
 
-  [Array, Class, Hash, Regexp, String].each do |e|
+  [Array, Module, Class, Hash, Regexp, String].each do |e|
     Core.extends e
   end
 end
