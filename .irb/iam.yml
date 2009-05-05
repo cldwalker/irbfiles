@@ -6,6 +6,14 @@
       - poc
   rake_commands:
     :type: :module
+  method_lister:
+    :type: :gem
+  what_methods:
+    :type: :gem
+  and_and:
+    :type: :gem
+  print_object_methods:
+    :type: :module
 :commands:
   libraries:
     :alias: lib

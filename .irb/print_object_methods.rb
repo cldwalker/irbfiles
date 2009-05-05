@@ -3,14 +3,14 @@
 # pm object, :more - shows all methods including base Object methods
 # pm object, :more, /to/ - shows all methods filtered by regexp
 
-class Object
+module PrintObjectMethods
   ANSI_BOLD       = "\033[1m"
   ANSI_RESET      = "\033[0m"
   ANSI_LGRAY    = "\033[0;34m"
   ANSI_GRAY     = "\033[1;30m"
 
   # Print object's methods
-  def pm(*options)
+  def pom(*options)
     methods = self.methods
     methods -= Object.methods unless options.include? :more
     filter = options.select {|opt| opt.kind_of? Regexp}.first

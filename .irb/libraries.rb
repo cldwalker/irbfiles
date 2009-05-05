@@ -41,14 +41,6 @@ module Iam::Libraries
     alias :r :require
   end
 
-  def misc_gems
-    %w{what_methods andand backports irb-history every}.each {|e| require e }
-  end
-
-  def method_lister
-    require 'method_lister'
-  end
-
   def duration
     require 'duration'
     Object.const_set(:IRB_START_TIME,Time.now)

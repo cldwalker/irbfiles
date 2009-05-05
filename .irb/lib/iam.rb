@@ -92,6 +92,13 @@ module Iam
           base_object.send(library)
           create_loaded_library(library, :method)
         else
+          #try gem
+          begin
+            object_methods = Object.methods
+            require library.to_s
+            return create_loaded_library(library, :gem, :commands=>(Object.methods - object_methods))
+          rescue
+          end
           puts "Library '#{library}' not found"
         end
       rescue LoadError
@@ -111,7 +118,9 @@ module Iam
       library_obj = {:loaded=>false, :name=>name.to_s}.merge(config[:libraries][name.to_s] || {}).merge(lib_hash)
       library_obj[:type] = library_type if library_type
       set_library_commands(library_obj)
-      library_obj[:commands].each {|e| @commands << create_command(e, name)}
+      if library_obj[:loaded]
+        library_obj[:commands].each {|e| @commands << create_command(e, name)}
+      end
       puts "Loaded #{library_type} library '#{name}'" if $DEBUG
       library_obj
     end
