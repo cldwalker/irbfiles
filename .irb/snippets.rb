@@ -38,7 +38,6 @@ end
 def irb_lib_aliases
   alias :x :exit
   alias :r :require
-  alias :iload :load_irb_lib
 end
 
 def irb_lib_misc_gems
@@ -82,8 +81,8 @@ end
 # load in my ruby extensions: http://github.com/cldwalker/my_core
 # use core to load extensions: http://github.com/cldwalker/core
 def irb_lib_core_extensions
-  local_require 'my_core'
-  local_require 'core'
+  LocalGem.local_require 'my_core'
+  LocalGem.local_require 'core'
   Core.default_library = MyCore
   libraries = {
     :activesupport=>{:base_class=>"ActiveSupport::CoreExtensions", :base_path=>"active_support/core_ext"},
