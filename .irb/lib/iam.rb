@@ -1,24 +1,26 @@
 require 'yaml'
 module Iam
+  module Libraries; end
   class <<self
-    attr_accessor :irb_base_dir, :libraries
+    attr_accessor :base_dir, :libraries, :base_object
     def register(*args)
       options = args[-1].is_a?(Hash) ? args.pop : {}
       @libraries ||= []
-      @irb_base_dir = options[:base_dir] || "#{ENV['HOME']}/.irb"
+      @base_object = options[:with] || @base_object || Object.new
+      @base_object.send :extend, Iam::Libraries
+      @base_dir = options[:base_dir] || "#{ENV['HOME']}/.irb"
       args.each {|e| load_library(e, options) }
     end
 
-    IRB_METHOD_PREFIX = 'irb_lib_' 
-
     def load_library(library, options={})
       begin
-        if File.exists?(File.join(irb_base_dir, "#{library}.rb"))
-          load File.join(irb_base_dir, "#{library}.rb")
+        if File.exists?(File.join(base_dir, "#{library}.rb"))
+          load File.join(base_dir, "#{library}.rb")
           @libraries << library
           puts "Loaded library file '#{library}'" if $DEBUG
-        elsif respond_to?("#{IRB_METHOD_PREFIX}#{library}", true)
-          send("#{IRB_METHOD_PREFIX}#{library}")
+        #td: eval in base_object without having to intrude with extend
+        elsif base_object.respond_to?(library)
+          base_object.send(library)
           @libraries << library
           puts "Loaded library method '#{library}'" if $DEBUG
         else
