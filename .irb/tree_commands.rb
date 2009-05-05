@@ -1,17 +1,11 @@
-begin
-  LocalGem.local_require 'hirb'
-rescue
-  require 'hirb'
-end
-extend Hirb::Console
+require 'hirb'
 
-module TreeMethods
-  def itree(klass, options={})
+module TreeCommands
+  def inheritance_tree(klass, options={})
     view klass, :parent_child_tree, {:children_method=>:class_children, :type=>:directory}.merge(options)
   end
   
-  def ntree(klass, options={})
+  def nested_tree(klass, options={})
     view klass, :parent_child_tree, {:children_method=>:nested_children, :value_method=>:nested_name, :type=>:directory}.merge(options)
   end
 end
-extend TreeMethods

@@ -1,0 +1,16 @@
+:libraries:
+  wirble:
+    :commands:
+      - ri
+      - po
+      - poc
+:commands:
+  libraries:
+    :alias: lib
+  commands:
+    :alias: com
+  nested_tree:
+    :alias: ntree
+  inheritance_tree:
+    :alias: itree
+  
