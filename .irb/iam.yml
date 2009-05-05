@@ -4,6 +4,8 @@
       - ri
       - po
       - poc
+  rake_commands:
+    :type: :module
 :commands:
   libraries:
     :alias: lib
@@ -13,4 +15,6 @@
     :alias: ntree
   inheritance_tree:
     :alias: itree
+  load_library:
+    :alias: ll
   
