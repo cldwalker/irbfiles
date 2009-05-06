@@ -1,20 +1,4 @@
 module Iam::Libraries
-  #loads pp, irb/completion, convenience methods for ri and object inspection (:ri, :po, :poc)
-  # another color possibility: http://github.com/rkh/dotfiles/tree/master/.config/irb/color.rb
-  def wirble
-    require 'wirble'
-    Wirble.init :skip_history=>true
-    #td: make better colorizing
-    #Wirble.colorize
-  end
-
-  def utility_belt
-    gem "utility_belt"
-    require 'utility_belt/equipper'
-    UtilityBelt.equip(:string_to_proc, :with, :not, :pipe, :language_greps, :irb_verbosity_control,
-      :clipboard, :hash_math, :interactive_editor, :command_history)
-  end
-
   def railsrc
     IRB_PROCS[:railrc] = lambda { load_railsrc }
   end
@@ -44,7 +28,7 @@ module Iam::Libraries
   def duration
     require 'duration'
     Object.const_set(:IRB_START_TIME,Time.now)
-    at_exit { puts "\nirb session duration: #{Duration.new(Time.now - IRB_START_TIME)}" }
+    Kernel::at_exit { puts "\nirb session duration: #{Duration.new(Time.now - IRB_START_TIME)}" }
   end
 
   def irb_options

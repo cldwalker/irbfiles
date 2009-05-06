@@ -1,5 +1,6 @@
 require 'tempfile'
 
+# Similar to utility_belt's command history
 # Prints, evals and edits history by specifying start and end history numbers.
 # For example, 1-3,7 specifies lines 1 through 3 and line 7. Default is all lines.
 module HistoryCommands

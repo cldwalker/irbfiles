@@ -25,5 +25,5 @@ $:.unshift irb_base_dir
 require 'lib/iam'
 require 'libraries'
 
-Iam.register(:irb_options, :wirble, :railsrc, :aliases, :history, :local_gem, :core_extensions,
-  :history_commands, :tree_commands, Iam::Commands, Hirb::Console, :with=>self)
+Iam.register(:irb_options, :railsrc, :aliases, :history, :local_gem, :core_extensions, :wirble, :duration,
+  :utility_belt, :history_commands, :tree_commands, Iam::Commands, Hirb::Console, :with=>self)

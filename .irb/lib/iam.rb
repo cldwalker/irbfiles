@@ -16,14 +16,19 @@ module Iam
       @config
     end
 
+    def init(options={})
+      @libraries ||= []
+      @commands ||= []
+      @base_dir = options[:base_dir] || (File.exists?("#{ENV['HOME']}/.irb") ? "#{ENV['HOME']}/.irb" : '.irb')
+      $:.unshift @base_dir unless $:.include? File.expand_path(@base_dir)
+    end
+
     # can only be run once b/c of alias and extend
     def register(*args)
       options = args[-1].is_a?(Hash) ? args.pop : {}
-      @libraries ||= []
-      @commands ||= []
+      init(options)
       @base_object = options[:with] || @base_object || Object.new
       @base_object.send :extend, Iam::Libraries
-      @base_dir = options[:base_dir] || "#{ENV['HOME']}/.irb"
       create_libraries(args, options)
       create_aliases
     end
@@ -44,7 +49,7 @@ module Iam
       aliases_hash = {}
       Iam.commands.each do |e|
         if e[:alias]
-          if (lib = Iam.libraries.find {|l| l[:name] == e[:lib]}) && !lib[:module]
+          if ((lib = Iam.libraries.detect {|l| l[:name] == e[:lib]}) && !lib[:module]) || !lib
             puts "No lib module for #{e[:name]} when aliasing"
             next
           end
@@ -62,7 +67,7 @@ module Iam
     end
 
     def create_or_update_library(*args)
-      if (lib = load_library(*args))
+      if (lib = load_library(*args)) && lib.is_a?(Hash)
         if (existing_lib = Iam.libraries.find {|e| e[:name] == lib[:name]})
           existing_lib.merge!(lib)
         else
@@ -74,31 +79,34 @@ module Iam
 
     def load_library(library, options={})
       begin
-        if library.is_a?(Module) || File.exists?(File.join(base_dir, "#{library}.rb"))
-          if File.exists?(File.join(base_dir, "#{library}.rb"))
-            load File.join(base_dir, "#{library}.rb") 
-            unless library = Util.constantize(library)
-              puts "No module found for library #{library}"
-              return
-            end
-          end
+        if (library.is_a?(Symbol) || library.is_a?(String)) && base_object.respond_to?(library)
+          base_object.send(library)
+          return create_loaded_library(library, :method)
+        end
+
+        if library.is_a?(Module) || (module_library = Util.constantize(library))
+          library = module_library if module_library
           library.send(:init) if library.respond_to?(:init)
           base_object.extend(library)
           create_loaded_library(Util.underscore(library), :module, :module=>library)
-        # elsif File.exists?(File.join(base_dir, "#{library}.rb"))
-        #   load File.join(base_dir, "#{library}.rb")
-        #   create_loaded_library(library, :file)
         #td: eval in base_object without having to intrude with extend
-        elsif base_object.respond_to?(library)
-          base_object.send(library)
-          create_loaded_library(library, :method)
         else
           #try gem
           begin
+            require "libraries/#{library}"
             object_methods = Object.methods
-            require library.to_s
-            return create_loaded_library(library, :gem, :commands=>(Object.methods - object_methods))
+            if (gem_module = Util.constantize("iam/libraries/#{library}"))
+              gem_module.send(:init) if gem_module.respond_to?(:init)
+              base_object.extend(gem_module)
+              library_hash = {:module=>gem_module}
+            else
+              require library.to_s
+              library_hash = {}
+            end
+            return create_loaded_library(library, :gem, library_hash.merge(:commands=>(Object.methods - object_methods)))
           rescue
+            puts "Failed to load gem library"
+            puts caller.slice(0,5).join("\n")
           end
           puts "Library '#{library}' not found"
         end
@@ -107,7 +115,7 @@ module Iam
       rescue Exception
         puts "Failed to load '#{library}'"
         puts "Reason: #{$!}"
-        puts caller.slice(0,3).join("\n")
+        puts caller.slice(0,5).join("\n")
       end
     end
 
@@ -127,20 +135,17 @@ module Iam
     end
 
     def set_library_commands(library_obj)
-      library_obj[:commands] ||= begin
-        if library_obj[:module]
-          aliases = library_obj[:module].instance_methods.map {|e|
-            config[:commands][e][:alias] rescue nil
-          }.compact
-          library_obj[:module].instance_methods - aliases
-        else
-          []
-        end
+      library_obj[:commands] ||= []
+      if library_obj[:module]
+        aliases = library_obj[:module].instance_methods.map {|e|
+          config[:commands][e][:alias] rescue nil
+        }.compact
+        library_obj[:commands] += (library_obj[:module].instance_methods - aliases)
       end
     end
 
     def create_command(name, library=nil)
-      (config[:commands][name] || {}).merge({:name=>name, :lib=>library})
+      (config[:commands][name] || {}).merge({:name=>name, :lib=>library.to_s})
     end
   end  
 end

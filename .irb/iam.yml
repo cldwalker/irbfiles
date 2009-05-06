@@ -1,14 +1,15 @@
 :libraries:
-  wirble:
-    :commands:
-      - ri
-      - po
-      - poc
+  # wirble:
+  #   :commands:
+  #     - po
+  #     - poc
   rake_commands:
     :type: :module
   method_lister:
     :type: :gem
   what_methods:
+    :type: :gem
+  pp:
     :type: :gem
   and_and:
     :type: :gem
@@ -30,3 +31,7 @@
     :alias: ph
   edit_history:
     :alias: eh
+  clipboard_paste:
+    :alias: pbp
+  clipboard_copy:
+    :alias: pbc
