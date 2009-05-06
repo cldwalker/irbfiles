@@ -14,6 +14,7 @@
     :type: :gem
   print_object_methods:
     :type: :module
+  history_commands:
 :commands:
   libraries:
     :alias: lib
@@ -25,4 +26,7 @@
     :alias: itree
   load_library:
     :alias: ll
-  
+  print_history:
+    :alias: ph
+  edit_history:
+    :alias: eh

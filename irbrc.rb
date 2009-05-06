@@ -26,4 +26,4 @@ require 'lib/iam'
 require 'libraries'
 
 Iam.register(:irb_options, :wirble, :railsrc, :aliases, :history, :local_gem, :core_extensions,
-  :tree_commands, Iam::Commands, Hirb::Console, :with=>self)
+  :history_commands, :tree_commands, Iam::Commands, Hirb::Console, :with=>self)

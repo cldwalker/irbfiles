@@ -82,11 +82,12 @@ module Iam
               return
             end
           end
+          library.send(:init) if library.respond_to?(:init)
           base_object.extend(library)
           create_loaded_library(Util.underscore(library), :module, :module=>library)
-        elsif File.exists?(File.join(base_dir, "#{library}.rb"))
-          load File.join(base_dir, "#{library}.rb")
-          create_loaded_library(library, :file)
+        # elsif File.exists?(File.join(base_dir, "#{library}.rb"))
+        #   load File.join(base_dir, "#{library}.rb")
+        #   create_loaded_library(library, :file)
         #td: eval in base_object without having to intrude with extend
         elsif base_object.respond_to?(library)
           base_object.send(library)
