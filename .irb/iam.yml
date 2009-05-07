@@ -35,3 +35,47 @@
     :alias: pbp
   clipboard_copy:
     :alias: pbc
+  irb_jobs:
+    :alias: jobs
+    :description: list workspaces/subsessions
+  irb_fg:
+    :alias: fg
+    :description: switch to a workspace/subsession
+  irb_kill:
+    :alias: kill
+    :description: kills a given workspace/subsession
+  irb_exit:
+    :alias: exit
+    :description: kills the current workspace/subsession
+  irb_context:
+    :alias: conf
+    :description: displays configuration for current workspace/subsession
+  irb:
+    :description: starts a new workspace/subsession
+  install_alias_method:
+    :description: aliases given method, allows lazy loading of dependent file
+  irb_change_workspace:
+    :alias: cws
+    :description: changes current workspace to given object
+  irb_push_workspace:
+    :alias: pushws
+    :description: creates a workspace for given object and pushes it into the current context
+  irb_pop_workspace:
+    :alias: popws
+    :description: pops current workspace and changes to next workspace in context
+  irb_current_working_workspace:
+    :alias: cwws
+    :description: prints current workspace
+  irb_workspaces:
+    :alias: workspaces
+    :description: array of workspaces for current context
+  irb_help:
+    :alias: help
+    :description: ri based help
+  irb_source:
+    :alias: source
+    :description: sources full file and displays it
+  irb_load:
+    :description: sources file in $LOAD_PATH like require and displays it
+  irb_require:
+    :description: wrapper around require
