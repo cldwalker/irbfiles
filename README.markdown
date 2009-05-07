@@ -1,14 +1,20 @@
 Description
 ===========
 
- Currently contains irb snippets (mine + others).
-Since I use irb enough as a shell, some kind of custom irb manager will come from here.
-This irb manager will at minimum manage commands (ruby methods) ie list, search and alias them.
+Contains libraries of irb snippets and commands, some original and some copied.
+These libraries are managed by my irb manager, [iam](http://github.com/cldwalker/iam).
+
 
 Try/Install
 ===========
 
-To simply try what I have setup, execute `irb -f -rirbrc` in this project's base directory.
+You'll need to download [iam](http://github.com/cldwalker/iam).
+<temporary>
+Until I make iam a gem, you'll need to download it locally and use
+[local_gem](http://github.com/cldwalker/local_gem) to point to its location.
+</temporary>
+
+To try what I have setup, execute `irb -f -rirbrc` in this project's base directory.
 Of course you can take out the -f if you want to also load up your custom irbrc but it may conflict
 with what I have setup.
 
