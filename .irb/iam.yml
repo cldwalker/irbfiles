@@ -16,6 +16,7 @@
   print_object_methods:
     :type: :module
   history_commands:
+    :type: :gem
 :commands:
   libraries:
     :alias: lib
@@ -74,8 +75,8 @@
     :description: ri based help
   irb_source:
     :alias: source
-    :description: sources full file and displays it
+    :description: evals full path file line by line
   irb_load:
-    :description: sources file in $LOAD_PATH like require and displays it
+    :description: evals file like load line by line
   irb_require:
-    :description: wrapper around require
+    :description: evals file like require line by line

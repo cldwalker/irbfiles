@@ -48,43 +48,4 @@ module Iam::Libraries
     irb_standalone_running = !script_console_running && !rails_running
     IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history_rails" unless irb_standalone_running
   end
-
-  def local_gem
-    # gem install cldwalker-local_gem
-    require 'local_gem'
-    include LocalGem
-  end
-
-  # load in my ruby extensions: http://github.com/cldwalker/my_core
-  # use core to load extensions: http://github.com/cldwalker/core
-  def core_extensions
-    LocalGem.local_require 'my_core'
-    LocalGem.local_require 'core'
-    Core.default_library = MyCore
-    libraries = {
-      :activesupport=>{:base_class=>"ActiveSupport::CoreExtensions", :base_path=>"active_support/core_ext"},
-      :facets=>{:base_path=>"facets", :monkeypatch=>true},
-      :nuggets=>{:base_path=>"nuggets", :monkeypatch=>true}
-    }
-    libraries.each do |k,v|
-      Core.create_library(v)
-    end
-
-    eval %[module ::Util; end]
-    #Core.verbose = true
-    conf = {
-      Util =>{:with=>"MyCore::Object", :only=>:class},
-      Object=>{:only=>:instance},
-      Dir=>{:only=>:class},
-      File=>{:only=>:class},
-      IO=>{:only=>:class},
-    }
-    conf.each do |k,v|
-      Core.extends k, v
-    end
-
-    [Array, Module, Class, Hash, Regexp, String].each do |e|
-      Core.extends e
-    end
-  end
 end
