@@ -17,6 +17,9 @@
     :type: :module
   history_commands:
     :type: :gem
+  local_gem:
+    :except:
+      - setup_config
 :commands:
   libraries:
     :alias: lib
