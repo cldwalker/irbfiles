@@ -1,10 +1,31 @@
 :libraries:
-  # wirble:
-  #   :commands:
-  #     - po
-  #     - poc
-  rake_commands:
-    :type: :module
+  irb/extend_command_bundle:
+    commands:
+      - irb_pop_workspace
+      - irb_source
+      - irb_help
+      - irb_context
+      - irb_load
+      - irb_jobs
+      - irb_workspaces
+      - irb
+      - public
+      - irb_exit
+      - irb_fg
+      - irb_require
+      - irb_kill
+      - include
+      - install_alias_method
+      - irb_current_working_workspace
+      - irb_change_workspace
+      - private
+      - irb_push_workspace
+  google_reader:
+    :type: :gem
+  highline:
+    :type: :gem
+  ansi:
+    :type: :gem
   method_lister:
     :type: :gem
   what_methods:
@@ -13,13 +34,13 @@
     :type: :gem
   and_and:
     :type: :gem
-  print_object_methods:
-    :type: :module
   history_commands:
     :type: :gem
   local_gem:
     :except:
       - setup_config
+  misc_commands:
+    :type: :module
 :commands:
   libraries:
     :alias: lib
@@ -83,3 +104,9 @@
     :description: evals file like load line by line
   irb_require:
     :description: evals file like require line by line
+  include:
+    :description: works same as Module#include
+  private:
+    :description: works same as Module#private
+  public:
+    :description: works same as Module#public
