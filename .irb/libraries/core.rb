@@ -19,10 +19,10 @@ module Iam::Libraries::Core
       Core.create_library(v)
     end
 
-    eval %[module ::Util; end]
+    # eval %[module ::Util; end]
     #Core.verbose = true
     conf = {
-      Util =>{:with=>"MyCore::Object", :only=>:class},
+      # Util =>{:with=>"MyCore::Object", :only=>:class},
       Object=>{:only=>:instance},
       Dir=>{:only=>:class},
       File=>{:only=>:class},

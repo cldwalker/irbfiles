@@ -23,6 +23,7 @@ module MiscCommands
   end
 
   def undetected_methods
-    metaclass.instance_methods - (Kernel.instance_methods + Object.instance_methods + Iam.commands.map {|e| [e[:name], e[:alias]] }.flatten.compact)
+    metaclass.instance_methods - (Kernel.instance_methods + Object.instance_methods + Iam.commands.map {|e| [e[:name], e[:alias]] }.flatten.compact +
+      IRB::ExtendCommandBundle.instance_eval("@ALIASES").map {|e| e[0].to_s} + Iam::Libraries.instance_methods)
   end
 end
