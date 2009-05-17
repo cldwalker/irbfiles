@@ -1,4 +1,4 @@
-module Iam::Libraries
+module Iam::Libraries::IrbFeatures
   def railsrc
     IRB_PROCS[:railrc] = lambda { load_railsrc }
   end

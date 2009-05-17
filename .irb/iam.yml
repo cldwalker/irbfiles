@@ -1,5 +1,6 @@
 :libraries:
   irb/extend_command_bundle:
+    :detect_methods: false
     commands:
       - irb_pop_workspace
       - irb_source
@@ -20,6 +21,13 @@
       - irb_change_workspace
       - private
       - irb_push_workspace
+  irb_features:
+    :load:
+      - irb_options
+      - railsrc
+      - aliases
+      - history
+      - duration
   google_reader:
     :type: :gem
   highline:
