@@ -1,7 +1,7 @@
 :libraries:
   irb/extend_command_bundle:
     :detect_methods: false
-    commands:
+    :commands:
       - irb_pop_workspace
       - irb_source
       - irb_help
@@ -22,7 +22,7 @@
       - private
       - irb_push_workspace
   irb_features:
-    :load:
+    :call_methods:
       - irb_options
       - railsrc
       - aliases
