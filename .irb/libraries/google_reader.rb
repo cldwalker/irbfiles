@@ -5,9 +5,7 @@ module Iam::Libraries::GoogleReader
   end
   
   def feeds(search=nil, field='google_id')
-    require 'hirb'
     results = search ? Google::Reader::Subscription.all.select {|e| e.send(field) =~ /#{search}/ } : Google::Reader::Subscription.all
-    puts Hirb::Helpers::AutoTable.render(results, :fields=>[:title, :google_id])
   end
 
   def labels

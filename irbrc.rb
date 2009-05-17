@@ -13,4 +13,4 @@ end
 
 method_libs = [:irb_options, :railsrc, :aliases, :history, :duration, {:with=>self}]
 Iam.register(*method_libs)
-Iam.register(:local_gem, :core, :wirble, :utility_belt, :history_commands, :tree_commands, Hirb::Console, :misc_commands)
+Iam.register(:local_gem, :core, :wirble, :utility_belt, :history_commands, :tree_commands,:hirb, :misc_commands, :method_lister)

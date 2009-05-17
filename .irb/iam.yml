@@ -110,3 +110,5 @@
     :description: works same as Module#private
   public:
     :description: works same as Module#public
+  delicious:
+    :alias: del
