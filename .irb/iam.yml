@@ -28,27 +28,12 @@
       - aliases
       - history
       - duration
-  google_reader:
-    :type: :gem
-  highline:
-    :type: :gem
-  ansi:
-    :type: :gem
-  method_lister:
-    :type: :gem
   what_methods:
-    :type: :gem
   pp:
-    :type: :gem
   and_and:
-    :type: :gem
-  history_commands:
-    :type: :gem
   local_gem:
     :except:
       - setup_config
-  misc_commands:
-    :type: :module
 :commands:
   libraries:
     :alias: lib
@@ -120,3 +105,5 @@
     :description: works same as Module#public
   delicious:
     :alias: del
+  toggle_hirb:
+    :alias: th
