@@ -1,3 +1,4 @@
+require 'libraries/browser'
 module Iam::Libraries::GoogleReader
   def self.init
     require 'google/reader'
@@ -6,6 +7,14 @@ module Iam::Libraries::GoogleReader
   
   def feeds(search=nil, field='google_id')
     results = search ? Google::Reader::Subscription.all.select {|e| e.send(field) =~ /#{search}/ } : Google::Reader::Subscription.all
+  end
+  
+  def open_feed(google_feed)
+    browser("http://www.google.com/reader/view/#stream/" + google_feed)
+  end
+
+  def open_label(label)
+    browser("http://www.google.com/reader/view/user/-/label/"+label)
   end
 
   def labels

@@ -31,9 +31,23 @@
   what_methods:
   pp:
   and_and:
+  google_reader:
+    :dependencies:
+      - browser
   local_gem:
+    :gems:
+      - local_gem
     :except:
       - setup_config
+  tree_commands:
+    :dependencies:
+      - core
+  hirb:
+    :gems:
+      - hirb
+  core:
+    :gems:
+      - core
 :commands:
   libraries:
     :alias: lib
