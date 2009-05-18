@@ -31,6 +31,9 @@
   what_methods:
   pp:
   and_and:
+  github:
+    :dependencies:
+      - hirb
   google_reader:
     :dependencies:
       - browser
