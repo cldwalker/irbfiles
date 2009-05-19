@@ -11,5 +11,5 @@ require 'rubygems'
   end
 end
 
-Iam.register(:irb_features, :local_gem, :core, :wirble, :utility_belt, :history_commands, :tree_commands,
- :hirb, :misc_commands, :method_lister, :every, :with=>self)
+Iam.register(:irb_features, :local_gem, :core, :wirble, :utility_belt, :irb_history, :tree,
+ :hirb, :misc, :method_lister, :every, :with=>self)

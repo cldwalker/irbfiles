@@ -2,7 +2,7 @@
 # Prints, evals and edits history by specifying start and end history numbers.
 # For example, 1-3,7 specifies lines 1 through 3 and line 7. Default is all lines.
 # Note: This library needs to be used at startup until I find a call to indicate that IRB is initialized.
-module HistoryCommands
+module IrbHistory
   class<<self; attr_accessor :original_history_size ; end
   
   def self.init

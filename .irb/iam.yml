@@ -43,7 +43,7 @@
       - local_gem
     :except:
       - setup_config
-  tree_commands:
+  tree:
     :dependencies:
       - core
       - hirb

@@ -1,4 +1,4 @@
-module TreeCommands
+module Tree
   def self.init
     require 'libraries/core'
     require 'libraries/hirb'

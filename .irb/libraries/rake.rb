@@ -1,6 +1,8 @@
-require 'rake'
+module Rake
+  def self.init
+    require 'rake'
+  end
 
-module RakeCommands
   def rake(task)
     Rake::Task[task.to_s].invoke
   end

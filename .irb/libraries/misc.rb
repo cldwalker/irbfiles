@@ -1,4 +1,4 @@
-module MiscCommands
+module Misc
   #Reloads a file just as you would require it.
   def reload(filename)
     filename += '.rb' unless filename[/\.rb$/]
