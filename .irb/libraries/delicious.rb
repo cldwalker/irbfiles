@@ -1,4 +1,4 @@
-module Iam::Libraries::Delicious
+module Delicious
   def self.init
     require 'www/delicious'
   end

@@ -38,6 +38,7 @@
     :dependencies:
       - browser
   local_gem:
+    :module: LocalGem
     :gems:
       - local_gem
     :except:
@@ -45,7 +46,9 @@
   tree_commands:
     :dependencies:
       - core
+      - hirb
   hirb:
+    :module: Iam::Libraries::Hirb
     :gems:
       - hirb
   core:

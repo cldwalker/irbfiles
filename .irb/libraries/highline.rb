@@ -1,4 +1,4 @@
-module Iam::Libraries::Highline
+module Highline
   def self.init
     require 'highline'
     [:agree, :ask, :choose, :say].each do |m|

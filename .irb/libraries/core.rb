@@ -1,4 +1,4 @@
-module Iam::Libraries::Core
+module Core
   # my ruby extensions: http://github.com/cldwalker/my_core
   # use core to load extensions: http://github.com/cldwalker/core
   def self.init
@@ -9,14 +9,14 @@ module Iam::Libraries::Core
         require e
       end
     end
-    Core.default_library = MyCore
+    ::Core.default_library = MyCore
     libraries = {
       :activesupport=>{:base_class=>"ActiveSupport::CoreExtensions", :base_path=>"active_support/core_ext"},
       :facets=>{:base_path=>"facets", :monkeypatch=>true},
       :nuggets=>{:base_path=>"nuggets", :monkeypatch=>true}
     }
     libraries.each do |k,v|
-      Core.create_library(v)
+      ::Core.create_library(v)
     end
 
     # eval %[module ::Util; end]
@@ -29,11 +29,11 @@ module Iam::Libraries::Core
       IO=>{:only=>:class},
     }
     conf.each do |k,v|
-      Core.extends k, v
+      ::Core.extends k, v
     end
 
     [Array, Module, Class, Hash, Regexp, String].each do |e|
-      Core.extends e
+      ::Core.extends e
     end
   end  
 end

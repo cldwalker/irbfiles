@@ -1,4 +1,4 @@
-module Iam::Libraries::Httparty
+module Httparty
   def self.init
     require 'httparty'
     [:get, :post, :put, :update].each do |m|

@@ -1,4 +1,4 @@
-module Iam::Libraries::Ansi
+module Ansi
   # gem install ssoroka-ansi
   def self.init
     require 'ansi'

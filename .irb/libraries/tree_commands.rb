@@ -1,7 +1,7 @@
-require 'libraries/core'
 module TreeCommands
   def self.init
-    require 'hirb'
+    require 'libraries/core'
+    require 'libraries/hirb'
   end
 
   def inheritance_tree(klass, options={})

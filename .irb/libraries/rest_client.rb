@@ -1,4 +1,4 @@
-module Iam::Libraries::RestClient
+module RestClient
   def self.init
     require 'restclient'
     [:head, :get, :post, :put, :update].each do |m|

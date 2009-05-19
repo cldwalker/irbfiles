@@ -1,6 +1,6 @@
-require 'libraries/browser'
-module Iam::Libraries::GoogleReader
+module GoogleReader
   def self.init
+    require 'libraries/browser'
     require 'google/reader'
     Google::Reader::Base.establish_connection(ENV["GOOGLE_USER"], ENV["GOOGLE_PASSWORD"])
   end

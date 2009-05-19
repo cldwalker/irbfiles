@@ -1,13 +1,13 @@
-require 'tempfile'
-
 # Similar to utility_belt's command history
 # Prints, evals and edits history by specifying start and end history numbers.
 # For example, 1-3,7 specifies lines 1 through 3 and line 7. Default is all lines.
+# Note: This library needs to be used at startup until I find a call to indicate that IRB is initialized.
 module HistoryCommands
   class<<self; attr_accessor :original_history_size ; end
   
   def self.init
-    IRB_PROCS[:set_command_history] = lambda { HistoryCommands.original_history_size =  Readline::HISTORY.size }
+    require 'tempfile'
+    IRB_PROCS[:set_command_history] = lambda { self.original_history_size =  Readline::HISTORY.size }
   end
   
   def print_history(*args)
@@ -35,11 +35,15 @@ module HistoryCommands
   end
 
   def history_list(start_num=1,end_num=Readline::HISTORY.size - 1)
-    Readline::HISTORY.to_a[(start_num + HistoryCommands.original_history_size - 1) .. (end_num + HistoryCommands.original_history_size - 1) ]
+    Readline::HISTORY.to_a[(start_num + original_history_size - 1) .. (end_num + original_history_size - 1) ]
   end
 
   def history_slice(nums)
-    multislice(Readline::HISTORY.to_a, nums,',', HistoryCommands::original_history_size)
+    multislice(Readline::HISTORY.to_a, nums,',', original_history_size)
+  end
+
+  def original_history_size
+    Iam::Libraries::HistoryCommands.original_history_size
   end
 
   def history_list_or_slice(*args)
@@ -68,4 +72,3 @@ module HistoryCommands
   end
 
 end
-# HistoryCommands.original_history_size =  Readline::HISTORY.size

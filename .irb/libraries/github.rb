@@ -1,6 +1,6 @@
-require 'libraries/hirb'
-module Iam::Libraries::Github
+module Github
   def self.init
+    require 'libraries/hirb'
     require 'httparty'
   end
 

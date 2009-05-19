@@ -1,25 +1,29 @@
-module Iam::Libraries::Pstore
+module Pstore
   def self.init
     require 'pstore'
   end
 
-  def pdb
-    @pdb ||= PStore.new(File.join(Iam.base_dir, 'main.pstore'))
+  def db_init(yaml=false)
+    if yaml
+      require 'yaml'
+      require 'yaml/store'
+      @db = YAML::Store.new(File.join(Iam.base_dir, 'main.pstore.yml'))
+    else
+      @db = PStore.new(File.join(Iam.base_dir, 'main.pstore'))
+    end
   end
 
-  def ydb
-    require 'yaml'
-    require 'yaml/store'
-    @pdb ||= YAML::Store.new(File.join(Iam.base_dir, 'main.pstore.yml'))
+  def db
+    @db || db_init
   end
 
   def db_keys
-    @pdb.transaction { pstore.roots }
+    @db.transaction { @db.roots }
   end
 
   def db_hash
-    keys = pstore_keys
-    @pdb.transaction { keys.inject({}) {|h,e| h[e] = @pdb[e]; h } }
+    keys = db_keys
+    @db.transaction { keys.inject({}) {|h,e| h[e] = @db[e]; h } }
   end
 end
   
