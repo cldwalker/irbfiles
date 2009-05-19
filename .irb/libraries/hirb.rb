@@ -2,6 +2,7 @@ module Iam::Libraries::Hirb
   def self.init
     require 'hirb'
     send :include, Hirb::Console
+    Hirb::Helpers::Table.max_width = 210
   end
   
   def toggle_hirb
