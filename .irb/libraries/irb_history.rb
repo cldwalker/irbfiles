@@ -43,7 +43,7 @@ module IrbHistory
   end
 
   def original_history_size
-    Iam::Libraries::HistoryCommands.original_history_size
+    Boson::Libraries::HistoryCommands.original_history_size
   end
 
   def history_list_or_slice(*args)

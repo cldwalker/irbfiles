@@ -48,7 +48,7 @@
       - core
       - hirb
   hirb:
-    :module: Iam::Libraries::Hirb
+    :module: Boson::Libraries::Hirb
     :gems:
       - hirb
   core:

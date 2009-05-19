@@ -1,4 +1,4 @@
-module Iam::Libraries::Hirb
+module Boson::Libraries::Hirb
   def self.init
     require 'hirb'
     send :include, Hirb::Console

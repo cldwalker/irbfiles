@@ -2,15 +2,15 @@ Description
 ===========
 
 Contains libraries of irb snippets and commands, some original and some copied.
-These libraries are managed by my irb manager, [iam](http://github.com/cldwalker/iam).
+These libraries are managed by my irb manager, [boson](http://github.com/cldwalker/boson).
 
 
 Try/Install
 ===========
 
-You'll need to download [iam](http://github.com/cldwalker/iam).
+You'll need to download [boson](http://github.com/cldwalker/boson).
 <temporary>
-Until I make iam a gem, you'll need to download it locally and use
+Until I make boson a gem, you'll need to download it locally and use
 [local_gem](http://github.com/cldwalker/local_gem) to point to its location.
 </temporary>
 

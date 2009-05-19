@@ -1,7 +1,7 @@
-# This irbrc uses my irb manager, iam, to load libraries of irb commands + snippets
+# This irbrc uses my irb manager, boson, to load libraries of irb commands + snippets
 
 require 'rubygems'
-%w{hirb alias iam}.each do |e|
+%w{hirb alias boson}.each do |e|
   # load a local gem first or default to normal gem
   begin
     require 'local_gem' # gem install cldwalker-local_gem
@@ -11,5 +11,5 @@ require 'rubygems'
   end
 end
 
-Iam.register(:irb_features, :local_gem, :core, :wirble, :utility_belt, :irb_history, :tree,
+Boson.register(:irb_features, :local_gem, :core, :wirble, :utility_belt, :irb_history, :tree,
  :hirb, :misc, :method_lister, :every, :with=>self)
