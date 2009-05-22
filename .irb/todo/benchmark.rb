@@ -30,3 +30,5 @@ if defined? Benchmark
     end
   end
 end
+
+#http://blog.evanweaver.com/articles/2006/12/13/benchmark/

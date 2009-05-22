@@ -1,5 +1,5 @@
 #from http://eigenclass.org/hiki/irb+ri+completion
-class Object
+Class Object
   def puts_ri_documentation_for(obj, meth)
     case self
     when Module
@@ -74,3 +74,13 @@ RICompletionProc = proc{|input|
 #Readline.basic_word_break_characters= " \t\n\"\\'`><=;|&{("
 Readline.basic_word_break_characters= " \t\n\\><=;|&"
 Readline.completion_proc = RICompletionProc
+
+__END__
+# Thanks to http://github.com/ryanb/dotfiles/blob/145906d11810c691dbb1a47481d790e3ad186dcb/irbrc
+  def ri(method = nil)
+    unless method && method =~ /^[A-Z]/ # if class isn't specified
+      klass = self.kind_of?(Class) ? name : self.class.name
+      method = [klass, method].compact.join('#')
+    end
+    puts `ri '#{method}'`
+  end

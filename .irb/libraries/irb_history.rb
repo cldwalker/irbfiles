@@ -17,7 +17,12 @@ module IrbHistory
   end
 
   def eval_history(*args)
-    eval %[ #{history_list_or_slice(*args).join("\n")} ]
+    irb_eval history_list_or_slice(*args).join("\n")
+  end
+  
+  def irb_eval(string)
+    string.split("\n").each {|e| Readline::HISTORY << e }
+    IRB.CurrentContext.workspace.evaluate(self, string)
   end
 
   def edit_history(*args)
@@ -43,7 +48,7 @@ module IrbHistory
   end
 
   def original_history_size
-    Boson::Libraries::HistoryCommands.original_history_size
+    IrbHistory.original_history_size
   end
 
   def history_list_or_slice(*args)

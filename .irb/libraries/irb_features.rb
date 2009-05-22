@@ -15,9 +15,10 @@ module IrbFeatures
 
   #prefer to use history already shipped with irb
   def history
-    require 'irb/ext/save-history'
     IRB.conf[:SAVE_HISTORY] = 1000
     IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb_history"
+    require 'irb/ext/save-history' #only needed for :EVAL_HISTORY
+    IRB.conf[:EVAL_HISTORY] = 200
   end
 
   def aliases
@@ -39,6 +40,10 @@ module IrbFeatures
     IRB.conf[:IRB_RC] = lambda do
       IRB_PROCS.each {|key, proc| proc.call }
     end
+  end
+
+  def irb_verbosity_toggle
+    irb_context.echo ? irb_context.echo = false : irb_context.echo = true
   end
 
   #from http://dotfiles.org/~localhost/.irbrc

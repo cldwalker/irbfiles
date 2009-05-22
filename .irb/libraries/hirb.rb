@@ -12,6 +12,9 @@ module Boson::Libraries::Hirb
   private
   def output_config
     {
+      "IRB::History"=>{:class=>"Hirb::Helpers::Table", :output_method=>lambda {|l| 
+        l.instance_eval("@contents").map {|e| [e[0], e[1].inspect.gsub("\n", '\n')]} },
+        :options=>{:headers=>{0=>'statement_num',1=>'output'}} },
       'WWW::Delicious::Element'=>{:class=>'Hirb::Helpers::ObjectTable', :ancestor=>true},
       'WWW::Delicious::Bundle'=>{:options=>{:fields=>[:name, :tags]}},
       'WWW::Delicious::Tag'=>{:options=>{:fields=>[:name, :count]}},

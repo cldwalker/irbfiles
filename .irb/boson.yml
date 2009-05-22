@@ -73,6 +73,8 @@
     :alias: pbp
   clipboard_copy:
     :alias: pbc
+  irb_verbosity_toggle:
+    :alias: iv
   irb_jobs:
     :alias: jobs
     :description: list workspaces/subsessions
