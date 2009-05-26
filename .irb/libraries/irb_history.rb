@@ -6,12 +6,12 @@ module IrbHistory
   class<<self; attr_accessor :original_history_size ; end
   
   def self.init
+    require 'libraries/irb_features'
     require 'tempfile'
     IRB_PROCS[:set_command_history] = lambda { self.original_history_size =  Readline::HISTORY.size }
   end
   
   def print_history(*args)
-    # puts history_list_or_slice(*args).join("\n")
     history_list_or_slice(*args).compact.each_with_index {|e,i| puts "#{i+1}: #{e}"}
     nil
   end
@@ -20,14 +20,18 @@ module IrbHistory
     irb_eval history_list_or_slice(*args).join("\n")
   end
   
+  def edit_history(*args)
+    history_string = history_list_or_slice(*args).join("\n")
+    edit(history_string)
+  end
+
   def irb_eval(string)
     string.split("\n").each {|e| Readline::HISTORY << e }
     IRB.CurrentContext.workspace.evaluate(self, string)
   end
 
-  def edit_history(*args)
-    history_string = history_list_or_slice(*args).join("\n")
-    edit(history_string)
+  def edit_and_eval(*args)
+    irb_eval edit(*args)
   end
 
   private

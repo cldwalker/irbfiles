@@ -27,7 +27,6 @@
       - railsrc
       - aliases
       - history
-      - duration
   what_methods:
   pp:
   and_and:
@@ -67,6 +66,8 @@
     :alias: ll
   print_history:
     :alias: ph
+  edit_and_eval:
+    :alias: ee
   edit_history:
     :alias: eh
   clipboard_paste:
