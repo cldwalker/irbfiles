@@ -7,57 +7,57 @@
   irb/extend_command_bundle:
     :detect_methods: false
     :commands:
-      - irb_pop_workspace
-      - irb_source
-      - irb_help
-      - irb_context
-      - irb_load
-      - irb_jobs
-      - irb_workspaces
-      - irb
-      - public
-      - irb_exit
-      - irb_fg
-      - irb_require
-      - irb_kill
-      - include
-      - install_alias_method
-      - irb_current_working_workspace
-      - irb_change_workspace
-      - private
-      - irb_push_workspace
+    - irb_pop_workspace
+    - irb_source
+    - irb_help
+    - irb_context
+    - irb_load
+    - irb_jobs
+    - irb_workspaces
+    - irb
+    - public
+    - irb_exit
+    - irb_fg
+    - irb_require
+    - irb_kill
+    - include
+    - install_alias_method
+    - irb_current_working_workspace
+    - irb_change_workspace
+    - private
+    - irb_push_workspace
   irb_features:
     :call_methods:
-      - irb_options
-      - railsrc
-      - aliases
-      - history
+    - irb_options
+    - railsrc
+    - aliases
+    - history
   what_methods:
   pp:
   and_and:
   github:
     :dependencies:
-      - hirb
+    - hirb
   google_reader:
     :dependencies:
-      - browser
+    - browser
   local_gem:
     :module: LocalGem
     :gems:
-      - local_gem
+    - local_gem
     :except:
-      - setup_config
+    - setup_config
   tree:
     :dependencies:
-      - core
-      - hirb
+    - core
+    - hirb
   hirb:
     :module: Boson::Libraries::Hirb
     :gems:
-      - hirb
+    - hirb
   core:
     :gems:
-      - core
+    - core
 :commands:
   libraries:
     :alias: lib
