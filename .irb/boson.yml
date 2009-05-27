@@ -1,3 +1,8 @@
+:defaults:
+- method_lister
+- core
+- tree
+- misc
 :libraries:
   irb/extend_command_bundle:
     :detect_methods: false

@@ -11,5 +11,5 @@ require 'rubygems'
   end
 end
 
-Boson.register(:irb_features, :local_gem, :core, :wirble, :utility_belt, :irb_history, :tree, :duration,
- :hirb, :misc, :method_lister, :every, :with=>self)
+Boson.register(:irb_features, :local_gem, :wirble, :utility_belt, :irb_history, :duration, :hirb,
+ :every, :with=>self)
