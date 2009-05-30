@@ -35,6 +35,7 @@
   what_methods:
   pp:
   and_and:
+  sketches:
   github:
     :dependencies:
     - hirb

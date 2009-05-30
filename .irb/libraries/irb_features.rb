@@ -15,8 +15,8 @@ module IrbFeatures
     require 'irb/completion'
     IRB.conf[:PROMPT_MODE] = :SIMPLE
     Object.const_set("IRB_PROCS",{}) unless Object.const_defined?(:IRB_PROCS)
-    IRB.conf[:IRB_RC] = lambda do
-      IRB_PROCS.each {|key, proc| proc.call; IRB_PROCS.delete(key)}
+    IRB.conf[:IRB_RC] = lambda do |e|
+      IRB_PROCS.each {|key, proc| proc.call(e); IRB_PROCS.delete(key)}
     end
   end
 
