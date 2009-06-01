@@ -34,6 +34,17 @@ module IrbFeatures
     IRB_PROCS[:railsrc] = lambda { load_railsrc }
   end
 
+  def irb_prompts
+    dirname = File.basename(Dir.pwd)
+    IRB.conf[:PROMPT][:DIR] = {
+      :PROMPT_I => "#{dirname}> ",
+      :PROMPT_N => "#{dirname}> ",
+      :PROMPT_S => "#{dirname}* ",
+      :PROMPT_C => "#{dirname}? ",
+      :RETURN => "=> %s\n"
+    }
+  end
+
   private
   def load_railsrc
     #global railsrc

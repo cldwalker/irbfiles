@@ -32,6 +32,7 @@
     - railsrc
     - aliases
     - history
+    - irb_prompts
   what_methods:
   pp:
   and_and:
@@ -136,3 +137,5 @@
     :alias: del
   toggle_hirb:
     :alias: th
+  trace:
+    :alias: tr
