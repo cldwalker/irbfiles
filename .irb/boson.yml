@@ -71,6 +71,8 @@
     :alias: itree
   load_library:
     :alias: ll
+  reload_library:
+    :alias: rl
   print_history:
     :alias: ph
   edit_and_eval:
