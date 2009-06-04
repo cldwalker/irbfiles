@@ -141,3 +141,5 @@
     :alias: th
   trace:
     :alias: tr
+  songs_jump:
+    :alias: sj

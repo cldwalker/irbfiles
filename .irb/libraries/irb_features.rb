@@ -45,6 +45,12 @@ module IrbFeatures
     }
   end
 
+  def reset_irb
+    at_exit { exec($0) }
+    IRB::HistorySavingAbility.create_finalizer.call
+    throw :IRB_EXIT, 0
+  end
+
   private
   def load_railsrc
     #global railsrc
