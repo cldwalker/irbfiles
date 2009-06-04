@@ -1,7 +1,6 @@
 module Xmms2
   def self.init
     require 'libraries/hirb'
-    require 'hirb/helpers/menu'
   end
 
   def songs(query)
