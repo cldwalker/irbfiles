@@ -1,5 +1,6 @@
 module Ri
   def self.init
+    #using rdoc-2.3.0
     require 'rdoc/ri/driver'
     require 'libraries/hirb'
   end
@@ -13,8 +14,9 @@ module Ri
         ri_driver.display_class(query)
       else
         results = ri_driver.select_methods(/#{query}/)
-        chosen = ::Hirb::Helpers::Menu.render results, :fields=>['full_name']
-        system_ri(chosen[0]['full_name']) if chosen.size == 1
+        if (chosen = ::Hirb::Helpers::Menu.render(results, :fields=>['full_name'], :choose=>:one))
+          system_ri(chosen['full_name'])
+        end
       end
     end
     nil

@@ -9,8 +9,9 @@ module Xmms2
 
   def songs_jump(query)
     results = search_songs(query)
-    chosen = ::Hirb::Helpers::Menu.render(results, :fields=>[:track, :title, :time])
-    system('xmms2', 'jump', chosen[0][:track].to_s) if chosen.size == 1
+    if (chosen = ::Hirb::Helpers::Menu.render(results, :fields=>[:track, :title, :time], :choose=>:one))
+      system('xmms2', 'jump', chosen[:track].to_s)
+    end
   end
 
   private
