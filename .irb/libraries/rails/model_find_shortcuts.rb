@@ -1,5 +1,6 @@
 module ModelFindShortcuts
   def self.init
+    require 'libraries/irb_features'
     IRB_PROCS[:define_model_procs] = { define_model_find_shortcuts }
     define_model_find_shortcuts
   end
