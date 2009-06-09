@@ -8,13 +8,16 @@ These libraries are managed by my irb manager, [boson](http://github.com/cldwalk
 Try/Install
 ===========
 
-You'll need to download [boson](http://github.com/cldwalker/boson).
-<temporary>
-Until I make boson a gem, you'll need to download it locally and use
-[local_gem](http://github.com/cldwalker/local_gem) to point to its location.
-</temporary>
+If you want to try any of the libraries under .irb/, simply require and include it:
 
-To try what I have setup, execute `irb -f -rirbrc` in this project's base directory.
+  bash> irb -f
+  irb>> require ".irb/libraries/ansi"
+  irb>> class<<self; include Ansi; end
+
+If you want to use my irbrc, you'll need to download [boson](http://github.com/cldwalker/boson).
+Until I make boson a gem, you'll need to download it locally and use [local_gem](http://github.com/cldwalker/local_gem) to point to its location.
+
+To run my irbrc, execute `irb -f -rirbrc` in this project's base directory.
 Of course you can take out the -f if you want to also load up your custom irbrc but it may conflict
 with what I have setup.
 
