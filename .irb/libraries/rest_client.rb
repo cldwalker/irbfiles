@@ -1,5 +1,5 @@
 module RestClient
-  def self.init
+  def self.included(mod)
     require 'restclient'
     [:head, :get, :post, :put, :update].each do |m|
       module_eval %[

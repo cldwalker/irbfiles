@@ -1,6 +1,6 @@
 # for less dependencies could use http://gist.github.com/122071
 module Gmail
-  def self.init
+  def self.included(mod)
     require 'gmail_sender'
   end
 

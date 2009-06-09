@@ -1,5 +1,5 @@
 module Tree
-  def self.init
+  def self.included(mod)
     require 'libraries/core'
     require 'libraries/hirb'
   end

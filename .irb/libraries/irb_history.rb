@@ -5,7 +5,7 @@
 module IrbHistory
   class<<self; attr_accessor :original_history_size ; end
   
-  def self.init
+  def self.included(mod)
     require 'libraries/irb_features'
     require 'tempfile'
     IRB_PROCS[:set_command_history] = lambda { self.original_history_size =  Readline::HISTORY.size }

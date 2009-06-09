@@ -1,5 +1,5 @@
 module Ri
-  def self.init
+  def self.included(mod)
     #using rdoc-2.3.0
     require 'rdoc/ri/driver'
     require 'libraries/hirb'

@@ -2,7 +2,7 @@
 #which in turn is probably from defunkt
 
 module Logger
-  def self.init
+  def self.included(mod)
     require 'logger'
     Object.const_set(:RAILS_DEFAULT_LOGGER, ::Logger.new(STDOUT)) unless Object.const_defined?(:RAILS_DEFAULT_LOGGER)
   end

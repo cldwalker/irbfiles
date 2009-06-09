@@ -1,5 +1,5 @@
 module Xmms2
-  def self.init
+  def self.included(mod)
     require 'libraries/hirb'
   end
 

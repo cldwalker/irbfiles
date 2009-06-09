@@ -1,5 +1,5 @@
 module Highline
-  def self.init
+  def self.included(mod)
     require 'highline'
     [:agree, :ask, :choose, :say].each do |m|
       module_eval %[

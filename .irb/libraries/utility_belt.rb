@@ -1,5 +1,5 @@
 module UtilityBelt
-  def self.init
+  def self.included(mod)
     gem "utility_belt"
     require 'utility_belt/equipper'
     # extensions: hash_math, with, string_to_proc, pipe, not

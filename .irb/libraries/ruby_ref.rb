@@ -1,5 +1,5 @@
 module RubyRef
-  def self.init
+  def self.included(mod)
     require 'libraries/hirb'
   end
 

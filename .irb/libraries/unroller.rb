@@ -1,5 +1,5 @@
 module Unroller
-  def self.init
+  def self.included(mod)
     require 'unroller'
   end
 

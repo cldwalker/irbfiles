@@ -1,5 +1,5 @@
 module Httparty
-  def self.init
+  def self.included(mod)
     require 'httparty'
     [:get, :post, :put, :update].each do |m|
       module_eval %[

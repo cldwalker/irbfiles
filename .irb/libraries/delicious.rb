@@ -1,5 +1,5 @@
 module Delicious
-  def self.init
+  def self.included(mod)
     require 'www/delicious'
   end
 

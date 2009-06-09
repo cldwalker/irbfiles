@@ -1,5 +1,5 @@
 module GoogleReader
-  def self.init
+  def self.included(mod)
     require 'libraries/browser'
     require 'google/reader'
     Google::Reader::Base.establish_connection(ENV["GOOGLE_USER"], ENV["GOOGLE_PASSWORD"])

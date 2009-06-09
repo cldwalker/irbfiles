@@ -1,5 +1,5 @@
 module Rake
-  def self.init
+  def self.included(mod)
     require 'rake'
   end
 

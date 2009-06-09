@@ -1,5 +1,5 @@
 module Pstore
-  def self.init
+  def self.included(mod)
     require 'pstore'
   end
 

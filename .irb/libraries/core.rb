@@ -1,7 +1,7 @@
 module Core
   # my ruby extensions: http://github.com/cldwalker/my_core
   # use core to load extensions: http://github.com/cldwalker/core
-  def self.init
+  def self.included(mod)
     %w{my_core core}.each do |e|
       begin
         LocalGem.local_require e
