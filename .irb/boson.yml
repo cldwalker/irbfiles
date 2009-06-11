@@ -40,7 +40,7 @@
   github:
     :dependencies:
     - hirb
-  google_reader:
+  api/google_reader:
     :dependencies:
     - browser
   local_gem:

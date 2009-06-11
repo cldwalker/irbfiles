@@ -14,7 +14,7 @@ module Ri
         methods = []
         original_query.methods(nil).grep(regex).sort.each {|e| methods << {:name=>"#{original_query}::#{e}", :type=>:class} }
         original_query.instance_methods(nil).grep(regex).sort.each {|e| methods << {:name=>"#{original_query}##{e}", :type=>:instance} }
-        ::Hirb::Helpers::Menu.render(methods, :fields=>[:name, :type]) do |chosen|
+        ::Hirb::Helpers::Menu.render(methods, :fields=>[:name, :type], :ask=>false) do |chosen|
           system_ri(*chosen.map {|e| e[:name]})
         end
       else
@@ -23,7 +23,7 @@ module Ri
           ri_driver.display_class(query)
         else
           results = ri_driver.select_methods(/#{query}/)
-          ::Hirb::Helpers::Menu.render(results, :fields=>['full_name']) do |chosen|
+          ::Hirb::Helpers::Menu.render(results, :fields=>['full_name'], :ask=>false) do |chosen|
             system_ri(*chosen.map {|e| e['full_name']})
           end
         end
