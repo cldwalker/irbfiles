@@ -3,6 +3,7 @@
 - core
 - tree
 - misc
+- silencer
 :libraries:
   irb/extend_command_bundle:
     :detect_methods: false
@@ -143,3 +144,5 @@
     :alias: tr
   songs_jump:
     :alias: sj
+  current_variables:
+    :alias: cv

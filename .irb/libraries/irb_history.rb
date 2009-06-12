@@ -25,11 +25,6 @@ module IrbHistory
     edit(history_string)
   end
 
-  def irb_eval(string)
-    string.split("\n").each {|e| Readline::HISTORY << e }
-    IRB.CurrentContext.workspace.evaluate(self, string)
-  end
-
   def edit_and_eval(*args)
     irb_eval edit(*args)
   end
