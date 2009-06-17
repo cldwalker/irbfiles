@@ -9,7 +9,7 @@ module Xmms2
 
   def songs_jump(query)
     results = search_songs(query)
-    if (chosen = ::Hirb::Helpers::Menu.render(results, :fields=>[:track, :title, :time], :choose=>:one))
+    if (chosen = menu(results, :fields=>[:track, :title, :time], :validate_one=>true))
       system('xmms2', 'jump', chosen[:track].to_s)
     end
   end

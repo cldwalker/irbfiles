@@ -1,7 +1,7 @@
 module ModelFindShortcuts
   def self.included(mod)
     require 'libraries/irb_features'
-    IRB_PROCS[:define_model_procs] = { define_model_find_shortcuts }
+    IRB_PROCS[:define_model_procs] = lambda { define_model_find_shortcuts }
     define_model_find_shortcuts(mod)
   end
 

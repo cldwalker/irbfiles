@@ -12,4 +12,4 @@ require 'rubygems'
 end
 
 Boson.register(:irb_features, :local_gem, :wirble, :utility_belt, :irb_history, :duration, :hirb,
- :every, :with=>self)
+ :every, :with=>self, :verbose=>true)

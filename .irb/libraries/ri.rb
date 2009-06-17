@@ -2,7 +2,6 @@ module Ri
   def self.included(mod)
     #using rdoc-2.3.0
     require 'rdoc/ri/driver'
-    require 'libraries/hirb'
   end
 
   def ri(original_query, regex=nil)
@@ -10,11 +9,11 @@ module Ri
     if query =~ /::|\#|\./
       system_ri(query)
     else
-      if original_query.is_a?(Class) && regex
+      if original_query.is_a?(Module) && regex
         methods = []
-        original_query.methods(nil).grep(regex).sort.each {|e| methods << {:name=>"#{original_query}::#{e}", :type=>:class} }
-        original_query.instance_methods(nil).grep(regex).sort.each {|e| methods << {:name=>"#{original_query}##{e}", :type=>:instance} }
-        ::Hirb::Helpers::Menu.render(methods, :fields=>[:name, :type], :ask=>false) do |chosen|
+        original_query.methods(nil).grep(regex).sort.each {|e| methods << {:name=>"#{original_query}.#{e}", :type=>:class} }
+        original_query.instance_methods(nil).grep(regex).sort.each {|e| methods << {:name=>"#{original_query}.#{e}", :type=>:instance} }
+        menu(methods, :fields=>[:name, :type], :ask=>false) do |chosen|
           system_ri(*chosen.map {|e| e[:name]})
         end
       else
@@ -23,7 +22,7 @@ module Ri
           ri_driver.display_class(query)
         else
           results = ri_driver.select_methods(/#{query}/)
-          ::Hirb::Helpers::Menu.render(results, :fields=>['full_name'], :ask=>false) do |chosen|
+          menu(results, :fields=>['full_name'], :ask=>false) do |chosen|
             system_ri(*chosen.map {|e| e['full_name']})
           end
         end
@@ -33,7 +32,10 @@ module Ri
   end
 
   def system_ri(*queries)
-    RDoc::RI::Driver.run(queries)
+    ::Hirb::View.capture_and_render { RDoc::RI::Driver.run(queries) }
   rescue SystemExit
+    invalid_method = $!.message[/\S+\s*$/]
+    # retry query if invalid method detected
+    system_ri(*queries) if queries.delete(invalid_method) && !queries.empty?
   end
 end

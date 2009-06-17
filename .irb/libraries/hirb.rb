@@ -2,7 +2,6 @@ module Boson::Libraries::Hirb
   def self.included(mod)
     require 'hirb'
     mod.send :include, Hirb::Console
-    Hirb::Helpers::Table.max_width = 210
   end
   
   def toggle_hirb
