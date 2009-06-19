@@ -1,5 +1,4 @@
-#mostly from http://github.com/stephencelis/dotfiles/blob/master/railsrc
-#which in turn is probably from defunkt
+# http://weblog.jamisbuck.org/2007/1/31/more-on-watching-activerecord
 
 module Logger
   def self.included(mod)
@@ -7,9 +6,10 @@ module Logger
     Object.const_set(:RAILS_DEFAULT_LOGGER, ::Logger.new(STDOUT)) unless Object.const_defined?(:RAILS_DEFAULT_LOGGER)
   end
 
-  def change_log(stream)
+  def change_log(stream, colorize=true)
     ActiveRecord::Base.logger = ::Logger.new(stream)
     ActiveRecord::Base.clear_active_connections!
+    ActiveRecord::Base.colorize_logging = colorize
   end
 
   def show_log

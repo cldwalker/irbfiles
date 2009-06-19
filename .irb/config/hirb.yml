@@ -1,36 +1,36 @@
---- 
-:view:
-  :output: 
-    WWW::Delicious::Post: 
-      :options: 
-        :fields: 
-        - :url
-        - :notes
-        - :time
-    WWW::Delicious::Tag: 
-      :options: 
-        :fields: 
-        - :name
-        - :count
-    ActiveRecord::Base: 
-      :class: Hirb::Views::ActiveRecord_Base
-      :ancestor: true
-    WWW::Delicious::Bundle: 
-      :options: 
-        :fields: 
-        - :name
-        - :tags
-        :filters:
-          :tags:
-          - join
-          - ','
-    WWW::Delicious::Element: 
-      :ancestor: true
-      :class: Hirb::Helpers::ObjectTable
-    # for google reader posts
-    OpenStruct: 
-      :class: Hirb::Helpers::ObjectTable
-      :options: 
-        :fields: 
-        - :title
-        - :google_id
+---
+:pager_command: less -r
+:output:
+  WWW::Delicious::Post:
+    :options:
+      :fields:
+      - :url
+      - :notes
+      - :time
+  WWW::Delicious::Tag:
+    :options:
+      :fields:
+      - :name
+      - :count
+  ActiveRecord::Base:
+    :class: Hirb::Views::ActiveRecord_Base
+    :ancestor: true
+  WWW::Delicious::Bundle:
+    :options:
+      :fields:
+      - :name
+      - :tags
+      :filters:
+        :tags:
+        - join
+        - ','
+  WWW::Delicious::Element:
+    :ancestor: true
+    :class: :object_table
+  # for google reader posts
+  OpenStruct:
+    :class: Hirb::Helpers::ObjectTable
+    :options:
+      :fields:
+      - :title
+      - :google_id
