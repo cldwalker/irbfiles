@@ -20,6 +20,11 @@ module RubyRef
     get_loaded_paths.values
   end
 
+  def rbconfig
+    require 'rbconfig'
+    table RbConfig::CONFIG , :header=>{0=>"name", 1=>"value"}
+  end
+
   private
   def get_loaded_paths
     hash = {}
