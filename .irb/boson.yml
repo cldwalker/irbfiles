@@ -4,6 +4,7 @@
 - tree
 - misc
 - silencer
+- browser
 :libraries:
   irb/extend_command_bundle:
     :detect_methods: false
