@@ -16,6 +16,17 @@ module RubyRef
       :fields=>[:require_path, :full_path]
   end
 
+  # hash of class dependencies excluding error-related ones
+  def dependencies
+    deps = {}
+    ObjectSpace.each_object Class do |mod|
+    next if mod.name =~ /Errno/
+    next if mod < Exception
+    deps[mod.to_s] = mod.superclass.to_s
+    end
+    deps
+  end
+
   def full_paths
     get_loaded_paths.values
   end

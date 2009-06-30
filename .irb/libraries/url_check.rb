@@ -23,7 +23,7 @@ module UrlCheck
         response.code = Net::HTTP.get_response(URI.parse(url)).code
       end
       puts "Fetched #{url} with response: #{response.code}" if options[:verbose]
-    rescue
+    rescue Exception
       response.code = 'error'
       response.error = $!
       puts "Fetched #{url} with error: #{$!}" if options[:verbose]

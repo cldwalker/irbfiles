@@ -6,10 +6,6 @@ module Misc
     require(filename)
   end
 
-  def backtick(cmd,*args)
-    ::IO.popen('-') {|f| f ? f.read : exec(cmd,*args)}
-  end
-
   # A more versatile version of Module#const_get.
   # Retrieves constant for given string, even if it's nested under classes.
   def any_const_get(name)

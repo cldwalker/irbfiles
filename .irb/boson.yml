@@ -5,6 +5,7 @@
 - misc
 - silencer
 - browser
+- shell
 :libraries:
   irb/extend_command_bundle:
     :detect_methods: false
@@ -39,6 +40,9 @@
   pp:
   and_and:
   sketches:
+  gem:
+    :dependencies: 
+    - shell
   github:
     :dependencies:
     - hirb

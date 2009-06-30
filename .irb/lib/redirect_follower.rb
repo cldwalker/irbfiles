@@ -1,5 +1,5 @@
 # explained here: http://railstips.org/2009/3/4/following-redirects-with-net-http
-# modified version: http://github.com/jnunemaker/columbus/blob/4f5199e2a778563ffc208e314c8879ee13245e6b/lib/columbus/redirect_follower.rb
+# original version: http://github.com/jnunemaker/columbus/blob/4f5199e2a778563ffc208e314c8879ee13245e6b/lib/columbus/redirect_follower.rb
 class RedirectFollower
   class TooManyRedirects < StandardError; end
 
