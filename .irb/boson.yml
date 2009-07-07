@@ -1,4 +1,5 @@
 :defaults:
+- alias
 - method_lister
 - core
 - tree
@@ -33,7 +34,6 @@
     :call_methods:
     - irb_options
     - railsrc
-    - aliases
     - history
     - irb_prompts
   what_methods:

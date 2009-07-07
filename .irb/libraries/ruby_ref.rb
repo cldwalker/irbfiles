@@ -36,6 +36,10 @@ module RubyRef
     table RbConfig::CONFIG , :header=>{0=>"name", 1=>"value"}
   end
 
+  def instance_var_table(obj)
+    table obj.instance_variables.map {|e| [e, obj.instance_variable_get(e).inspect] }
+  end
+
   private
   def get_loaded_paths
     hash = {}

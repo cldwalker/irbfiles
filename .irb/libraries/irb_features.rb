@@ -4,11 +4,6 @@ module IrbFeatures
     IRB.conf[:EVAL_HISTORY] = 200
   end
 
-  def aliases
-    alias :x :exit
-    alias :r :require
-  end
-
   def irb_options
     IRB.conf[:AUTO_INDENT] = true
     IRB.conf[:SINGLE_IRB] = true
