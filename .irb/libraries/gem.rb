@@ -1,6 +1,6 @@
 module Gem
   def self.included(mod)
-    require 'libraries/shell'
+    require 'yaml'
   end
 
   def gem_menu(command)
@@ -33,6 +33,11 @@ module Gem
     end
   end
 
+  def gem_approved
+    gem_file = File.join(Boson.base_dir, 'config', 'gems.yml')
+    YAML::load_file(gem_file)[:approved]
+  end
+
   def gem_check
     gem_file = File.join(Boson.base_dir, 'config', 'gems.yml')
     yaml = YAML::load_file(gem_file)
@@ -54,7 +59,6 @@ module Gem
   end
 
   def gem_list(query='')
-    # Gem.source_index.gems.keys
-    shell('gem', 'list', query).split("\n").map {|e| e[/[\w-]+/] }
+    ::Gem.source_index.gems.values.map {|e| e.name}.uniq.grep(/#{query}/)
   end
 end
