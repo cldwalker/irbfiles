@@ -31,6 +31,16 @@ module Gem
     end
   end
 
+  def gem_check
+    gem_file = File.join(Boson.base_dir, 'config', 'gems.yml')
+    gem_list - YAML::load_file(gem_file)[:approved]
+  end
+
+  def gem_save(gems=gem_list)
+    gem_file = File.join(Boson.base_dir, 'config', 'gems.yml')
+    File.open(gem_file, 'w') {|f| f.write({:approved=>gems}.to_yaml) }
+  end
+
   def gem_list(query='')
     # Gem.source_index.gems.keys
     shell('gem', 'list', query).split("\n").map {|e| e[/[\w-]+/] }
