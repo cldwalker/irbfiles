@@ -1,4 +1,21 @@
 --- 
+:system: 
+- acts_as_ferret
+- cgi_multipart_eof_fix
+- daemons
+- dnssd
+- fastthread
+- fcgi
+- ferret
+- gem_plugin
+- libxml-ruby
+- needle
+- net-sftp
+- net-ssh
+- rubynode
+- ruby-openid
+- ruby-yadis
+- termios
 :approved: 
 - actionmailer
 - actionpack
@@ -6,9 +23,7 @@
 - activerecord
 - activeresource
 - activesupport
-- acts_as_ferret
 - adamwiggins-rest-client
-- alias
 - andand
 - capistrano
 - cheat
@@ -17,7 +32,6 @@
 - cldwalker-core
 - cldwalker-has_machine_tags
 - cldwalker-hirb
-- cldwalker-lightning
 - collectiveidea-awesome_nested_set
 - dcadenas-gmail_sender
 - defunkt-github
@@ -25,7 +39,6 @@
 - gem_grep
 - googlereader
 - grancher
-- has_machine_tags
 - highline
 - hpricot
 - httparty
@@ -63,9 +76,6 @@
 - ruby-debug
 - ruby2ruby
 - rubyforge
-- rubygems-update
-- RubyInline
-- rubynode
 - rubypan
 - sinatra
 - sketches
@@ -76,28 +86,11 @@
 - technicalpickles-jeweler
 - thor
 - unroller
-- use
-- utility_belt
 - webmat-git_remote_branch
-- wee
 - what_methods
 - wirble
 - www-delicious
 - ZenTest
-:system:
-- cgi_multipart_eof_fix
-- daemons
-- dnssd
-- fastthread
-- fcgi
-- ferret
-- gem_plugin
-- libxml-ruby
-- needle
-- net-sftp
-- net-ssh
-- ruby-openid
-- ruby-yadis
-- termios
-:exception:
+:exception: 
 - tlsmail
+- rubygems-update
