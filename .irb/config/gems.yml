@@ -1,5 +1,6 @@
 --- 
 :system: 
+- actionwebservice
 - acts_as_ferret
 - cgi_multipart_eof_fix
 - daemons
@@ -17,11 +18,7 @@
 - ruby-yadis
 - termios
 :approved: 
-- actionmailer
-- actionpack
-- actionwebservice
 - activerecord
-- activeresource
 - activesupport
 - adamwiggins-rest-client
 - andand
@@ -91,6 +88,15 @@
 - wirble
 - www-delicious
 - ZenTest
+- Platform
+- mspec
 :exception: 
 - tlsmail
 - rubygems-update
+:github:
+- adamwiggins-rest-client
+- collectiveidea-awesome_nested_set
+- jeremymcanally-pending
+- mbleigh-acts-as-taggable-on
+- mynyml-every
+- n3bulous-amiruby19

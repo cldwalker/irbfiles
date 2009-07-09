@@ -36,7 +36,7 @@ module Gem
   end
 
   def gem_approved
-    table gem_config[:approved]
+    table gem_config[:approved].sort
   end
 
   def gem_add(name)
@@ -76,6 +76,15 @@ module Gem
 
   def gem_file
     File.join(Boson.base_dir, 'config', 'gems.yml')
+  end
+
+  def github_gems
+    ::Gem.source_index.gems.values.select {|e| e.homepage && e.homepage[/github/] }.map {|e| e.name}
+  end
+
+  def gem_names(gems)
+    ghub_gems = github_gems + gem_config[:github]
+    gems.map {|e| ghub_gems.include?(e) ? e.split('-', 2)[-1]: e}
   end
 
   def gem_list(query='')
