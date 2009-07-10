@@ -3,11 +3,8 @@ module RubyRef
     require 'libraries/hirb'
   end
 
-  def global_variables
-    vars = %w{$! $-F $-w $6 $? $VERBOSE $stderr $" $-I $. $7 $@ $\\ $stdin $$ $-K $/ $8 $DEBUG $_ $stdout $& $-a $0 $9 $FILENAME $` $~} +
-     %w{$' $-d $1 $: $KCODE $binding $* $-i $2 $; $LOADED_FEATURES $deferr $+ $-l $3 $< $LOAD_PATH $defout $, $-p $4 $= $PROGRAM_NAME} + 
-     %w{$fileutils_rb_have_lchmod $-0 $-v $5 $> $SAFE $fileutils_rb_have_lchown}
-    table vars.sort.map {|e| [e, (eval e).inspect] }, :headers=>{0=>"variable",1=>"value"}
+  def global_var
+    table global_variables.sort.map {|e| [e, (eval e).inspect] }, :headers=>{0=>"variable",1=>"value"}
   end
   
   def loaded_paths(reload=false)

@@ -1,16 +1,17 @@
 module IrbCompletion
   # append_character, quote_characters, word_break_characters, case_fold, filename_quote_char, basic_quote_char
-  def set_proc(&block)
-    Readline.basic_word_break_characters= " \t\n`><=;|&{("
-    Readline.completion_proc = proc {|input|
-      if input =~ /^(['"])/
-        quote = $1
-        (Readline::FILENAME_COMPLETION_PROC.call(input.tr(quote, '')) || []).map {|e| 
-          e =~ /^~/ ?  quote + File.expand_path(e) : quote + e
-        }
-      else
-        IRB::InputCompletor::CompletionProc.call(input)
-      end
+  def self.included(mod)
+    LocalGem.local_require 'bond'
+  end
+
+  def set_proc
+    Readline.basic_word_break_characters= "\t\n`><=;|&{("
+    mag = Bond.new
+    mag.complete(/^(['"])/) {|input, match|
+      quote = match[0]
+      (Readline::FILENAME_COMPLETION_PROC.call(input.tr(quote, '')) || []).map {|e|
+        e =~ /^~/ ?  quote + File.expand_path(e) : quote + e
+      }
     }
   end
 
