@@ -1,16 +1,16 @@
 module IrbCompletion
   # append_character, quote_characters, word_break_characters, case_fold, filename_quote_char, basic_quote_char
   def self.included(mod)
-    LocalGem.local_require 'bond'
   end
 
   def set_proc
-    Readline.basic_word_break_characters= "\t\n`><=;|&{("
-    mag = Bond.new
-    mag.complete(/^(['"])/) {|input, match|
-      quote = match[0]
-      (Readline::FILENAME_COMPLETION_PROC.call(input.tr(quote, '')) || []).map {|e|
-        e =~ /^~/ ?  quote + File.expand_path(e) : quote + e
+    LocalGem.local_require 'bond'
+    Bond.complete(:command=>"req") {|e,f|
+      %w{would be nice if works}.grep(/#{e}/)
+    }
+    Bond.complete(:on=>/\s*["']([^'"]*)$/) {|input, match|
+      (Readline::FILENAME_COMPLETION_PROC.call(match[1]) || []).map {|e|
+        e =~ /^~/ ?  File.expand_path(e) : e
       }
     }
   end
@@ -21,8 +21,12 @@ module IrbCompletion
   end
 
   def irb_enhanced
-    $: << File.expand_path("~/.irb/lib/irb-enhanced")
-    require 'irb-completion-enhanced'
+    if !$".grep(/irb-enhanced/).empty?
+      reload 'irb-completion-enhanced'
+    else
+      $: << File.expand_path("~/.irb/lib/irb-enhanced")
+      require 'irb-completion-enhanced'
+    end
     IRB::InputCompletor.setup
   end
 end
