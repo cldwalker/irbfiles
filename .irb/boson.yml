@@ -36,6 +36,9 @@
     - railsrc
     - history
     - irb_prompts
+  irb_completion:
+    :call_methods:
+    - load_bond
   what_methods:
   pp:
   and_and:
