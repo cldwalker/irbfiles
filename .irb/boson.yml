@@ -37,6 +37,7 @@
     - history
     - irb_prompts
   irb_completion:
+    :module: Boson::Libraries::IrbCompletion
     :call_methods:
     - load_bond
   what_methods:
