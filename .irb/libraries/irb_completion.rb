@@ -17,10 +17,6 @@ module Bond
         index += 1; completions
       end
     end
-
-    def shell_commands(input)
-      ENV['PATH'].split(File::PATH_SEPARATOR).uniq.map {|e| Dir.entries(e) }.flatten.uniq
-    end
   end
 end
 
@@ -28,31 +24,14 @@ module Boson::Libraries::IrbCompletion
   def load_bond
     begin LocalGem.local_require 'bond'; rescue; require 'bond' end
     Bond.reset
-    Bond.debrief :debug=>true
-    Bond.complete(:method=>"reload") {|e|
-      $".map {|f| f.gsub('.rb','') }
-    }
+    Bond.debrief :debug=>true, :default_search=>:underscore
+    require 'bond/completion'
+    # place it before symbols
+    Bond.complete(:on=>/^((([a-z][^:.\(]*)+):)+/, :search=>false, :action=>:alias_constants, :place=>5)
+    Bond.complete(:method=>"reload") {|e| $" }
     Bond.complete(:method=>/ll|rl/) {|e|
       Dir["#{Boson.base_dir}/libraries/**/*.rb"].map {|l| l[/#{Boson.base_dir}\/libraries\/(.*)\.rb/,1]}
     }
-    Bond.complete(:method=>/system|`/, :action=>:shell_commands)
-    Bond.complete(:object=>"Object", :search=>:underscore)
-    Bond.complete(:on=>/^((([a-z][^:.\(]*)+):)+/, :search=>false, :action=>:alias_constants)
-
-    # Bond.complete(:on=>/\S+\s*["']([^'"]*)$/, :search=>false) {|e|
-    #   (Readline::FILENAME_COMPLETION_PROC.call(e.matched[1]) || []).map {|f|
-    #     f =~ /^~/ ?  File.expand_path(f) : f
-    #   }
-    # }
-  end
-
-  def irb_enhanced
-    if !$".grep(/irb-enhanced/).empty?
-      reload 'irb-completion-enhanced'
-    else
-      $: << File.expand_path("~/.irb/lib/irb-enhanced")
-      require 'irb-completion-enhanced'
-    end
-    IRB::InputCompletor.setup
+    Bond.complete(:method=>'r', :action=>:method_require, :search=>false)
   end
 end

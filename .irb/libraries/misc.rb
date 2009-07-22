@@ -1,9 +1,7 @@
 module Misc
   #Reloads a file just as you would require it.
-  def reload(filename)
-    filename += '.rb' unless filename[/\.rb$/]
-    $".delete(filename)
-    require(filename)
+  def reload(require_regex)
+    $".grep(/#{require_regex}/).each {|e| $".delete(e) && require(e) }
   end
 
   # A more versatile version of Module#const_get.
