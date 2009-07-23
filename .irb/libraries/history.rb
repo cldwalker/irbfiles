@@ -6,9 +6,13 @@ module IrbHistory
   class<<self; attr_accessor :original_history_size ; end
   
   def self.included(mod)
-    require 'libraries/irb_features'
+    require 'libraries/console'
     require 'tempfile'
-    IRB_PROCS[:set_command_history] = lambda { self.original_history_size =  Readline::HISTORY.size }
+    if Object.const_defined?(:IRB_PROCS)
+      IRB_PROCS[:set_command_history] = lambda { self.original_history_size =  Readline::HISTORY.size }
+    else
+      self.original_history_size = Readline::HISTORY.size
+    end
   end
   
   def print_history(*args)
@@ -17,7 +21,7 @@ module IrbHistory
   end
 
   def eval_history(*args)
-    irb_eval history_list_or_slice(*args).join("\n")
+    console_eval history_list_or_slice(*args).join("\n")
   end
   
   def edit_history(*args)
@@ -26,7 +30,7 @@ module IrbHistory
   end
 
   def edit_and_eval(*args)
-    irb_eval edit(*args)
+    console_eval edit(*args)
   end
 
   private

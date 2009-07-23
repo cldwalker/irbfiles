@@ -11,5 +11,6 @@ require 'rubygems'
   end
 end
 
-Boson.register(:irb_features, :irb_completion, :local_gem, :wirble, :clipboard, :irb_history, :duration, :hirb,
- :every, :with=>self, :verbose=>true)
+libs = [:history, :local_gem, :wirble, :clipboard, :duration, :hirb, :every, {:with=>self, :verbose=>true}]
+libs.unshift(:irb_features) if Object.const_defined?(:IRB)
+Boson.register(*libs)

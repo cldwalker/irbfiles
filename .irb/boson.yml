@@ -1,4 +1,6 @@
 :defaults:
+- console
+- irb_completion
 - alias
 - method_lister
 - core

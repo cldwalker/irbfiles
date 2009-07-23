@@ -39,21 +39,6 @@ module IrbFeatures
     }
   end
 
-  def reset_irb
-    at_exit { exec($0) }
-    IRB::HistorySavingAbility.create_finalizer.call
-    throw :IRB_EXIT, 0
-  end
-
-  def irb_eval(string)
-    string.split("\n").each {|e| Readline::HISTORY << e }
-    IRB.CurrentContext.workspace.evaluate(self, string)
-  end
-
-  def current_variables
-    irb_eval "local_variables - (self.methods + self.private_methods)"
-  end
-
   private
   def load_railsrc
     #global railsrc
