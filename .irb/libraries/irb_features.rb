@@ -7,7 +7,6 @@ module IrbFeatures
   def irb_options
     IRB.conf[:AUTO_INDENT] = true
     IRB.conf[:SINGLE_IRB] = true
-    require 'irb/completion'
     IRB.conf[:PROMPT_MODE] = :SIMPLE
     Object.const_set("IRB_PROCS",{}) unless Object.const_defined?(:IRB_PROCS)
     IRB.conf[:IRB_RC] = lambda do |e|
