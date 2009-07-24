@@ -17,6 +17,12 @@ module Bond
         index += 1; completions
       end
     end
+
+    def my_constants(input)
+      receiver = input.matched[1]
+      candidates = current_eval("#{receiver}.constants")
+      candidates.grep(/^#{Regexp.escape(input.matched[4])}/).map {|e| receiver + "::" + e}
+    end
   end
 end
 
@@ -26,12 +32,14 @@ module Boson::Libraries::IrbCompletion
     Bond.reset
     Bond.debrief :debug=>true, :default_search=>:underscore
     require 'bond/completion'
+    Bond.complete(:on=>/(((::)?[A-Z][^:.\(]*)+)::?([^:.]*)$/, :action=>:my_constants, :search=>false, :place=>3)
     # place it before symbols
-    Bond.complete(:on=>/^((([a-z][^:.\(]*)+):)+/, :search=>false, :action=>:alias_constants, :place=>5)
+    Bond.complete(:on=>/^((([a-z][^:.\(]*)+):)+/, :search=>false, :action=>:alias_constants, :place=>6)
     Bond.complete(:method=>"reload") {|e| $" }
     Bond.complete(:method=>/ll|rl/) {|e|
       Dir["#{Boson.base_dir}/libraries/**/*.rb"].map {|l| l[/#{Boson.base_dir}\/libraries\/(.*)\.rb/,1]}
     }
     Bond.complete(:method=>'r', :action=>:method_require, :search=>false)
+    Bond.complete(:on=>/ENV\[["'](\S*)$/, :search=>false) {|e| ENV.keys.grep(/^#{Regexp.escape(e.matched[1])}/i) }
   end
 end
