@@ -157,3 +157,5 @@
     :alias: sj
   current_variables:
     :alias: cv
+  gem_recursive_uninstall:
+    :alias: sgu
