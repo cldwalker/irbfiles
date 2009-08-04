@@ -1,4 +1,4 @@
-module Core
+module CoreGem
   # my ruby extensions: http://github.com/cldwalker/my_core
   # use core to load extensions: http://github.com/cldwalker/core
   def self.included(mod)

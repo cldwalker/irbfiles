@@ -3,7 +3,7 @@
 - irb_completion
 - alias
 - method_lister
-- core
+- core_gem
 - tree
 - misc
 - silencer
@@ -63,13 +63,13 @@
     - setup_config
   tree:
     :dependencies:
-    - core
+    - core_gem
     - hirb
   hirb:
     :module: Boson::Libraries::Hirb
     :gems:
     - hirb
-  core:
+  core_gem:
     :gems:
     - core
 :commands:
