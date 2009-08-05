@@ -37,7 +37,7 @@ module Boson::Libraries::IrbCompletion
     Bond.complete(:on=>/^((([a-z][^:.\(]*)+):)+/, :search=>false, :action=>:alias_constants, :place=>6)
     Bond.complete(:method=>"reload") {|e| $" }
     Bond.complete(:method=>/ll|rl/) {|e|
-      Dir["#{Boson.base_dir}/libraries/**/*.rb"].map {|l| l[/#{Boson.base_dir}\/libraries\/(.*)\.rb/,1]}
+      Dir["#{Boson.dir}/libraries/**/*.rb"].map {|l| l[/#{Boson.dir}\/libraries\/(.*)\.rb/,1]}
     }
     Bond.complete(:method=>'r', :action=>:method_require, :search=>false)
     Bond.complete(:on=>/ENV\[["'](\S*)$/, :search=>false) {|e| ENV.keys.grep(/^#{Regexp.escape(e.matched[1])}/i) }
