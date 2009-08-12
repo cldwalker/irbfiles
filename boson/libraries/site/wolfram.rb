@@ -2,7 +2,6 @@ module Wolfram
   def self.included(mod)
     require 'net/http'
     require 'cgi'
-    require 'libraries/hirb'
   end
 
   def wolfram(query)

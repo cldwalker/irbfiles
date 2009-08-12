@@ -1,9 +1,4 @@
 module Tree
-  def self.included(mod)
-    require 'libraries/core'
-    require 'libraries/hirb'
-  end
-
   def inheritance_tree(klass, options={})
     view klass, {:class=>:parent_child_tree, :children_method=>:class_children, :type=>:directory}.merge(options)
   end

@@ -1,6 +1,5 @@
 module Github
   def self.included(mod)
-    require 'libraries/hirb'
     require 'httparty'
   end
 

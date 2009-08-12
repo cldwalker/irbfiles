@@ -1,8 +1,4 @@
 module Xmms2
-  def self.included(mod)
-    require 'libraries/hirb'
-  end
-
   def songs(query)
     table search_songs(query), :fields=>[:track, :title, :time]
   end

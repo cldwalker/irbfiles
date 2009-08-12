@@ -1,8 +1,4 @@
 module RubyRef
-  def self.included(mod)
-    require 'libraries/hirb'
-  end
-
   def global_var
     table global_variables.sort.map {|e| [e, (eval e).inspect] }, :headers=>{0=>"variable",1=>"value"}
   end

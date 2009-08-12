@@ -1,7 +1,6 @@
 module UrlCheck
   def self.included(mod)
     require 'net/http'
-    require 'libraries/hirb'
     require 'lib/redirect_follower'
   end
 
