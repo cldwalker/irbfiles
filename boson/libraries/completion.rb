@@ -26,7 +26,7 @@ module Bond
   end
 end
 
-module Boson::Libraries::IrbCompletion
+module Boson::Libraries::Completion
   def load_bond
     begin LocalGem.local_require 'bond'; rescue; require 'bond' end
     Bond.reset
@@ -37,7 +37,7 @@ module Boson::Libraries::IrbCompletion
     Bond.complete(:on=>/^((([a-z][^:.\(]*)+):)+/, :search=>false, :action=>:alias_constants, :place=>6)
     Bond.complete(:method=>"reload") {|e| $" }
     Bond.complete(:method=>/ll|rl/) {|e|
-      Dir["#{Boson.dir}/libraries/**/*.rb"].map {|l| l[/#{Boson.dir}\/libraries\/(.*)\.rb/,1]}
+      Boson.libraries.map {|e| e.name}
     }
     Bond.complete(:method=>'r', :action=>:method_require, :search=>false)
     Bond.complete(:on=>/ENV\[["'](\S*)$/, :search=>false) {|e| ENV.keys.grep(/^#{Regexp.escape(e.matched[1])}/i) }
