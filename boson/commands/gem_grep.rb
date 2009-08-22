@@ -1,7 +1,7 @@
 module Gemgrep
   def self.included(mod)
     LocalGem.local_require 'gem_grep'
-    require 'lib/rubygems/specification'
+    require 'rubygems/specification_hack'
   end
 
   def gem_grep(term, options={})

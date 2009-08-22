@@ -1,7 +1,7 @@
 module UrlCheck
   def self.included(mod)
     require 'net/http'
-    require 'lib/redirect_follower'
+    require 'redirect_follower'
   end
 
   def url_check(urls, options={})

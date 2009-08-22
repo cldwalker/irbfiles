@@ -1,6 +1,6 @@
 module Clipboard
   def self.included(mod)
-    require 'lib/clipboard'
+    require 'clipboard'
   end
 
   def clipboard_copy(stuff)

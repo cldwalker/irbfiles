@@ -1,6 +1,6 @@
 module Countdown
   def self.included(mod)
-    require 'lib/countdown'
+    require 'countdown'
   end
 
   def countdown(question, seconds=10.0, default=false)
