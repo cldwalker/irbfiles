@@ -1,4 +1,4 @@
-module Boson::Libraries::Hirb
+module Boson::Commands::Hirb
   def self.included(mod)
     require 'hirb'
     mod.send :include, Hirb::Console

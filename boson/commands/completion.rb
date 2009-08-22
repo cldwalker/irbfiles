@@ -26,7 +26,7 @@ module Bond
   end
 end
 
-module Boson::Libraries::Completion
+module Boson::Commands::Completion
   def load_bond
     begin LocalGem.local_require 'bond'; rescue; require 'bond' end
     Bond.reset

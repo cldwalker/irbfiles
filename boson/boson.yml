@@ -87,7 +87,7 @@
     - core_gem
     - hirb
   hirb:
-    :module: Boson::Libraries::Hirb
+    :module: Boson::Commands::Hirb
     :gems:
     - hirb
   core_gem:
