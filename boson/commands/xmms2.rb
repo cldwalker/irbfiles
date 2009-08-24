@@ -10,6 +10,13 @@ module Xmms2
     end
   end
 
+  def play(*dirs)
+    system('xmms2 clear')
+    dirs.unshift 'xmms2', 'radd'
+    system(*dirs)
+    system('xmms2 shuffle')
+  end
+
   private
   def search_songs(query)
     parse_songs `xmms2 list |grep #{query}`.split("\n")

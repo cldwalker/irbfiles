@@ -49,6 +49,8 @@
   pp:
   and_and:
   sketches:
+  silencer:
+    :namespace: true
   gem:
     :dependencies: 
     - shell
@@ -56,8 +58,10 @@
     :dependencies:
     - browser
   site/github:
+    :namespace: g
     :dependencies:
     - hirb
+    - browser
   site/wolfram:
     :dependencies:
     - hirb
@@ -180,3 +184,7 @@
     :alias: cv
   gem_recursive_uninstall:
     :alias: sgu
+  checkout:
+    :alias: co
+  analytics_day:
+    :alias: ad

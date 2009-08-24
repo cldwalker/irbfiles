@@ -23,4 +23,11 @@ module GoogleReader
   def unread
     Google::Reader::Count.all
   end
+
+  def analytics_day(date=nil)
+    date = date ? Date.parse("#{date}/2009") : Date.today
+    date = date.strftime("%Y%m%d")
+    url = "https://www.google.com/analytics/reporting/?reset=1&id=14680769&pdr=#{date}-#{date}"
+    browser url
+  end
 end
