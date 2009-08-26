@@ -6,7 +6,7 @@ module UrlCheck
 
   def url_check(urls, options={})
     responses = urls.map {|e| fetch_url(e, options) }
-    table responses, :fields=>[:url, :code, :final_url]
+    render responses, :fields=>[:url, :code, :final_url]
     responses
   end
 

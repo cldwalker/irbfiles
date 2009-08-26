@@ -36,7 +36,7 @@ module Gem
   end
 
   def gem_approved
-    table gem_config[:approved].sort
+    render gem_config[:approved].sort
   end
 
   def gem_add(name)

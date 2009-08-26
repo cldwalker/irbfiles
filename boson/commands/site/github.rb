@@ -8,7 +8,7 @@ module Github
   end
 
   def user_table(user='cldwalker')
-    table user_feed(user)['repositories'].select {|e| !e['private']}, :fields=>%w{name watchers forks homepage description}
+    render user_feed(user)['repositories'].select {|e| !e['private']}, :fields=>%w{name watchers forks homepage description}
   end
 
   def issues(user='cldwalker')
@@ -16,7 +16,7 @@ module Github
       puts "Fetching open issues on #{e['name']}..."
       [e['name'], HTTParty.get("http://github.com/api/v2/json/issues/list/#{user}/#{e['name']}/open")['issues'] ]
     end
-    table result.map {|e,f| [e, f.size] }
+    render result.map {|e,f| [e, f.size] }
     result
   end
   

@@ -1,6 +1,6 @@
 module Xmms2
   def songs(query)
-    table search_songs(query), :fields=>[:track, :title, :time]
+    render search_songs(query), :fields=>[:track, :title, :time]
   end
 
   def songs_jump(query)

@@ -1,6 +1,6 @@
 module KeyMaster
   def keys_used
-    table functions_hash.to_a.sort, :headers=>%w{function key}, :filters=>{1=>proc {|e| e.join(",")}}
+    render functions_hash.to_a.sort, :headers=>%w{function key}, :filters=>{1=>proc {|e| e.join(",")}}
   end
 
   def functions_hash

@@ -1,11 +1,11 @@
 module RubyRef
   def global_var
-    table global_variables.sort.map {|e| [e, (eval e).inspect] }, :headers=>{0=>"variable",1=>"value"}
+    render global_variables.sort.map {|e| [e, (eval e).inspect] }, :headers=>{0=>"variable",1=>"value"}
   end
   
   def loaded_paths(reload=false)
     @loaded_paths = get_loaded_paths if reload || @loaded_paths.nil?
-    table @loaded_paths.inject([]) {|t,(k,v)| t << {:require_path=>k, :full_path=>v } }.sort_by {|e| e[:require_path]},
+    render @loaded_paths.inject([]) {|t,(k,v)| t << {:require_path=>k, :full_path=>v } }.sort_by {|e| e[:require_path]},
       :fields=>[:require_path, :full_path]
   end
 
@@ -26,11 +26,11 @@ module RubyRef
 
   def rbconfig
     require 'rbconfig'
-    table RbConfig::CONFIG , :header=>{0=>"name", 1=>"value"}
+    render RbConfig::CONFIG , :header=>{0=>"name", 1=>"value"}
   end
 
   def instance_var_table(obj)
-    table obj.instance_variables.map {|e| [e, obj.instance_variable_get(e).inspect] }
+    render obj.instance_variables.map {|e| [e, obj.instance_variable_get(e).inspect] }
   end
 
   private

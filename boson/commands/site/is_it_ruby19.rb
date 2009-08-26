@@ -1,7 +1,7 @@
 # API ref: http://forum.brightbox.co.uk/forums/isitruby19-com/topics/api-is-added
 module IsItRuby19
   def r19_gem(name)
-    table r19_formatted_comments(name), :fields=>%w{version works_for_me platform body name url}
+    render r19_formatted_comments(name), :fields=>%w{version works_for_me platform body name url}
   end
 
   def r19_stat(name)

@@ -49,8 +49,6 @@
   pp:
   and_and:
   sketches:
-  silencer:
-    :namespace: true
   gem:
     :dependencies: 
     - shell
@@ -58,28 +56,16 @@
     :dependencies:
     - browser
   site/github:
-    :namespace: g
+    :namespace: github
     :dependencies:
-    - hirb
     - browser
   site/wolfram:
-    :dependencies:
-    - hirb
   site/is_it_ruby19:
     :dependencies:
     - httparty
   rails/model_find_shortcuts:
     :dependencies:
     - irb_features
-  ruby_ref:
-    :dependencies:
-    - hirb
-  xmms2:
-    :dependencies:
-    - hirb
-  url_check:
-    :dependencies:
-    - hirb
   local_gem:
     :module: LocalGem
     :gems:
@@ -89,7 +75,6 @@
   tree:
     :dependencies:
     - core_gem
-    - hirb
   hirb:
     :module: Boson::Commands::Hirb
     :gems:
@@ -188,3 +173,5 @@
     :alias: co
   analytics_day:
     :alias: ad
+  github:
+    :alias: g

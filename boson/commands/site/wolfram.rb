@@ -9,9 +9,9 @@ module Wolfram
     result.delete_if {|e| e.nil? || e.empty? }
     if result.size == 2
       puts result[0]
-      table result[1].split("\\n").map {|e| e.split(/\s*\|\s*/) }
+      render result[1].split("\\n").map {|e| e.split(/\s*\|\s*/) }
     else
-      table result.map {|e| [e]} rescue result
+      render result.map {|e| [e]} rescue result
     end
   end
 

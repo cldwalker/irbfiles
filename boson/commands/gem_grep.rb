@@ -15,7 +15,7 @@ module Gemgrep
       }
       # versions = records.inject({}) {|t,e| (t[e.name] ||= []) << e.version.to_s; t }
     }.flatten
-    puts table(total_records, :fields=>GemGrep.display_fields)
+    render total_records, :fields=>GemGrep.display_fields
   end
 
   def indexes
@@ -34,6 +34,6 @@ module Gemgrep
     data = Gem::RemoteFetcher.fetcher.fetch_path search_uri
     spec_tuples = Marshal.load data
     records = spec_tuples.map {|e| [e[0][0], e[0][1].to_s]}
-    table records, :headers=>['name', 'version']
+    render records, :headers=>['name', 'version']
   end
 end
