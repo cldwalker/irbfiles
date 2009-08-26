@@ -76,6 +76,8 @@
     :dependencies:
     - core_gem
   hirb:
+    :call_methods:
+    - setup_hirb
     :module: Boson::Commands::Hirb
     :gems:
     - hirb

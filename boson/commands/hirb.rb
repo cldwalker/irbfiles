@@ -1,16 +1,20 @@
 module Boson::Commands::Hirb
-  def self.included(mod)
-    require 'hirb'
-    mod.send :include, Hirb::Console
-  end
-  
   def toggle_hirb
-    enable_options = {:config_file=>File.join(Boson.dir, 'config', 'hirb.yml'), :output=>output_config}
-    enable_options[:output_method] = "Mini.output" unless Object.const_defined?(:IRB)
-    Hirb::View.enabled? ? Hirb::View.disable : Hirb::View.enable(enable_options)
+    Hirb::View.enabled? ? Hirb.disable : Hirb.enable(enable_options)
   end
 
   private
+  def setup_hirb
+    Hirb.disable if Hirb::View.enabled?
+    Hirb.enable(enable_options)
+  end
+
+  def enable_options
+    @enable_options = {:config_file=>File.join(Boson.dir, 'config', 'hirb.yml'), :output=>output_config}
+    @enable_options[:output_method] = "Mini.output" unless Object.const_defined?(:IRB)
+    @enable_options
+  end
+
   def output_config
     {
       "IRB::History"=>{:class=>"Hirb::Helpers::Table", :output_method=>lambda {|l| 
