@@ -85,30 +85,6 @@
     :gems:
     - core
 :commands:
-  libraries:
-    :alias: lib
-  commands:
-    :alias: com
-  nested_tree:
-    :alias: ntree
-  inheritance_tree:
-    :alias: itree
-  load_library:
-    :alias: ll
-  reload_library:
-    :alias: rl
-  print_history:
-    :alias: ph
-  edit_and_eval:
-    :alias: ee
-  edit_history:
-    :alias: eh
-  clipboard_paste:
-    :alias: pbp
-  clipboard_copy:
-    :alias: pbc
-  irb_verbosity_toggle:
-    :alias: iv
   irb_jobs:
     :alias: jobs
     :description: list workspaces/subsessions
@@ -159,21 +135,26 @@
     :description: works same as Module#private
   public:
     :description: works same as Module#public
-  delicious:
-    :alias: del
-  toggle_hirb:
-    :alias: th
-  trace:
-    :alias: tr
-  songs_jump:
-    :alias: sj
-  current_variables:
-    :alias: cv
-  gem_recursive_uninstall:
-    :alias: sgu
-  checkout:
-    :alias: co
-  analytics_day:
-    :alias: ad
-  github:
-    :alias: g
+:command_aliases:
+  render: v
+  libraries: lib
+  commands: com
+  nested_tree: ntree
+  inheritance_tree: itree
+  load_library: ll
+  reload_library: rl
+  print_history: ph
+  edit_and_eval: ee
+  edit_history: eh
+  clipboard_paste: pbp
+  clipboard_copy: pbc
+  irb_verbosity_toggle: iv
+  delicious: del
+  toggle_hirb: th
+  trace: tr
+  songs_jump: sj
+  current_variables: cv
+  gem_recursive_uninstall: sgu
+  checkout: co
+  analytics_day: ad
+  github: g
