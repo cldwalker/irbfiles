@@ -33,8 +33,7 @@ module Github
   end
 
   def raw_file(file_url)
-    file_url = file_url.sub('blob','raw')
-    system("wget", file_url)
+    download file_url.sub('blob','raw')
   end
 
   def repo(user_repo, file=nil)
