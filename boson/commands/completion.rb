@@ -36,9 +36,8 @@ module Boson::Commands::Completion
     # place it before symbols
     Bond.complete(:on=>/^((([a-z][^:.\(]*)+):)+/, :search=>false, :action=>:alias_constants, :place=>6)
     Bond.complete(:method=>"reload") {|e| $" }
-    Bond.complete(:method=>/ll|rl/) {|e|
-      Boson.libraries.map {|e| e.name}
-    }
+    Bond.complete(:method=>'rl') {|e|  Boson.libraries.map {|e| e.name} }
+    Bond.complete(:method=>'ll') {|e| Object.new.extend(Boson::Commands::Core).unloaded_libraries }
     Bond.complete(:method=>'r', :action=>:method_require, :search=>false)
     Bond.complete(:on=>/ENV\[["'](\S*)$/, :search=>false) {|e| ENV.keys.grep(/^#{Regexp.escape(e.matched[1])}/i) }
   end

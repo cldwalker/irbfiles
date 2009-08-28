@@ -83,7 +83,7 @@ module Gem
   end
 
   def gem_version(name)
-    (spec = Gem.loaded_specs.values.find {|e| e.name =~ /(-|^)\#{name}/ }) &&
+    (spec = Gem.loaded_specs.values.find {|e| e.name =~ /(-|^)#{name}/ }) &&
       spec.version.to_s
   end
 
