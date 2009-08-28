@@ -82,6 +82,11 @@ module Gem
     ::Gem.source_index.gems.values.select {|e| e.homepage && e.homepage[/github/] }.map {|e| e.name}
   end
 
+  def gem_version(name)
+    (spec = Gem.loaded_specs.values.find {|e| e.name =~ /(-|^)\#{name}/ }) &&
+      spec.version.to_s
+  end
+
   def gem_names(gems)
     ghub_gems = github_gems + gem_config[:github]
     gems.map {|e| ghub_gems.include?(e) ? e.split('-', 2)[-1]: e}
