@@ -11,7 +11,7 @@ module Boson::Commands::Hirb
 
   def enable_options
     @enable_options = {:config_file=>File.join(Boson.dir, 'config', 'hirb.yml'), :output=>output_config}
-    @enable_options[:output_method] = "Mini.output" unless Object.const_defined?(:IRB)
+    @enable_options[:output_method] = "Mini.output" if !Object.const_defined?(:IRB) && Object.const_defined?(:Mini)
     @enable_options
   end
 

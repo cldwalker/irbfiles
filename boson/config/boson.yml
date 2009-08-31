@@ -46,8 +46,7 @@
     :dependencies:
       - console
   what_methods:
-  pp:
-  and_and:
+  andand:
   sketches:
   gem:
     :dependencies: 
@@ -64,8 +63,8 @@
     :dependencies:
     - httparty
   rails/model_find_shortcuts:
-    :dependencies:
-    - irb_features
+    :call_methods:
+    - define_model_shortcuts
   local_gem:
     :module: LocalGem
     :gems:
