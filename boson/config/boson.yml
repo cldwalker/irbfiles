@@ -9,6 +9,7 @@
 - silencer
 - browser
 - shell
+- boson
 :libraries:
   method_lister:
     :detect_object_methods: false
@@ -80,6 +81,10 @@
       post: HTTParty.post
       put: HTTParty.put
       delete: HTTParty.delete
+  boson:
+    :class_commands:
+      any_const_get: Boson::Util.any_const_get
+      detect: Boson::Util.detect
   restclient:
     :force: true
     :class_commands:
@@ -192,3 +197,4 @@
   mls: ls
   mgrep: grep
   mwhich: which
+  reload: re

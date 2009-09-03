@@ -4,29 +4,6 @@ module Misc
     $".grep(/#{require_regex}/).each {|e| $".delete(e) && require(e) }
   end
 
-  # A more versatile version of Module#const_get.
-  # Retrieves constant for given string, even if it's nested under classes.
-  def any_const_get(name)
-    klass = ::Object
-    name.split('::').each {|e|
-      klass = klass.const_get(e)
-    }
-    klass
-  rescue
-    nil
-  end
-
-  def undetected_methods(priv=false)
-    public_undetected = metaclass.instance_methods - (Kernel.instance_methods + Object.instance_methods(false) + MyCore::Object::InstanceMethods.instance_methods +
-      Boson.commands.map {|e| [e.name, e.alias] }.flatten.compact)
-    public_undetected -= IRB::ExtendCommandBundle.instance_eval("@ALIASES").map {|e| e[0].to_s} if Object.const_defined?(:IRB)
-    priv ? (public_undetected + metaclass.private_instance_methods - (Kernel.private_instance_methods + Object.private_instance_methods)) : public_undetected
-  end
-
-  def detect(*args, &block)
-    Boson::Util.detect(*args, &block)
-  end
-
   # from http://kpumuk.info/ruby-on-rails/colorizing-console-ruby-script-output/
   def color_table
     [0, 1, 4, 5, 7].each do |attr|
