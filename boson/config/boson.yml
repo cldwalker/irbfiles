@@ -12,15 +12,14 @@
 - boson
 :libraries:
   method_lister:
-    :detect_object_methods: false
+    :object_methods: false
     :commands:
     - mls
     - mwhich
     - mgrep
   alias:
-    :detect_object_methods: false
+    :object_methods: false
   irb/extend_command_bundle:
-    :detect_methods: false
     :commands:
     - irb_pop_workspace
     - irb_source
@@ -42,14 +41,14 @@
     - private
     - irb_push_workspace
   irb_features:
-    :call_methods:
+    :init_methods:
     - irb_options
     - railsrc
     - history
     - irb_prompts
   completion:
     :no_module_eval: true
-    :call_methods:
+    :init_methods:
     - load_bond
   history:
     :dependencies:
@@ -72,7 +71,7 @@
     :dependencies:
     - httparty
   rails/model_find_shortcuts:
-    :call_methods:
+    :init_methods:
     - define_model_shortcuts
   httparty:
     :force: true
@@ -111,7 +110,7 @@
     :dependencies:
     - core_gem
   hirb:
-    :call_methods:
+    :init_methods:
     - setup_hirb
     :module: Boson::Commands::Hirb
     :gems:
