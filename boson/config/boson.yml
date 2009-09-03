@@ -7,7 +7,6 @@
 - tree
 - misc
 - silencer
-- browser
 - shell
 - boson
 :libraries:
@@ -59,13 +58,8 @@
   gem:
     :dependencies: 
     - shell
-  site/google_reader:
-    :dependencies:
-    - browser
   site/github:
     :namespace: github
-    :dependencies:
-    - browser
   site/wolfram:
   site/is_it_ruby19:
     :dependencies:
