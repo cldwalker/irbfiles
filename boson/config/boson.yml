@@ -10,6 +10,14 @@
 - browser
 - shell
 :libraries:
+  method_lister:
+    :detect_object_methods: false
+    :commands:
+    - mls
+    - mwhich
+    - mgrep
+  alias:
+    :detect_object_methods: false
   irb/extend_command_bundle:
     :detect_methods: false
     :commands:
@@ -65,6 +73,29 @@
   rails/model_find_shortcuts:
     :call_methods:
     - define_model_shortcuts
+  httparty:
+    :force: true
+    :class_commands:
+      get: HTTParty.get
+      post: HTTParty.post
+      put: HTTParty.put
+      delete: HTTParty.delete
+  restclient:
+    :force: true
+    :class_commands:
+      head: RestClient.head
+      get: RestClient.get
+      post: RestClient.post
+      put: RestClient.put
+      delete: RestClient.delete
+  clipboard:
+    :class_commands:
+      paste: Clipboard.read
+      copy: Clipboard.write
+  unroller:
+    :detect_object_methods: false
+    :class_commands:
+      trace: Unroller.trace
   local_gem:
     :module: LocalGem
     :gems:
@@ -158,3 +189,6 @@
   analytics_day: ad
   github: g
   unloaded_libraries: ul
+  mls: ls
+  mgrep: grep
+  mwhich: which
