@@ -1,6 +1,6 @@
 module IrbFeatures
-  def self.included(mod)
-    require 'irb'
+  def self.append_features(mod)
+    super if Object.const_defined?(:IRB)
   end
 
   def history

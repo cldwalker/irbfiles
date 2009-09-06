@@ -11,7 +11,4 @@ require 'rubygems'
   end
 end
 
-libs = [:history, :local_gem, :wirble, :clipboard, :duration, :hirb, :every]
-libs.unshift(:irb_features) if Object.const_defined?(:IRB)
-
-Boson.activate :libraries=>libs, :verbose=>true
+Boson.activate :verbose=>true

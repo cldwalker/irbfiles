@@ -9,6 +9,14 @@
 - silencer
 - shell
 - boson
+- irb_features
+- history
+- local_gem
+- wirble
+- clipboard
+- duration
+- hirb
+- every
 :libraries:
   method_lister:
     :object_methods: false
@@ -75,6 +83,7 @@
       put: HTTParty.put
       delete: HTTParty.delete
   boson:
+    :force: true
     :class_commands:
       any_const_get: Boson::Util.any_const_get
       detect: Boson::Util.detect
@@ -91,7 +100,7 @@
       paste: Clipboard.read
       copy: Clipboard.write
   unroller:
-    :detect_object_methods: false
+    :object_methods: false
     :class_commands:
       trace: Unroller.trace
   local_gem:
