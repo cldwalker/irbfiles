@@ -13,6 +13,8 @@ module Logger
     require 'logger'
     Object.const_set(:RAILS_DEFAULT_LOGGER, ::Logger.new(STDOUT)) unless Object.const_defined?(:RAILS_DEFAULT_LOGGER)
     Alias.create :file=>"~/.alias/rails.yml"
+    require 'console_update' #gem install cldwalker-console_update
+    ConsoleUpdate.enable_named_scope
   end
 
   def show_log
