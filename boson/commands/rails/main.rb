@@ -10,7 +10,6 @@ module Logger
   end
 
   def self.setup_rails(*args)
-    require 'logger'
     Object.const_set(:RAILS_DEFAULT_LOGGER, ::Logger.new(STDOUT)) unless Object.const_defined?(:RAILS_DEFAULT_LOGGER)
     Alias.create :file=>"~/.alias/rails.yml"
     require 'console_update' #gem install cldwalker-console_update
@@ -26,6 +25,7 @@ module Logger
   end
 
   private
+  #intermittently works if AB.logger.close
   def change_log(stream, colorize=true)
     ActiveRecord::Base.logger = ::Logger.new(stream)
     ActiveRecord::Base.clear_active_connections!

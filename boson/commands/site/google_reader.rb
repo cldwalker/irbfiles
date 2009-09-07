@@ -24,10 +24,11 @@ module GoogleReader
     Google::Reader::Count.all
   end
 
-  def analytics_day(date=nil)
-    date = date ? Date.parse("#{date}/2009") : Date.today
-    date = date.strftime("%Y%m%d")
-    url = "https://www.google.com/analytics/reporting/?reset=1&id=14680769&pdr=#{date}-#{date}"
+  def analytics_day(start_date=nil, end_date=nil)
+    start_date = start_date ? Date.parse("#{start_date}/2009") : Date.today
+    start_date = start_date.strftime("%Y%m%d")
+    end_date ||= start_date
+    url = "https://www.google.com/analytics/reporting/?reset=1&id=14680769&pdr=#{start_date}-#{end_date}"
     browser url
   end
 end
