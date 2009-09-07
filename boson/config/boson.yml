@@ -17,6 +17,7 @@
 - duration
 - hirb
 - every
+- rails/main
 :libraries:
   method_lister:
     :object_methods: false
@@ -72,6 +73,11 @@
   site/is_it_ruby19:
     :dependencies:
     - httparty
+  rails/main:
+    :class_commands:
+      reconnect: 'ActiveRecord::Base.connection.reconnect!'
+      recognize_path: ActionController::Routing::Routes.recognize_path
+      generate: ActionController::Routing::Routes.generate
   rails/model_find_shortcuts:
     :init_methods:
     - define_model_shortcuts
