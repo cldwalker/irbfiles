@@ -41,6 +41,13 @@
   history:
     :dependencies:
       - console
+  highline:
+    :commands:
+    - agree
+    - ask
+    - choose
+    - say
+    :namespace: true
   what_methods:
   andand:
   sketches:
@@ -49,6 +56,7 @@
     - shell
   site/github:
     :namespace: github
+    :object_methods: false
   site/wolfram:
   site/is_it_ruby19:
     :dependencies:
@@ -161,6 +169,8 @@
   clipboard_copy: pbc
   irb_verbosity_toggle: iv
   delicious: del
+  github: g
+  highline: h
   toggle_hirb: th
   trace: tr
   songs_jump: sj
@@ -168,7 +178,6 @@
   gem_recursive_uninstall: sgu
   checkout: co
   analytics_day: ad
-  github: g
   unloaded_libraries: ul
   mls: ls
   mgrep: grep

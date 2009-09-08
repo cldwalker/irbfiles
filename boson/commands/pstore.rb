@@ -7,9 +7,9 @@ module Pstore
     if yaml
       require 'yaml'
       require 'yaml/store'
-      @db = YAML::Store.new(File.join(Boson.dir, 'main.pstore.yml'))
+      @db = YAML::Store.new(File.join(config_dir, 'main.pstore.yml'))
     else
-      @db = PStore.new(File.join(Boson.dir, 'main.pstore'))
+      @db = PStore.new(File.join(config_dir, 'main.pstore'))
     end
   end
 

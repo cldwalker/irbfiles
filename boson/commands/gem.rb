@@ -75,7 +75,7 @@ module Gem
   end
 
   def gem_file
-    File.join(Boson.config_dir, 'gems.yml')
+    File.join(config_dir, 'gems.yml')
   end
 
   def github_gems

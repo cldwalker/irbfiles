@@ -1,6 +1,10 @@
 module BosonLib
+  def config_dir
+    Boson.repo.config_dir
+  end
+
   def edit_library(name)
-    file = Boson::Library.library_file(name.to_s)
+    file = Boson::FileLibrary.library_file(name.to_s)
     system("vim", file)
   end
 

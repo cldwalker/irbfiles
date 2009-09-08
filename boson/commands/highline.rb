@@ -1,13 +1,6 @@
 module Highline
   def self.included(mod)
     require 'highline'
-    [:agree, :ask, :choose, :say].each do |m|
-      module_eval %[
-        def #{m}(*args, &block)
-          highline.#{m}(*args, &block)
-        end
-      ]
-    end
   end
 
   def highline
