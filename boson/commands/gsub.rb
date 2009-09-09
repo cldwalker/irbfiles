@@ -1,3 +1,4 @@
+# consider features from http://github.com/JosephPecoraro/rr/tree/master
 module Gsub
   def gsub(search, replace, files, for_real=false)
     string = for_real ? "ruby -pi" : "ruby -p"

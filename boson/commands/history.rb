@@ -1,7 +1,7 @@
 # Similar to utility_belt's command history
 # Prints, evals and edits history by specifying start and end history numbers.
 # For example, 1-3,7 specifies lines 1 through 3 and line 7. Default is all lines.
-# Note: This library needs to be used at startup until I find a call to indicate that IRB is initialized.
+# consider copy history like http://pastie.org/501623
 module History
   class<<self; attr_accessor :original_history_size ; end
   

@@ -1,4 +1,4 @@
-module Boson::Commands::Hirb
+module HirbLib
   def toggle_hirb
     Hirb::View.enabled? ? Hirb.disable : Hirb.enable(enable_options)
   end

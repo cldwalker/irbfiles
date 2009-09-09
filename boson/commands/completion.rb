@@ -1,4 +1,4 @@
-module Bond
+module ::Bond
   module Actions
     def alias_constants(input)
       fetch_constants = proc {|klass, klass_alias| klass.constants.grep(/^#{klass_alias}/i).map {|f| klass.const_get(f)} }
@@ -26,7 +26,7 @@ module Bond
   end
 end
 
-module Boson::Commands::Completion
+module Completion
   def load_bond
     begin LocalGem.local_require 'bond'; rescue; require 'bond' end
     Bond.reset
