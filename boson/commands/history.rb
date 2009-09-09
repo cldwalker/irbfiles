@@ -14,7 +14,7 @@ module History
       self.original_history_size = Readline::HISTORY.size
     end
   end
-  
+
   def print_history(*args)
     history_list_or_slice(*args).compact.each_with_index {|e,i| puts "#{i+1}: #{e}"}
     nil
