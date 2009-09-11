@@ -144,3 +144,5 @@
   mgrep: grep
   mwhich: which
   reload: re
+  boson_library: bl
+  boson_command: bc

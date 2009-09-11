@@ -3,11 +3,21 @@ module BosonLib
     Boson.repo.config_dir
   end
 
+  # Edit a library
   def edit_library(name)
     file = Boson::FileLibrary.library_file(name.to_s)
     system("vim", file)
   end
 
+  def boson_command
+    Boson.command(name) || Boson.command(name, :alias)
+  end
+
+  def boson_library(name)
+    Boson.library(name) || Boson.library(name, :alias)
+  end
+
+  desc "Downloads a url and saves to a local boson directory"
   def download(url)
     filename = determine_download_name(url)
     File.open(filename, 'w') { |f| f.write get(url) }
