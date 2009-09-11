@@ -6,7 +6,6 @@ module History
   class<<self; attr_accessor :original_history_size ; end
   
   def self.included(mod)
-    require 'tempfile'
     require 'readline'
     if Object.const_defined?(:IRB_PROCS)
       IRB_PROCS[:set_command_history] = lambda { self.original_history_size =  Readline::HISTORY.size }
@@ -15,39 +14,31 @@ module History
     end
   end
 
-  def print_history(*args)
-    history_list_or_slice(*args).compact.each_with_index {|e,i| puts "#{i+1}: #{e}"}
-    nil
+  options :return_array=>:boolean, :edit=>:boolean, ["--eval", "-x"]=>:boolean
+  def history(*args)
+    options = args[-1].is_a?(Hash) ? args.pop : {}
+    list = history_list_or_slice(*args)
+    list = edit_string list.join("\n") if options[:edit]
+    console_eval(list.is_a?(Array) ? list.join("\n") : list) if options[:eval]
+    if options[:return_array] || list.is_a?(String)
+      list
+    else
+      render list.compact, :number=>true
+    end
   end
 
-  def eval_history(*args)
-    console_eval history_list_or_slice(*args).join("\n")
-  end
-  
-  def edit_history(*args)
-    history_string = history_list_or_slice(*args).join("\n")
-    edit(history_string)
-  end
-
-  def edit_and_eval(*args)
-    console_eval edit(*args)
-  end
-
-  private
-  def edit(string=nil,editor=ENV['EDITOR'])
+  def edit_string(string=nil,editor=ENV['EDITOR'])
+    require 'tempfile'
     editor ||= raise "editor must be given or defined by EDITOR environment variable"
-    tempfile = Tempfile.new('edit')
+    tempfile = Tempfile.new('edit_string')
     File.open(tempfile.path,'w') {|f| f.write(string) } if string
-    system("#{editor} #{tempfile.path}")
+    system(editor, tempfile.path)
     File.open(tempfile.path) {|f| f.read } 
   end
 
+  private
   def history_list(start_num=1,end_num=Readline::HISTORY.size - 1)
     Readline::HISTORY.to_a[(start_num + original_history_size - 1) .. (end_num + original_history_size - 1) ]
-  end
-
-  def history_slice(nums)
-    multislice(Readline::HISTORY.to_a, nums,',', original_history_size)
   end
 
   def original_history_size
@@ -56,7 +47,7 @@ module History
 
   def history_list_or_slice(*args)
     if args[0].class == String
-      history_slice(*args)
+      multislice(Readline::HISTORY.to_a, args[0],',', original_history_size)
     else
       history_list(*args)
     end

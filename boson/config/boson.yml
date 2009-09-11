@@ -40,6 +40,7 @@
   history:
     :dependencies:
       - console
+      - boson
   highline:
     :commands:
     - agree
@@ -133,11 +134,8 @@
   inheritance_tree: itree
   load_library: ll
   reload_library: rl
-  print_history: ph
-  edit_and_eval: ee
-  edit_history: eh
-  clipboard_paste: pbp
-  clipboard_copy: pbc
+  history: hi
+  edit_string: es
   irb_verbosity_toggle: iv
   delicious: del
   github: g
