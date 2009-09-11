@@ -1,4 +1,5 @@
 module HirbLib
+  # Toggles hirb between being enabled and disabled
   def toggle_hirb
     Hirb::View.enabled? ? Hirb.disable : Hirb.enable(enable_options)
   end

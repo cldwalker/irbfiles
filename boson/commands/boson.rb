@@ -1,4 +1,5 @@
 module BosonLib
+  # Config directory of main Boson repo
   def config_dir
     Boson.repo.config_dir
   end
@@ -9,10 +10,12 @@ module BosonLib
     system("vim", file)
   end
 
-  def boson_command
+  # Get command object by name or alias
+  def boson_command(name)
     Boson.command(name) || Boson.command(name, :alias)
   end
 
+  # Get library object by name or alias
   def boson_library(name)
     Boson.library(name) || Boson.library(name, :alias)
   end
@@ -24,6 +27,13 @@ module BosonLib
     filename
   end
 
+  options :sort=>:optional, :output_method=>:optional, :all_fields=>:boolean, :number=>:boolean, :vertical=>:boolean
+  # Wrapper around render with options
+  def view(*args)
+    render(*args)
+  end
+
+  # Tells you what methods in current binding aren't boson commands.
   def undetected_methods(priv=false)
     public_undetected = metaclass.instance_methods - (Kernel.instance_methods + Object.instance_methods(false) + MyCore::Object::InstanceMethods.instance_methods +
       Boson.commands.map {|e| [e.name, e.alias] }.flatten.compact)

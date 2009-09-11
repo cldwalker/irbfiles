@@ -82,6 +82,11 @@
     :class_commands:
       any_const_get: Boson::Util.any_const_get
       detect: Boson::Util.detect
+    :commands:
+      detect:
+        :description: Detect modules, gems and kernel methods loaded
+      any_const_get:
+        :description: Converts a string to a constant if it exists
   restclient:
     :force: true
     :class_commands:
@@ -91,6 +96,11 @@
       put: RestClient.put
       delete: RestClient.delete
   clipboard:
+    :commands:
+      paste: 
+        :description: Paste to clipboard
+      copy:
+        :description: Copy to clipboard
     :class_commands:
       paste: Clipboard.read
       copy: Clipboard.write
@@ -116,7 +126,7 @@
     :gems:
     - core
 :command_aliases:
-  render: v
+  view: v
   libraries: lib
   commands: com
   nested_tree: ntree

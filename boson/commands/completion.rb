@@ -43,6 +43,7 @@ module Completion
     Bond.complete(:on=>/ENV\[["'](\S*)$/, :search=>false) {|e| ENV.keys.grep(/^#{Regexp.escape(e.matched[1])}/i) }
   end
 
+  # Toggles object completion between all methods and just the object's class methods
   def toggle_object_complete
     if @object_complete
       Bond.recomplete(:object=>'Object', :place=>:last)
