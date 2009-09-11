@@ -3,6 +3,7 @@ module Xmms2
     render search_songs(query), :fields=>[:track, :title, :time]
   end
 
+  # Searches for songs, displays results in menu and lets you jump to chosen song
   def songs_jump(query)
     results = search_songs(query)
     if (chosen = menu(results, :fields=>[:track, :title, :time], :validate_one=>true))
@@ -10,6 +11,7 @@ module Xmms2
     end
   end
 
+  # Plays everything under a given directory
   def play(*dirs)
     system('xmms2 clear')
     dirs.unshift 'xmms2', 'radd'

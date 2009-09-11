@@ -1,5 +1,4 @@
 # logger cmds from http://weblog.jamisbuck.org/2007/1/31/more-on-watching-activerecord
-
 module Logger
   def self.append_features(mod)
     super if ENV['RAILS_ENV']
@@ -16,10 +15,12 @@ module Logger
     ConsoleUpdate.enable_named_scope
   end
 
+  # Shows log on screen
   def show_log
     change_log(STDOUT)
   end
 
+  # Stops showing log
   def hide_log
     change_log(nil)
   end

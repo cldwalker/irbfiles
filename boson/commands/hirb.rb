@@ -11,9 +11,9 @@ module HirbLib
   end
 
   def enable_options
-    @enable_options = {:config_file=>File.join(config_dir, 'hirb.yml'), :output=>output_config}
-    @enable_options[:output_method] = "Mini.output" if !Object.const_defined?(:IRB) && Object.const_defined?(:Mini)
-    @enable_options
+    options = {:config_file=>File.join(config_dir, 'hirb.yml'), :output=>output_config}
+    options[:output_method] = "Mini.output" if !Object.const_defined?(:IRB) && Object.const_defined?(:Mini)
+    options
   end
 
   def output_config

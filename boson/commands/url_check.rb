@@ -4,6 +4,7 @@ module UrlCheck
     require 'redirect_follower'
   end
 
+  # Pings and resolves redirects for given urls. Returns their status code and final url
   def url_check(urls, options={})
     responses = urls.map {|e| fetch_url(e, options) }
     render responses, :fields=>[:url, :code, :final_url]
