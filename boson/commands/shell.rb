@@ -1,5 +1,5 @@
 module Shell
-  options :error=>:boolean
+  # options :error=>:boolean
   # Returns stdout or stderr string from shell command
   def shell(*args)
     require 'open3'
