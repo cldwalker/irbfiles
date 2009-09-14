@@ -28,7 +28,7 @@ module History
     end
   end
 
-  def edit_string(string=nil,editor=ENV['EDITOR'])
+  def edit_string(string,editor=ENV['EDITOR'])
     require 'tempfile'
     editor ||= raise "editor must be given or defined by EDITOR environment variable"
     tempfile = Tempfile.new('edit_string')

@@ -13,4 +13,33 @@ module Shell
   def backtick(cmd,*args)
     ::IO.popen('-') {|f| f ? f.read : exec(cmd,*args)}
   end
+
+  # options :screen=>:boolean, :print=>:boolean, :return=>:optional, :pretend=>false
+  def new_system(*args)
+    options = (args[-1].is_a?(Hash)) ? args.pop : {}
+    command = args[0]
+    command = "screen #{command}" if options[:screen]
+    puts "shell: '#{command}'" if options[:print] or options[:pretend]
+    return nil if options[:pretend]
+    if options[:return]
+      cmd_output = `#{command}`
+      if options[:return] == :array
+        return_value = cmd_output.split("\n")
+      #string (true, normal?) or pager
+      else
+        return_value = cmd_output
+
+        if options[:return] == :pager && return_value.respond_to?(:|)
+          return_value.|()
+          return_value = nil
+        end
+      end
+    #return-boolean, output- stdout
+    else
+      return_value = system(command)
+    end
+
+    return_value
+  end
+
 end
