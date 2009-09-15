@@ -3,7 +3,7 @@ module Ansi
     require 'ansi' # gem install ssoroka-ansi
   end
 
-  # options :list=>:boolean, :background_color=>:optional, :color=>:optional
+  # options :list=>:boolean, :background_color=>:string, :color=>:string
   # Prints text in color or background color
   def color(text, options={})
     if options.delete(:list)

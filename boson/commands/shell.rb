@@ -14,7 +14,7 @@ module Shell
     ::IO.popen('-') {|f| f ? f.read : exec(cmd,*args)}
   end
 
-  # options :screen=>:boolean, :print=>:boolean, :return=>:optional, :pretend=>false
+  # options :screen=>:boolean, :print=>:boolean, :return=>:string, :pretend=>false
   def new_system(*args)
     options = (args[-1].is_a?(Hash)) ? args.pop : {}
     command = args[0]
