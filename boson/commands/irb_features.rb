@@ -3,7 +3,7 @@ module IrbFeatures
     super if Object.const_defined?(:IRB)
   end
 
-  def history
+  def irb_history
     IRB.conf[:SAVE_HISTORY] = 1000
     IRB.conf[:EVAL_HISTORY] = 200
   end
