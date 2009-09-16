@@ -1,11 +1,11 @@
 # Ported from http://github.com/drnic/sake-tasks/tree/master/check
 # with option modifications
 module Syntax
-  # options :verbose=>:boolean, :extension=>:string
+  # options :verbose=>:boolean, :extension=>'rb'
   # Find all .rb files in the current directory tree and report any syntax errors
   def ruby(options={})
     require 'open3'
-    Dir["**/*.#{options[:extension] || 'rb'}"].each do |file|
+    Dir["**/*.#{options[:extension]}"].each do |file|
       next if file.match("vendor/rails")
       next if file.match("vendor/plugins/.*/generators/.*/templates")
       puts file if options[:verbose]

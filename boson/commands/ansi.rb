@@ -2,13 +2,12 @@ module Ansi
   def self.included(mod)
     require 'ansi' # gem install ssoroka-ansi
   end
+  COLORS = [:magenta, :green, :white, :blue, :cyan, :yellow, :black, :purple, :light_blue, :red]
 
-  # options :list=>:boolean, :background_color=>:string, :color=>:string
+  # options :background_color=>{:type=>:string, :values=>COLORS}, :color=>{:type=>:string, :values=>COLORS}
   # Prints text in color or background color
   def color(text, options={})
-    if options.delete(:list)
-      colors = [:magenta, :green, :white, :blue, :cyan, :yellow, :black, :purple, :light_blue, :red]
-    elsif (background_color = options.delete(:background_color))
+    if (background_color = options.delete(:background_color))
       puts ::ANSI.bg_color(background_color.to_sym, options) { text }
     else
       puts ::ANSI.color((options[:color] || 'blue').to_sym, options) { text }

@@ -6,7 +6,7 @@ module BosonLib
 
   # Edit a library
   def edit_library(name)
-    file = Boson::FileLibrary.library_file(name.to_s)
+    file = Boson::FileLibrary.library_file(name.to_s, Boson.repo.dir)
     system("vim", file)
   end
 
