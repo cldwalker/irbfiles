@@ -32,7 +32,7 @@
     :init_methods:
     - irb_options
     - railsrc
-    - history
+    - irb_history
     - irb_prompts
   completion:
     :init_methods:
@@ -155,3 +155,4 @@
   boson_library: bl
   boson_command: bc
   errorless_inheritance_tree: eit
+  directory_sizer: dsizer
