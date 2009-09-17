@@ -4,7 +4,7 @@ module Ansi
   end
   COLORS = [:magenta, :green, :white, :blue, :cyan, :yellow, :black, :purple, :light_blue, :red]
 
-  # options :background_color=>{:type=>:string, :values=>COLORS}, :color=>{:type=>:string, :values=>COLORS}
+  # @options :background_color=>{:type=>:string, :values=>COLORS}, :color=>{:type=>:string, :values=>COLORS}
   # Prints text in color or background color
   def color(text, options={})
     if (background_color = options.delete(:background_color))

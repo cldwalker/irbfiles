@@ -7,7 +7,7 @@ module Overview
   #
   # option :nosort, "Displays original order of methods for each class"
   # option :delete_empty, "Deletes classes that don't have any methods"
-  # options :nosort=>:boolean, :delete_empty=>:boolean, :rails_root=>:string
+  # @options :nosort=>:boolean, :delete_empty=>:boolean, :rails_root=>:string
   # Prints out a tree of classes and their methods for a rails project. 
   def overview(directories = %w{models helpers controllers}, options={})
   	rails_root = options[:rails_root] || (File.exists?(File.join(Dir.pwd,'config','environment.rb')) ?

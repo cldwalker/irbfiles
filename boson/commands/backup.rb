@@ -1,6 +1,6 @@
 module Backup
   #s3sync.rb comes from http://s3sync.net
-  # options :directory=>:string, :s3sync_options=>:string
+  # @options :directory=>:string, :s3sync_options=>:string
   # Back up files to s3
   def s3(options={})
     directories = options[:directory] ? [options[:directory]] : ['~/code','~/docs', '~/backup']
@@ -37,7 +37,6 @@ module Backup
     end
   end
 
-  # :s3_options=>:string
   # Local backups + s3 backup
   def local_and_s3
     local
@@ -52,7 +51,7 @@ module Backup
     commit_git_repo("~/backup")
   end
 
-  # options :file=>:string, :db=>'tag_tree_dev'
+  # @options :file=>:string, :db=>'tag_tree_dev'
   # Dumps db to a file
   def db_dump(options={})
     file = options[:file] || "#{options[:db]}-mysql.sql"

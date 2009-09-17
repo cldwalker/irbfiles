@@ -1,7 +1,7 @@
 # Ported from http://github.com/drnic/sake-tasks/tree/master/check
 # with option modifications
 module Syntax
-  # options :verbose=>:boolean, :extension=>'rb'
+  # @options :verbose=>:boolean, :extension=>'rb'
   # Find all .rb files in the current directory tree and report any syntax errors
   def ruby(options={})
     require 'open3'
@@ -19,7 +19,7 @@ module Syntax
     end
   end
 
-  # options :verbose=>:boolean
+  # @options :verbose=>:boolean
   # Find all .erb or .rhtml files in the current directory tree and report any syntax errors
   def erb(options={})
     require 'erb'

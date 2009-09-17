@@ -27,8 +27,9 @@ module BosonLib
     filename
   end
 
-  # options :sort=>:string, :output_method=>:string, :all_fields=>:boolean, :number=>:boolean, :vertical=>:boolean
-  # Wrapper around render with options
+  options :sort=>:string, :output_method=>:string, :all_fields=>:boolean, :number=>:boolean,
+    :vertical=>:boolean
+  desc "Wrapper around render with options"
   def view(*args)
     render(*args)
   end

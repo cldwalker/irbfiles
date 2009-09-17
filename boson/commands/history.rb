@@ -14,7 +14,7 @@ module History
     end
   end
 
-  # options :return_array=>:boolean, :edit=>:boolean, ["--eval", "-x"]=>:boolean
+  # @options :return_array=>:boolean, :edit=>:boolean, ["--eval", "-x"]=>:boolean
   # Print, eval, edit console history specified by slice arguments or multislice string
   def history(*args)
     options = args[-1].is_a?(Hash) ? args.pop : {}

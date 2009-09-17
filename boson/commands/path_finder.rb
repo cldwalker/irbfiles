@@ -1,7 +1,7 @@
 module PathFinder
   # option :gemdir, "Include paths to gem directories as defined by your gem binary"
   # option :dir, "Return directories of files"
-  # options :verbose=>:boolean, :gemdir=>:boolean, :dir=>:boolean
+  # @options :verbose=>:boolean, :gemdir=>:boolean, :dir=>:boolean
   # Looks in standard ruby's library paths for a given file's basename.
   def path_finder(basename, options={})
     require 'find'

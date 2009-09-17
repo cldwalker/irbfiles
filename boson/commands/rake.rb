@@ -3,7 +3,7 @@ module RakeLib
     require 'rake'
   end
 
-  # options :benchmark=>:boolean
+  # @options :benchmark=>:boolean
   # Run rake tasks in current directory. Defaults to test task regardless of rake default
   def rake(task=nil, options={})
     ARGV.replace(task ? [task] : ['test'])
