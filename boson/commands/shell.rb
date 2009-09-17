@@ -1,5 +1,5 @@
 module Shell
-  # options :error=>:boolean
+  # @options :error=>:boolean
   # Returns stdout or stderr string from shell command
   def shell(*args)
     require 'open3'
@@ -14,7 +14,7 @@ module Shell
     ::IO.popen('-') {|f| f ? f.read : exec(cmd,*args)}
   end
 
-  # options :screen=>:boolean, :print=>:boolean, :return=>:string, :pretend=>false
+  # @options :screen=>:boolean, :print=>:boolean, :return=>:string, :pretend=>false
   def new_system(*args)
     options = (args[-1].is_a?(Hash)) ? args.pop : {}
     command = args[0]

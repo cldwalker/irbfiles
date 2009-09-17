@@ -16,7 +16,7 @@ module ShellCommands
     system "cp -fv ~/code/tmpl/gitignore-gem .gitignore"
   end
 
-  # options :file=>:boolean, :editor=>'vim -u NONE'
+  # @options :file=>:boolean, :editor=>'vim -u NONE'
   # Open new file in or copy existing file into sandbox
   def try(basename=nil, options={})
     destination = File.expand_path("~/code/sandbox")
@@ -65,7 +65,7 @@ module ShellCommands
     end
   end
 
-  # options :confirm=>:boolean
+  # @options :confirm=>:boolean
   def regname(regex, replace,files, options={})
     file_map = files.map {|e|
       val = [e, e.gsub(regex, replace)]
