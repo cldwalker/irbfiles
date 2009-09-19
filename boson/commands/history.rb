@@ -14,27 +14,18 @@ module History
     end
   end
 
-  # @options :return_array=>:boolean, :edit=>:boolean, ["--eval", "-x"]=>:boolean
+  # @options :return_array=>:boolean, :edit=>:boolean, [:eval, :x]=>:boolean
   # Print, eval, edit console history specified by slice arguments or multislice string
   def history(*args)
     options = args[-1].is_a?(Hash) ? args.pop : {}
     list = history_list_or_slice(*args)
-    list = edit_string list.join("\n") if options[:edit]
+    list = edit :string=>list.join("\n") if options[:edit]
     console_eval(list.is_a?(Array) ? list.join("\n") : list) if options[:eval]
     if options[:return_array] || list.is_a?(String)
       list
     else
       render list.compact, :number=>true
     end
-  end
-
-  def edit_string(string,editor=ENV['EDITOR'])
-    require 'tempfile'
-    editor ||= raise "editor must be given or defined by EDITOR environment variable"
-    tempfile = Tempfile.new('edit_string')
-    File.open(tempfile.path,'w') {|f| f.write(string) } if string
-    system(editor, tempfile.path)
-    File.open(tempfile.path) {|f| f.read } 
   end
 
   private

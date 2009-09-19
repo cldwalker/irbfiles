@@ -4,10 +4,23 @@ module BosonLib
     Boson.repo.config_dir
   end
 
+  # @options :editor=>ENV['EDITOR'], :string=>:string, :file=>:string
+  # Edit a file or string
+  def edit(options={})
+    options[:editor] ||= ENV['EDITOR']
+    file = options[:file] || begin
+      require 'tempfile'
+      Tempfile.new('edit_string').path
+    end
+    File.open(file,'w') {|f| f.write(options[:string]) } if options[:string]
+    system(options[:editor], file)
+    File.open(file) {|f| f.read } if File.exists?(file) && options[:string]
+  end
+
   # Edit a library
   def edit_library(name)
     file = Boson::FileLibrary.library_file(name.to_s, Boson.repo.dir)
-    system("vim", file)
+    edit :file=>file
   end
 
   # Get command object by name or alias
