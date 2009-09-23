@@ -23,6 +23,13 @@ module BosonLib
     edit :file=>file
   end
 
+  # @options :all=>:boolean, :verbose=>true
+  # Updates index
+  def index(options={})
+    Boson::Index.update(options)
+    puts "Indexed #{Boson.libraries.size} libraries and #{Boson.commands.size} commands."
+  end
+
   # Get command object by name or alias
   def boson_command(name)
     Boson.command(name) || Boson.command(name, :alias)

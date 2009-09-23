@@ -20,7 +20,7 @@ module Github
     result
   end
   
-  #sample url: http://github.com/takai/twitty-console/tree/master
+  #sample url: http://github.com/takai/twitty-console
   def checkout(url)
     user, repo = /github.com\/([^\/]+)\/([^\/]+)/.match(url)[1,2]
     if user.nil? || repo.nil? 
@@ -38,7 +38,7 @@ module Github
 
   def repo(user_repo, file=nil)
     user_repo = user_repo.split('-', 2).join('/') unless user_repo.include?('/')
-    repo_url = "http://github.com/#{user_repo}/tree/master"
+    repo_url = "http://github.com/#{user_repo}"
     repo_url += "/" + file if file
     browser repo_url
   end
