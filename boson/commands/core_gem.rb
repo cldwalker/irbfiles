@@ -2,10 +2,11 @@ module CoreGem
   # my ruby extensions: http://github.com/cldwalker/my_core
   # use core to load extensions: http://github.com/cldwalker/core
   def self.included(mod)
+    require 'local_gem'
     %w{my_core core}.each do |e|
       begin
         LocalGem.local_require e
-      rescue LoadError
+      rescue Exception
         require e
       end
     end

@@ -23,6 +23,12 @@ module BosonLib
     edit :file=>file
   end
 
+  # Prints stats about boson's index
+  def stats
+    Boson::Index.read
+    render [[:libraries, Boson::Index.libraries.size], [:commands, Boson::Index.commands.size]]
+  end
+
   # @options :all=>:boolean, :verbose=>true
   # Updates index
   def index(options={})
