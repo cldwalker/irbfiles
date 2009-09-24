@@ -15,7 +15,8 @@ module BosonMethodMissing
           puts "Found command #{meths[0]}" if meths[0]
           # attempt to prevent double error but swallows command
           # Boson::BinRunner.command = meths[0] if meths[0] && Boson.constant_defined?(:BinRunner)
-          original_method_missing.call((meths[0] || meth).to_sym,*args)
+          meth = (meths[0] || meth).to_sym
+          respond_to?(meth) ? send(meth, *args) : original_method_missing.call(meth,*args)
         end
       end
 
