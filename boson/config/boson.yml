@@ -1,4 +1,7 @@
+:bin_defaults:
+- boson_method_missing
 :defaults:
+- boson_method_missing
 - console
 - completion
 - alias
@@ -19,6 +22,9 @@
 - every
 - rails/main
 :libraries:
+  boson_method_missing:
+    :init_methods:
+    - boson_method_missing
   method_lister:
     :object_methods: false
     :commands:

@@ -1,4 +1,8 @@
 module Console
+  def self.included(mod)
+    require 'readline'
+  end
+
   if Object.const_defined?(:IRB)
     # Reset console process
     def console_reset

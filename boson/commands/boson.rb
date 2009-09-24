@@ -29,11 +29,11 @@ module BosonLib
     render [[:libraries, Boson::Index.libraries.size], [:commands, Boson::Index.commands.size]]
   end
 
-  # @options :all=>:boolean, :verbose=>true
+  # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
   # Updates index
   def index(options={})
+    File.unlink(Boson::Index.marshal_file) if options[:reset]
     Boson::Index.update(options)
-    puts "Indexed #{Boson.libraries.size} libraries and #{Boson.commands.size} commands."
   end
 
   # Get command object by name or alias

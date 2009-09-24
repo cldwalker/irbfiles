@@ -11,4 +11,4 @@ require 'rubygems'
   end
 end
 
-Boson.start :verbose=>true, :autoload_libraries=>true
+Boson.start :verbose=>true
