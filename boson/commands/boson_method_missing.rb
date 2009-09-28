@@ -9,6 +9,7 @@ module BosonMethodMissing
         Boson::Index.read
         possible_commands = Boson::Index.commands.map {|e| [e.name, e.alias]}.flatten.compact.sort
         meths = _underscore_search(meth.to_s, possible_commands)
+        ((exact_meth = meths.find {|e| possible_commands.include?(e) }) && meths = [exact_meth])
         if meths.size > 1
           puts "Multiple commands match: #{meths.join(', ')}"
         else
