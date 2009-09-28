@@ -3,16 +3,16 @@ module Github
     require 'httparty'
   end
 
-  def user_feed(user='cldwalker')
-    HTTParty.get("http://github.com/api/v2/json/repos/show/#{user}")
-  end
-
-  def user_table(user='cldwalker')
-    render user_feed(user)['repositories'].select {|e| !e['private']}, :fields=>%w{name watchers forks homepage description}
+  # @render_options :fields=>{:default=>%w{name watchers forks homepage description},
+  #  :values=>["name", "watchers", "private", "url", "forks", "fork", "description", "homepage", "open_issues"]}
+  # @options :user=>'cldwalker', :fork_included=>true
+  def user_table(options={})
+    repos = user_repos(options[:user])
+    !options[:fork_included] ? repos.select {|e| ! e['fork'] } : repos
   end
 
   def issues(user='cldwalker')
-    result = user_feed(user)['repositories'].map do |e|
+    result = user_repos(user).map do |e|
       puts "Fetching open issues on #{e['name']}..."
       [e['name'], HTTParty.get("http://github.com/api/v2/json/issues/list/#{user}/#{e['name']}/open")['issues'] ]
     end
@@ -41,5 +41,10 @@ module Github
     repo_url = "http://github.com/#{user_repo}"
     repo_url += "/" + file if file
     browser repo_url
+  end
+
+  private
+  def user_repos(user)
+    HTTParty.get("http://github.com/api/v2/json/repos/show/#{user}")['repositories']
   end
 end

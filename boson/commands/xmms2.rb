@@ -1,13 +1,15 @@
 module Xmms2
-  def songs(query)
-    render search_songs(query), :fields=>[:track, :title, :time]
-  end
-
+  # @render_options :fields=>{:default=>[:track, :title, :time]}
+  # @options :menu=>true
   # Searches for songs, displays results in menu and lets you jump to chosen song
-  def songs_jump(query)
+  def songs_jump(query, options={})
     results = search_songs(query)
-    if (chosen = menu(results, :fields=>[:track, :title, :time], :validate_one=>true))
-      system('xmms2', 'jump', chosen[:track].to_s)
+    if options[:menu]
+      if (chosen = menu(results, :fields=>[:track, :title, :time], :validate_one=>true))
+        system('xmms2', 'jump', chosen[:track].to_s)
+      end
+    else
+      results
     end
   end
 
@@ -20,7 +22,7 @@ module Xmms2
   end
 
   private
-  def search_songs(query)
+  def search_songs(query, options={})
     parse_songs `xmms2 list |grep #{query}`.split("\n")
   end
 

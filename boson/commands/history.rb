@@ -4,7 +4,7 @@
 # consider copy history like http://pastie.org/501623
 module History
   class<<self; attr_accessor :original_history_size ; end
-  
+
   def self.included(mod)
     require 'readline'
     if Object.const_defined?(:IRB_PROCS)
@@ -14,18 +14,15 @@ module History
     end
   end
 
-  # @options :return_array=>:boolean, :edit=>:boolean, [:eval, :x]=>:boolean
+  # @render_options :number=>true
+  # @options :edit=>:boolean, [:eval, :x]=>:boolean
   # Print, eval, edit console history specified by slice arguments or multislice string
   def history(*args)
     options = args[-1].is_a?(Hash) ? args.pop : {}
     list = history_list_or_slice(*args)
     list = edit :string=>list.join("\n") if options[:edit]
     console_eval(list.is_a?(Array) ? list.join("\n") : list) if options[:eval]
-    if options[:return_array] || list.is_a?(String)
-      list
-    else
-      render list.compact, :number=>true
-    end
+    list
   end
 
   private

@@ -3,7 +3,7 @@ module AliasLib
     command_aliases = YAML::load_file(File.expand_path("~/.alias.yml"))[:aliases][:instance_method]["Alias::Console"] rescue {}
     search_options = {:type=>:string, :alias=>:string, :class=>:string, :name=>:string}
     create_options = {:pretend=>false, :force=>false}
-    commands = {'search_aliases'=>{:options=>search_options}, 'create_aliases'=>{:options=>create_options}}
+    commands = {'search_aliases'=>{:options=>search_options, :args=>'*'}, 'create_aliases'=>{:options=>create_options, :args=>3}}
     {:command_aliases=>command_aliases, :commands=>commands}
   end
 

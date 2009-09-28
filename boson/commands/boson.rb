@@ -38,7 +38,7 @@ module BosonLib
 
   # Get command object by name or alias
   def boson_command(name)
-    Boson.command(name) || Boson.command(name, :alias)
+    Boson::Command.find(name)
   end
 
   # Get library object by name or alias
