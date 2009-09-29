@@ -152,6 +152,7 @@
   current_variables: cv
   gem_recursive_uninstall: sgu
   checkout: co
+  user_repos: ur
   analytics_day: ad
   unloaded_libraries: ul
   mls: ls

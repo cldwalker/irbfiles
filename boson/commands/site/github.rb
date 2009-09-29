@@ -2,21 +2,32 @@ module Github
   # @render_options :fields=>{:default=>[:name, :watchers, :forks, :homepage, :description],
   #  :values=>[:homepage, :name, :forks, :private, :watchers, :fork, :url, :description, :owner, :open_issues]}
   # @options :user=>'cldwalker', :fork_included=>true
-  def user_table(options={})
-    repos = user_repos(options[:user])
+  # Displays a user's repositories
+  def user_repos(options={})
+    repos = yaml_get("http://github.com/api/v2/yaml/repos/show/#{options[:user]}")['repositories']
     !options[:fork_included] ? repos.select {|e| ! e['fork'] } : repos
   end
 
-  def issues(user='cldwalker')
-    result = user_repos(user).map do |e|
-      puts "Fetching open issues on #{e['name']}..."
-      [e['name'], yaml_get("http://github.com/api/v2/yaml/issues/list/#{user}/#{e['name']}/open")['issues'] ]
-    end
-    render result.map {|e,f| [e, f.size] }
-    result
+  # @render_options :fields=>{:values=>["score", "name", "size", "language", "followers", "type",
+  #   "username", "id", "description", "forks", "fork", "pushed", "created"], :default=>['name','username',
+  #   'followers','language','pushed','score','description']}, :sort=>'score', :reverse_sort=>true
+  #  Search repositories
+  def repo_search(query, options={})
+    yaml_get("http://github.com/api/v2/yaml/repos/search/#{query}")['repositories']
   end
-  
-  #sample url: http://github.com/takai/twitty-console
+
+  # @render_options :fields=>{:values=>[:homepage, :name, :watchers, :private, :forks, :fork, :url, :description, :owner, :open_issues],
+  #  :default=>[:owner, :watchers, :forks, :homepage, :description]}
+  # @options :user=>'cldwalker'
+  # Displays network of a given user-repo i.e. wycats-thor or defunkt/rip
+  def repo_network(user_repo, options={})
+    user_repo = convert_user_repo(user_repo)
+    user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']
+    yaml_get("http://github.com/api/v2/yaml/repos/show/#{user_repo}/network")['network']
+  end
+
+  # sample url: http://github.com/takai/twitty-console
+  # Clones a github repo and opens in textmate
   def checkout(url)
     user, repo = /github.com\/([^\/]+)\/([^\/]+)/.match(url)[1,2]
     if user.nil? || repo.nil? 
@@ -28,24 +39,17 @@ module Github
     end
   end
 
+  # Downloads the raw form of a github repo file url
   def raw_file(file_url)
     download file_url.sub('blob','raw')
   end
 
+  # Opens a repo with an optional path in a browser
   def repo(user_repo, file=nil)
     convert_user_repo(user_repo)
     repo_url = "http://github.com/#{convert_user_repo user_repo}"
     repo_url += "/blob/master/" + file if file
     browser repo_url
-  end
-
-  # @render_options :fields=>{:values=>[:homepage, :name, :watchers, :private, :forks, :fork, :url, :description, :owner, :open_issues],
-  #  :default=>[:owner, :watchers, :forks, :homepage, :description]}
-  # @options :user=>'cldwalker'
-  def repo_network(user_repo, options={})
-    user_repo = convert_user_repo(user_repo)
-    user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']
-    yaml_get("http://github.com/api/v2/yaml/repos/show/#{user_repo}/network")['network']
   end
 
   private
@@ -55,9 +59,5 @@ module Github
 
   def yaml_get(url)
     YAML::load(get(url))
-  end
-
-  def user_repos(user)
-    yaml_get("http://github.com/api/v2/yaml/repos/show/#{user}")['repositories']
   end
 end
