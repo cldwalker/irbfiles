@@ -34,6 +34,9 @@
   alias:
     :object_methods: false
     :no_alias_creation: true
+    :class_commands:
+      create_aliases: Alias::Console.create_aliases
+      save_aliases: Alias::Console.save_aliases
   irb_features:
     :init_methods:
     - irb_options
