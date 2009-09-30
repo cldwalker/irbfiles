@@ -1,11 +1,17 @@
 module Github
   # @render_options :fields=>{:default=>[:name, :watchers, :forks, :homepage, :description],
   #  :values=>[:homepage, :name, :forks, :private, :watchers, :fork, :url, :description, :owner, :open_issues]}
-  # @options :user=>'cldwalker', :fork_included=>true
+  # @options :user=>'cldwalker', :fork_included=>true, :stats=>true
   # Displays a user's repositories
   def user_repos(options={})
     repos = github_get("/repos/show/#{options[:user]}")['repositories']
-    !options[:fork_included] ? repos.select {|e| ! e[:fork] } : repos
+    repos = repos.select {|e| ! e[:fork] } unless options[:fork_included]
+    if options[:stats]
+      fork_average = repos.inject(0) {|t,e| t + e[:forks]} / repos.size.to_f
+      watcher_average = repos.inject(0) {|t,e| t + e[:watchers]} / repos.size.to_f
+      puts "Repos: #{repos.size}, Watchers: #{watcher_average}, Forks: #{fork_average}"
+    end
+    repos
   end
 
   # @render_options :fields=>{:values=>["score", "name", "size", "language", "followers", "type",
