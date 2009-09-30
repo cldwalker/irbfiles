@@ -136,7 +136,7 @@
     :gems:
     - core
 :command_aliases:
-  view: v
+  render: v
   libraries: lib
   commands: com
   nested_tree: ntree

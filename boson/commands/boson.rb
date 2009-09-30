@@ -1,9 +1,4 @@
 module BosonLib
-  # Config directory of main Boson repo
-  def config_dir
-    Boson.repo.config_dir
-  end
-
   # @options :editor=>ENV['EDITOR'], :string=>:string, :file=>:string
   # Edit a file or string
   def edit(options={})
@@ -53,13 +48,6 @@ module BosonLib
     filename
   end
 
-  options :sort=>:string, :output_method=>:string, :all_fields=>:boolean, :number=>:boolean,
-    :vertical=>:boolean
-  desc "Wrapper around render with options"
-  def view(*args)
-    render(*args)
-  end
-
   # Tells you what methods in current binding aren't boson commands.
   def undetected_methods(priv=false)
     public_undetected = metaclass.instance_methods - (Kernel.instance_methods + Object.instance_methods(false) + MyCore::Object::InstanceMethods.instance_methods +
@@ -69,6 +57,11 @@ module BosonLib
   end
 
   private
+  # Config directory of main Boson repo
+  def config_dir
+    Boson.repo.config_dir
+  end
+
   def determine_download_name(url)
     FileUtils.mkdir_p(File.join(Boson.repo.dir,'downloads'))
     basename = strip_name_from_url(url) || url.sub(/^[a-z]+:\/\//,'').tr('/','-')
