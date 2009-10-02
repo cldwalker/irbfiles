@@ -1,4 +1,4 @@
-# :auto_namespace: true
+:auto_namespace: true
 :bin_defaults:
 - boson_method_missing
 :defaults:

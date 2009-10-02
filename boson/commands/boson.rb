@@ -18,6 +18,11 @@ module BosonLib
     edit :file=>file
   end
 
+  # List libraries that haven't been loaded yet
+  def unloaded_libraries
+    (Boson::Runner.all_libraries - Boson.libraries.map {|e| e.name }).sort
+  end
+
   # Prints stats about boson's index
   def stats
     Boson::Index.read
@@ -25,7 +30,7 @@ module BosonLib
   end
 
   # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
-  # Updates index
+  # Updates/resets index of libraries and commands
   def index(options={})
     File.unlink(Boson::Index.marshal_file) if options[:reset] && File.exists?(Boson::Index.marshal_file)
     Boson::Index.update(options)
@@ -41,7 +46,7 @@ module BosonLib
     Boson.library(name) || Boson.library(name, :alias)
   end
 
-  desc "Downloads a url and saves to a local boson directory"
+  # Downloads a url and saves to a local boson directory
   def download(url)
     filename = determine_download_name(url)
     File.open(filename, 'w') { |f| f.write get(url) }
