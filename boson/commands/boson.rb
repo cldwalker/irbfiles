@@ -27,7 +27,7 @@ module BosonLib
   # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
   # Updates index
   def index(options={})
-    File.unlink(Boson::Index.marshal_file) if options[:reset]
+    File.unlink(Boson::Index.marshal_file) if options[:reset] && File.exists?(Boson::Index.marshal_file)
     Boson::Index.update(options)
   end
 

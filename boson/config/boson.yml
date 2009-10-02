@@ -1,3 +1,4 @@
+# :auto_namespace: true
 :bin_defaults:
 - boson_method_missing
 :defaults:
@@ -56,7 +57,7 @@
     - ask
     - choose
     - say
-    :namespace: true
+    :object_namespace: true
   what_methods:
   andand:
   sketches:

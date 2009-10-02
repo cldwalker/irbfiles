@@ -7,17 +7,17 @@ module BosonMethodMissing
       original_method_missing = Boson.main_object.method(:method_missing)
       define_method :method_missing do |meth,*args|
         Boson::Index.read
-        possible_commands = Boson::Index.commands.map {|e| [e.name, e.alias]}.flatten.compact.sort
+        possible_commands = Boson::Index.all_main_methods.sort
         meths = _underscore_search(meth.to_s, possible_commands)
-        ((exact_meth = meths.find {|e| possible_commands.include?(e) }) && meths = [exact_meth])
+        meths = [meth.to_s] if possible_commands.include?(meth.to_s)
         if meths.size > 1
-          puts "Multiple commands match: #{meths.join(', ')}"
+          puts "Multiple methods match: #{meths.join(', ')}"
+        elsif (meths.size == 1)
+          puts "Found method #{meths[0]}"
+          Boson::BinRunner.command = Boson::BinRunner.command.sub(meth.to_s, meths[0]) if Boson.const_defined?(:BinRunner)
+          original_method_missing.call(meths[0],*args)
         else
-          puts "Found command #{meths[0]}" if meths[0]
-          # attempt to prevent double error but swallows command
-          # Boson::BinRunner.command = meths[0] if meths[0] && Boson.constant_defined?(:BinRunner)
-          meth = (meths[0] || meth).to_sym
-          respond_to?(meth) ? send(meth, *args) : original_method_missing.call(meth,*args)
+          original_method_missing.call(meth,*args)
         end
       end
 
