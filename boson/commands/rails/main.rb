@@ -26,10 +26,12 @@ module Logger
   end
 
   private
-  #intermittently works if AB.logger.close
+  # as needed
+  #def logger.flush; end unless logger.respond_to?(:flush)
+  #ActionController::Base.logger = logger
   def change_log(stream, colorize=true)
     ActiveRecord::Base.logger = ::Logger.new(stream)
-    ActiveRecord::Base.clear_active_connections!
+    ActiveRecord::Base.clear_all_connections!
     ActiveRecord::Base.colorize_logging = colorize
   end
 end

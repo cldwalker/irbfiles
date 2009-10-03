@@ -10,7 +10,7 @@ module AliasLib
     require 'alias'
     eval "module ::MainCommands; end"
     Alias.create :file=>"~/.alias.yml", :verbose=>true
-    mod.send :include, ::MainCommands
+    Boson::Universe.send :include, ::MainCommands
     Alias::Console.send :extend, self
   end
 
