@@ -22,6 +22,7 @@
 - hirb
 - every
 - rails/main
+- irb_core
 :libraries:
   boson_method_missing:
     :init_methods:
