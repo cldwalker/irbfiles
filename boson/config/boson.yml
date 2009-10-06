@@ -59,6 +59,12 @@
     - choose
     - say
     :object_namespace: true
+  site/delicious:
+    :object_namespace: true
+    :commands:
+    - bundles_all
+    - posts_all
+    - posts_recent
   what_methods:
   andand:
   sketches:
@@ -66,8 +72,6 @@
     :dependencies: 
     - shell
   site/github:
-    :namespace: github
-    :object_methods: false
     :dependencies:
     - boson
   site/wolfram:
