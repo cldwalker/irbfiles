@@ -14,7 +14,7 @@ module Tree
   end
 
   # @options OPTIONS
-  # Prints a tree of nested classes under a given
+  # Prints a tree of nested classes under a given class/module.
   def nested_tree(klass, options={})
     render klass, {:as=>:parent_child_tree, :children_method=>:nested_children, :value_method=>:nested_name, :type=>:directory}.merge(options)
   end

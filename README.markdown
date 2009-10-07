@@ -1,25 +1,45 @@
 Description
 ===========
 
-Contains libraries of irb snippets and commands, some original and some copied.
-These libraries are managed by my irb manager, [boson](http://github.com/cldwalker/boson).
+Contains libraries of ruby commands/snippets, some original and some copied.
+These libraries are managed and run by my command framework, [boson](http://github.com/cldwalker/boson).
+Despite what the project name implies, all these commands can be used within irb or from the
+commandline thanks to boson.
 
 
-Try/Install
-===========
+Using a Library
+===============
 
-If you want to try any of the libraries under .irb/, simply require and include it:
+If you want to just try one or two libraries/files under boson/ without boson, simply require and include them:
 
     bash> irb -f
-    irb>> require ".irb/libraries/ansi"
+    irb>> require "boson/libraries/ansi"
     irb>> class<<self; include Ansi; end
 
-If you want to use my irbrc, you'll need to download [boson](http://github.com/cldwalker/boson).
-Until I make boson a gem, you'll need to download it locally and use [local_gem](http://github.com/cldwalker/local_gem) to point to its location.
+Note: this only works for libraries that don't depend on other libraries, don't use boson commands
+and don't rely on boson for default options.
 
-To run my irbrc, execute `irb -f -rirbrc` in this project's base directory.
-Of course you can take out the -f if you want to also load up your custom irbrc but it may conflict
-with what I have setup.
+If you want to install a boson library using boson:
 
-If you like this irb setup, modify symlink\_files.rb and irbrc.rb to point to your preferred directories.
-Make sure the destinations are correct since the installer will overwrite them. Run `ruby symlink_files.rb`.
+    # make sure to point to the code only url
+    bash> boson install http://github.com/cldwalker/irbfiles/raw/master/boson/commands/irb_core.rb
+
+Install
+=====
+
+If you want to use irb as a I do:
+
+* Clone this project: git clone git://github.com/cldwalker/irbfiles.git
+* Install [boson](http://github.com/cldwalker/boson): gem install boson
+* Save your ~/.irbrc to somewhere else temporarily. *Important* since the next step will symlink
+  over this file.
+* Run symlink_files.rb to symlink to ~/.boson and ~/.irbrc
+
+To see all the command goodies available to you:
+
+    # from irb
+    >> libraries
+
+    # from commandline
+    bash> boson libraries
+
