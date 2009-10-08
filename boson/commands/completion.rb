@@ -27,6 +27,10 @@ module ::Bond
 end
 
 module Completion
+  def self.append_features(mod)
+    super if RUBY_VERSION < '1.9'
+  end
+
   def load_bond
     begin LocalGem.local_require 'bond'; rescue; require 'bond' end
     Bond.reset
