@@ -29,7 +29,7 @@ module IrbFeatures
   end
 
   def railsrc
-    IRB_PROCS[:railsrc] = lambda { load_railsrc }
+    IRB_PROCS[:railsrc] = lambda {|e| load_railsrc }
   end
 
   def irb_prompts

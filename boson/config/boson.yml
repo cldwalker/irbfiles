@@ -4,7 +4,7 @@
 :defaults:
 - boson_method_missing
 - console
-- completion
+# - completion
 - alias
 - method_lister
 - core_gem

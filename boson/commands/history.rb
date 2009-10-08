@@ -8,7 +8,7 @@ module History
   def self.included(mod)
     require 'readline'
     if Object.const_defined?(:IRB_PROCS)
-      IRB_PROCS[:set_command_history] = lambda { self.original_history_size =  Readline::HISTORY.size }
+      IRB_PROCS[:set_command_history] = lambda {|e| self.original_history_size =  Readline::HISTORY.size }
     else
       self.original_history_size = Readline::HISTORY.size
     end
