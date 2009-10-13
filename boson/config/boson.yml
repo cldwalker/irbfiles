@@ -3,21 +3,14 @@
 - boson_method_missing
 :defaults:
 - boson_method_missing
-- console
 - completion
 - alias
 - method_lister
 - core_gem
-- tree
 - misc
-- silencer
-- shell
 - boson
 - irb_features
-- history
 - local_gem
-- wirble
-- clipboard
 - duration
 - hirb
 - every
@@ -46,6 +39,8 @@
     - irb_history
     - irb_prompts
   completion:
+    :class_commands:
+      spy: Bond.spy
     :init_methods:
     - load_bond
   history:

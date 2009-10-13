@@ -1,12 +1,14 @@
 module BosonLib
-  # @options :editor=>ENV['EDITOR'], :string=>:string, :file=>:string
-  # Edit a file or string
+  # @options :editor=>ENV['EDITOR'], :string=>:string, :file=>:string, :config=>:boolean,
+  #  :library=>:string
+  # Edit a file or string, boson's main config file or a boson library file
   def edit(options={})
     options[:editor] ||= ENV['EDITOR']
-    file = options[:file] || begin
-      require 'tempfile'
-      Tempfile.new('edit_string').path
-    end
+    file = options[:library] ? Boson.repo.commands_dir + "/#{options[:library]}.rb" :
+      options[:config] ? config_dir + '/boson.yml' : options[:file] || begin
+        require 'tempfile'
+        Tempfile.new('edit_string').path
+      end
     File.open(file,'w') {|f| f.write(options[:string]) } if options[:string]
     system(options[:editor], file)
     File.open(file) {|f| f.read } if File.exists?(file) && options[:string]
@@ -26,7 +28,10 @@ module BosonLib
   # Prints stats about boson's index
   def stats
     Boson::Index.read
-    render [[:libraries, Boson::Index.libraries.size], [:commands, Boson::Index.commands.size]]
+    option_cmds = Boson::Index.commands.select {|e| !e.options.to_s.empty? }
+    render_option_cmds = Boson::Index.commands.select {|e| !e.render_options.to_s.empty? }
+    render [[:libraries, Boson::Index.libraries.size], [:commands, Boson::Index.commands.size],
+      [:option_commands, option_cmds.size], [:render_option_commands, render_option_cmds.size], ]
   end
 
   # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
