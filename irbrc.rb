@@ -11,4 +11,4 @@ require 'rubygems'
   end
 end
 
-Boson.start :verbose=>true
+Boson.start

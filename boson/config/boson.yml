@@ -1,7 +1,7 @@
 # :auto_namespace: true
 :bin_defaults:
 - boson_method_missing
-:defaults:
+:console_defaults:
 - boson_method_missing
 - completion
 - alias
@@ -166,4 +166,4 @@
   boson_library: bl
   boson_command: bc
   errorless_inheritance_tree: eit
-  directory_sizer: dsizer
+  show_command: sc
