@@ -1,0 +1,70 @@
+<style type="text/css">
+  h1 { font-size: 3.0em; color: #000; margin: 0px; }
+  h1 .small { font-size: 0.4em; }
+  h1 a { text-decoration: none }
+  h2 { font-size: 1.5em; color: #000; }
+  h3 { text-align: center; color: #000; }
+  a { color: #000; }
+  .summary { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+  .download { float: right; }
+  pre { background: #000; color: #fff; padding: 15px;}
+  #install { font-size: 1.2em}
+  hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+  .footer { text-align:center; padding-top:30px; font-style: italic; }
+  #documentation_link {font-weight: bold;}
+</style>
+
+<a href="http://github.com/cldwalker/<%= @repo %>"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  
+
+<div class="download">
+  <a href="http://github.com/cldwalker/<%= @repo %>/zipball/master">
+    <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+  <a href="http://github.com/cldwalker/<%= @repo %>/tarball/master">
+    <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+</div>
+  
+<h1><a href="http://github.com/cldwalker/<%= @repo %>"><%= @repo %></a> 
+  <span class="small">by <a href="http://github.com/cldwalker">cldwalker</a></small></h1>
+
+<div class="summary">
+  <%= @summary %>
+</div>
+
+<% unless @not_gem %>
+<h2>Install</h2>
+<pre id="install">gem install cldwalker-<%= @repo %> --source http://gems.github.com</pre>
+<% end %>
+
+<h2>Description</h2>
+<p>
+  <%= @description %>
+  <% documentation_link = @no_doc ? "http://github.com/cldwalker/#{@repo}" : "doc/index.html" %>
+  <p> <a id="documentation_link" href="<%= documentation_link %>">Read documentation.</a></p>
+</p>
+
+<h2>Download</h2>
+<p>
+  You can download this project in either
+  <a href="http://github.com/cldwalker/<%= @repo %>/zipball/master">zip</a> or
+  <a href="http://github.com/cldwalker/<%= @repo %>/tarball/master">tar</a> formats, or clone the project with <a href="http://git-scm.com">Git</a>:
+  <pre>$ git clone git://github.com/cldwalker/<%= @repo %></pre>
+</p>
+  
+<h2>Issues</h2>
+<p>Issues, bugs, feature requests? <a href="http://github.com/cldwalker/<%=@repo%>/issues">Please report them on github.</a>
+  
+<% if @related_posts %>
+<h2>Links</h2>
+<p>Check out <a href="http://tagaholic.me/blog.html#<%= @related_posts %>">blog posts related to this project</a>.</p>
+<% end %>
+
+<h2>License</h2>
+<p>MIT</p>
+
+<h2>Authors</h2>
+<p>Gabriel Horner (gabriel.horner [AT] gmail.com)</p>
+
+<div class="footer">
+  Get the source code on GitHub : <a href="http://github.com/cldwalker/<%= @repo %>">cldwalker/<%= @repo %></a>
+</div>

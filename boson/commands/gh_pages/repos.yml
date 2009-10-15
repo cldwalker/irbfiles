@@ -1,0 +1,29 @@
+hirb:
+  :keywords: hirb, ruby irb, console, automated views, trees, tables, view framework, menu, pager
+  :related_posts: *:*=hirb
+local_gem:
+  :keywords: local_gem, require, gem, local library, quick gem, ruby, full path
+console_update:
+  :keywords: rails, database records, script/console, edit records, irb, console_update, activerecord, database editor
+  :related_posts: *:*=console_update
+has_machine_tags:
+  :keywords: tags, tagging, semantic tags, machine tags, semantic tags, flickr tags, rails tagging plugin, ruby tagging
+my_core:
+  :no_doc: true
+  :keywords: ruby extensions, core extensions, activesupport, facets, ruby core libraries, ruby standard libraries
+machinetag.js:
+  :no_doc: true
+  :not_gem: true
+  :related_posts: *:*=tag
+  :keywords: machine tags, machine tag jquery plugin, javascript machine tag, machinetag.js, triple tags, tag trees
+  :description: "These jQuery plugins provides machine-tag related methods, most importantly a machine tag search and a machine tag tree. To see a live version of a machine tag tree see <a href='http://tagaholic.me/blog.html'>my blog's search engine</a>, <a href='http://tagaholic.me/apps/delicious.html'>a delicious app</a> or <a href='http://tagaholic.me/apps/flickr.html'>a flickr app</a>."
+alias:
+  :keywords: alias, ruby alias, alias_method, alias methods, alias classes, ruby delegate, ruby forward, irb alias, console alias
+  :related_posts: *:*=alias
+bond:
+  :keywords: irb completion, irb autocompletion, ruby completion, ruby autocompletion, console completion, method completion, argument completion, ruby bond
+  :related_posts: *:*=bond
+boson:
+  :description: A command/task framework similar to rake and thor that opens your ruby universe to the commandline and irb. For my libraries that use this, see irbfiles. Works with Ruby 1.8.6 and 1.9.1.
+  :keywords: ruby tasks, ruby commands, ruby task manager, ruby command manager, irb command manager, command framework, rake tasks, thor tasks, ruby shell
+  :related_posts: *:*=boson
