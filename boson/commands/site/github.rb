@@ -5,7 +5,9 @@ module Github
   # Displays a user's repositories
   def user_repos(options={})
     repos = github_get("/repos/show/#{options[:user]}")['repositories']
+    return puts("Invalid user '#{options[:user]}'") unless repos
     repos = repos.select {|e| ! e[:fork] } unless options[:fork_included]
+
     if options[:stats]
       fork_average = repos.inject(0) {|t,e| t + e[:forks]} / repos.size.to_f
       watcher_average = repos.inject(0) {|t,e| t + e[:watchers]} / repos.size.to_f
@@ -100,6 +102,6 @@ module Github
   end
 
   def yaml_get(url)
-    YAML::load(get(url))
+    (str = get(url, :success_only=>true)) ? YAML::load(str) : {}
   end
 end
