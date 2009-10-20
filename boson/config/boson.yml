@@ -5,6 +5,7 @@
 - boson_method_missing
 - completion
 - alias
+- ruby_core
 - method_lister
 - core_gem
 - misc
@@ -24,10 +25,6 @@
     - mls
     - mwhich
     - mgrep
-  basic_shell:
-    :class_commands:
-      cd : Dir.chdir
-      pwd: Dir.pwd
   alias:
     :object_methods: false
     :no_alias_creation: true

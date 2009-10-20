@@ -8,10 +8,11 @@ module AliasLib
 
   def self.included(mod)
     require 'alias'
-    eval "module ::MainCommands; end"
-    Alias.create :file=>"~/.alias.yml", :verbose=>true
-    Boson::Universe.send :include, ::MainCommands
     Alias::Console.send :extend, self
+  end
+
+  def self.after_included
+    Alias.create :file=>"~/.alias.yml", :verbose=>true
   end
 
   # @render_options :sort=>{:values=>[:type, :alias, :class, :name]}
