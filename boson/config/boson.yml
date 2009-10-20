@@ -67,7 +67,7 @@
   site/is_it_ruby19:
     :dependencies:
     - httparty
-  rails/main:
+  rails/personal:
     :class_commands:
       reconnect: 'ActiveRecord::Base.connection.reconnect!'
       recognize_path: ActionController::Routing::Routes.recognize_path
