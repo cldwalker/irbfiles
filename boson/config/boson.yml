@@ -17,9 +17,6 @@
 - rails/main
 - irb_core
 :libraries:
-  boson_method_missing:
-    :init_methods:
-    - boson_method_missing
   method_lister:
     :object_methods: false
     :commands:
@@ -36,17 +33,9 @@
     :class_commands:
       create_aliases: Alias::Console.create_aliases
       save_aliases: Alias::Console.save_aliases
-  irb_features:
-    :init_methods:
-    - irb_options
-    - railsrc
-    - irb_history
-    - irb_prompts
   completion:
     :class_commands:
       spy: Bond.spy
-    :init_methods:
-    - load_bond
   history:
     :dependencies:
       - console
@@ -82,9 +71,6 @@
       reconnect: 'ActiveRecord::Base.connection.reconnect!'
       recognize_path: ActionController::Routing::Routes.recognize_path
       generate: ActionController::Routing::Routes.generate
-  rails/model_find_shortcuts:
-    :init_methods:
-    - define_model_shortcuts
   httparty:
     :force: true
     :class_commands:
@@ -133,8 +119,6 @@
     :dependencies:
     - core_gem
   hirb:
-    :init_methods:
-    - setup_hirb
     :gems:
     - hirb
   core_gem:
@@ -150,7 +134,7 @@
   reload_library: rl
   history: hi
   edit_string: es
-  irb_verbosity_toggle: iv
+  toggle_echo: te
   delicious: del
   github: g
   highline: h

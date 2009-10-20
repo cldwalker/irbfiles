@@ -31,7 +31,7 @@ module Completion
     super if RUBY_VERSION < '1.9'
   end
 
-  def load_bond
+  def self.after_included
     begin LocalGem.local_require 'bond'; rescue; require 'bond' end
     Bond.reset
     Bond.debrief :debug=>true, :default_search=>:underscore
