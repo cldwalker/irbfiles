@@ -4,7 +4,7 @@ module BosonLib
   # Edit a file or string, boson's main config file or a boson library file
   def edit(options={})
     options[:editor] ||= ENV['EDITOR']
-    file = options[:library] ? Boson.repo.commands_dir + "/#{options[:library]}.rb" :
+    file = options[:library] ? Boson::FileLibrary.library_file(options[:library], Boson.repo.dir) :
       options[:config] ? config_dir + '/boson.yml' : options[:file] || begin
         require 'tempfile'
         Tempfile.new('edit_string').path
@@ -12,12 +12,6 @@ module BosonLib
     File.open(file,'w') {|f| f.write(options[:string]) } if options[:string]
     system(options[:editor], file)
     File.open(file) {|f| f.read } if File.exists?(file) && options[:string]
-  end
-
-  # Edit a library
-  def edit_library(name)
-    file = Boson::FileLibrary.library_file(name.to_s, Boson.repo.dir)
-    edit :file=>file
   end
 
   # List libraries that haven't been loaded yet
