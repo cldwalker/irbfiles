@@ -1,14 +1,12 @@
 module AliasLib
   def self.config
-    command_aliases = YAML::load_file(File.expand_path("~/.alias.yml"))[:aliases][:instance_method]["Alias::Console"] rescue {}
     create_options = {:pretend=>false, :force=>false}
     commands = {'create_aliases'=>{:options=>create_options, :args=>3}}
-    {:command_aliases=>command_aliases, :commands=>commands}
+    {:commands=>commands}
   end
 
   def self.included(mod)
     require 'alias'
-    Alias::Console.send :extend, self
   end
 
   def self.after_included
