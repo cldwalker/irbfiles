@@ -14,7 +14,8 @@
 - duration
 - hirb
 - every
-- rails/main
+- rails/logger
+- rails/personal
 - irb_core
 :libraries:
   method_lister:
