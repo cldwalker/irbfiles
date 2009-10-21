@@ -62,6 +62,7 @@
     - boson
   site/wolfram:
   site/is_it_ruby19:
+    namespace: r19
     :dependencies:
     - httparty
   rails/personal:
