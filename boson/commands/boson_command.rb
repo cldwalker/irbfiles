@@ -1,6 +1,6 @@
 module BosonCommand
   def method_location(name)
-    return "no command found" unless (com = Boson::Command.find(name))
+    return nil unless (com = Boson::Command.find(name))
     if RUBY_VERSION < '1.9'
       Boson::MethodInspector.mod_store[com.library.module][:method_locations][com.name] rescue nil
     else
