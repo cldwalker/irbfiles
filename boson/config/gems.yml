@@ -17,6 +17,9 @@
 - ruby-openid
 - ruby-yadis
 - termios
+:exception:
+- tlsmail
+- rubygems-update
 :approved: 
 - activerecord
 - activesupport
@@ -90,9 +93,13 @@
 - ZenTest
 - Platform
 - mspec
-:exception: 
-- tlsmail
-- rubygems-update
+- bond
+- hirb
+- rvm
+- boson
+- test-unit
+- file-find
+- timocratic-test_benchmark
 :github:
 - adamwiggins-rest-client
 - collectiveidea-awesome_nested_set

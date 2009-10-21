@@ -19,6 +19,10 @@
 - rails/personal
 - irb_core
 :libraries:
+  gem:
+    :namespace: g
+    :command_aliases:
+      list: l
   method_lister:
     :object_methods: false
     :commands:
@@ -54,15 +58,12 @@
   what_methods:
   andand:
   sketches:
-  gem:
-    :dependencies: 
-    - shell
   site/github:
     :dependencies:
     - boson
   site/wolfram:
   site/is_it_ruby19:
-    namespace: r19
+    :namespace: r19
     :dependencies:
     - httparty
   rails/personal:

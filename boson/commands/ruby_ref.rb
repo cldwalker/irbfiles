@@ -1,3 +1,4 @@
+# Gives useful info about current environment
 module RubyRef
   # Prints global variables and their values
   def global_var
@@ -42,6 +43,12 @@ module RubyRef
   # Calculates id found in :to_s of most objects
   def to_s_id(obj)
     "0x%x" % [obj.object_id*2]
+  end
+
+  # @render_options {}
+  # List versions of currently loaded gems
+  def version_list
+    Gem.loaded_specs.values.map {|e| [e.name, e.version.to_s] }
   end
 
   private
