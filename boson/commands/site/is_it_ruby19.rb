@@ -6,7 +6,7 @@ module IsItRuby19
   end
 
   # @render_options :fields=>[:name, :stat]
-  def stats(*names)
+  def gems(*names)
     names.map {|e| stat(e) }
   end
 

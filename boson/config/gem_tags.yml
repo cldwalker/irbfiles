@@ -1,0 +1,99 @@
+--- 
+activesupport: &id016 
+  - rails
+Platform: &id004 
+  - irb
+sketches: &id003 
+  - irb
+rspec: &id002 
+  - test
+mislav-will_paginate: &id011 
+  - rails
+mongrel: &id001 
+  - webdev
+sqlite3-ruby: *id001
+rr: *id002
+gem_grep: &id005 
+  - mine
+what_methods: *id003
+highline: *id004
+thor: &id012 
+  - task
+sinatra: &id006 
+  - misc
+lightning: 
+- mine
+boson: *id005
+file-find: *id004
+mysql: *id001
+jeremymcanally-context: *id002
+n3bulous-amiruby19: &id007 
+  - cmd
+RedCloth: *id001
+mspec: &id008 
+  - test
+httparty: *id003
+rubypan: *id006
+unroller: *id003
+mynyml-every: &id014 
+  - irb
+stephencelis-ghi: 
+- cmd
+technicalpickles-jeweler: &id009 
+  - gem
+duration: *id004
+local_gem: *id005
+cldwalker-has_machine_tags: &id010 
+  - mine
+cheat: *id007
+rack: *id001
+bond: *id005
+timocratic-test_benchmark: *id008
+rubyforge: *id009
+nokogiri: *id006
+jeremymcanally-pending: *id002
+hirb: *id005
+cldwalker-hirb: *id010
+adamwiggins-rest-client: *id004
+jeremymcanally-stump: *id002
+cldwalker-alias: 
+- mine
+tabtab: *id007
+test-unit: *id002
+ruby2ruby: *id006
+hpricot: *id006
+ParseTree: *id006
+googlereader: *id004
+cldwalker-core: *id010
+grancher: &id013 
+  - website
+levenshtein: 
+- tag
+cldwalker-console_update: *id010
+andand: *id004
+ruby-debug: *id006
+rcov: *id002
+jeremymcanally-matchy: *id002
+www-delicious: *id003
+rubish: *id006
+rip: *id006
+rdoc: &id015 
+  - doc
+rvm: *id007
+rspec-rails: *id002
+mocha: *id002
+matthew-method_lister: *id003
+collectiveidea-awesome_nested_set: *id011
+wirble: *id003
+rake: *id012
+defunkt-github: *id007
+mojombo-jekyll: *id013
+dcadenas-gmail_sender: *id014
+mislav-hanna: *id015
+ssoroka-ansi: *id003
+activerecord: *id016
+mbleigh-acts-as-taggable-on: 
+- tag
+capistrano: *id012
+webmat-git_remote_branch: *id007
+rails: *id011

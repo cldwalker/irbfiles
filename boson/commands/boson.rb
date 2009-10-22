@@ -14,9 +14,15 @@ module BosonLib
     File.open(file) {|f| f.read } if File.exists?(file) && options[:string]
   end
 
+  # Show a library
   def show(lib)
     file = Boson::FileLibrary.library_file(lib, Boson.repo.dir)
     puts File.exists?(file) ? File.read(file) : "File '#{file}' doesn't exist"
+  end
+
+  # Uninstall a library
+  def uninstall(lib)
+    File.unlink Boson::FileLibrary.library_file(lib, Boson.repo.dir)
   end
 
   # List libraries that haven't been loaded yet

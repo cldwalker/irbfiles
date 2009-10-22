@@ -1,25 +1,4 @@
 --- 
-:system: 
-- actionwebservice
-- acts_as_ferret
-- cgi_multipart_eof_fix
-- daemons
-- dnssd
-- fastthread
-- fcgi
-- ferret
-- gem_plugin
-- libxml-ruby
-- needle
-- net-sftp
-- net-ssh
-- rubynode
-- ruby-openid
-- ruby-yadis
-- termios
-:exception:
-- tlsmail
-- rubygems-update
 :approved: 
 - activerecord
 - activesupport
@@ -67,7 +46,6 @@
 - rcov
 - rdoc
 - RedCloth
-- rio
 - rip
 - rr
 - rspec
@@ -90,7 +68,6 @@
 - what_methods
 - wirble
 - www-delicious
-- ZenTest
 - Platform
 - mspec
 - bond
@@ -100,7 +77,28 @@
 - test-unit
 - file-find
 - timocratic-test_benchmark
-:github:
+:system: 
+- actionwebservice
+- acts_as_ferret
+- cgi_multipart_eof_fix
+- daemons
+- dnssd
+- fastthread
+- fcgi
+- ferret
+- gem_plugin
+- libxml-ruby
+- needle
+- net-sftp
+- net-ssh
+- rubynode
+- ruby-openid
+- ruby-yadis
+- termios
+:exception: 
+- tlsmail
+- rubygems-update
+:github: 
 - adamwiggins-rest-client
 - collectiveidea-awesome_nested_set
 - jeremymcanally-pending

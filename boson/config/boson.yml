@@ -19,10 +19,15 @@
 - rails/personal
 - irb_core
 :libraries:
-  gem:
+  gem_tagger:
+    :namespace: gt
+  gem_brain:
     :namespace: g
     :command_aliases:
       list: l
+      tag: t
+      add: a
+      remove: rm
   method_lister:
     :object_methods: false
     :commands:
