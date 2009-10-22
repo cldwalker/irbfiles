@@ -17,6 +17,7 @@
 - every
 - rails/logger
 - rails/personal
+- rails/rails_core
 - irb_core
 :libraries:
   gem_tagger:
