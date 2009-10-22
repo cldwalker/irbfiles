@@ -12,4 +12,10 @@ module RailsCore
     }
     {:commands=>commands}
   end
+
+  # Add route methods *_url and *_path as commands
+  def add_routes
+    extend ActionController::UrlWriter
+    default_url_options[:host] = 'example.com'
+  end
 end

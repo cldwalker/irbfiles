@@ -20,8 +20,6 @@
 - rails/rails_core
 - irb_core
 :libraries:
-  gem_tagger:
-    :namespace: gt
   gem_brain:
     :namespace: g
     :command_aliases:
