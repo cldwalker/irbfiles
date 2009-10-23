@@ -35,7 +35,7 @@ module GhPages
     #@options :push=>true
     # Publish with grancher
     def publish(options={})
-      require 'granger'
+      require 'grancher'
       grancher = Grancher.new do |g|
         g.branch = 'gh-pages'
         g.push_to = 'origin'
