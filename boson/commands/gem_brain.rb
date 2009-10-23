@@ -23,7 +23,7 @@ module GemBrain
     menu(all_gems(options[:query]), :ask=>false) do |e|
       puts "Executing #{local_command || command} for #{e.inspect}"
       local_command ? send(local_command, *e) : options[:opts] ?
-        Boson::BinRunner.full_invoke(command, (e << options[:opts]).join(' ')) : system(*(args + e))
+        Boson.full_invoke(command, (e << options[:opts]).join(' ')) : system(*(args + e))
     end
   end
 
@@ -97,11 +97,11 @@ module GemBrain
 
   private
   def approved_gems
-    GemBrain.config[:approved].sort
+    GemBrain.gem_config[:approved].sort
   end
 
   def strip_users(gems)
-    ghub_gems = github_gems + GemBrain.config[:github]
+    ghub_gems = github_gems + GemBrain.gem_config[:github]
     gems.map {|e| ghub_gems.include?(e) ? e.split('-', 2)[-1]: e}
   end
 
@@ -114,7 +114,7 @@ module GemBrain
   end
 
   def unapproved_gems
-    yaml = GemBrain.config
+    yaml = GemBrain.gem_config
     all_gems - yaml[:approved] - yaml[:system] - yaml[:approved].map {|e| recursive_dependencies(e)}.flatten - yaml[:exception]
   end
 
@@ -142,7 +142,7 @@ module GemBrain
       File.open(gem_file, 'w') {|f| f.write(new_config.to_yaml) }
     end
 
-    def config
+    def gem_config
       YAML::load_file(gem_file)
     end
 
