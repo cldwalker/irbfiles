@@ -88,8 +88,9 @@
   boson:
     :force: true
     :class_commands:
-      any_const_get: Boson::Util.any_const_get
-      detect: Boson::Util.detect
+      Boson::Util:
+      - any_const_get
+      - detect
     :commands:
       detect:
         :description: Detect modules, gems and kernel methods loaded
@@ -98,11 +99,12 @@
   restclient:
     :force: true
     :class_commands:
-      head: RestClient.head
-      get: RestClient.get
-      post: RestClient.post
-      put: RestClient.put
-      delete: RestClient.delete
+      RestClient :
+      - head
+      - get
+      - post
+      - put
+      - delete
   clipboard:
     :commands:
       paste: 
@@ -118,8 +120,9 @@
       trace: Unroller.trace
   local_gem:
     :class_commands:
-      local_gem: LocalGem.local_gem
-      local_require: LocalGem.local_require
+      LocalGem:
+      - local_gem
+      - local_require
     :gems:
     - local_gem
   tree:
