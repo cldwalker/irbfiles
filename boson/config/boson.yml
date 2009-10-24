@@ -29,13 +29,16 @@
       remove: rm
   method_lister:
     :object_methods: false
+    :command_aliases:
+      mls: ls
+      mgrep: grep
+      mwhich: which
     :commands:
     - mls
     - mwhich
     - mgrep
   alias:
     :object_methods: false
-    :no_alias_creation: true
     :class_commands:
       create_aliases: Alias::Console.create_aliases
       save_aliases: Alias::Console.save_aliases
@@ -114,11 +117,11 @@
     :class_commands:
       trace: Unroller.trace
   local_gem:
-    :module: LocalGem
+    :class_commands:
+      local_gem: LocalGem.local_gem
+      local_require: LocalGem.local_require
     :gems:
     - local_gem
-    :except:
-    - setup_config
   tree:
     :dependencies:
     - core_gem
@@ -151,9 +154,6 @@
   user_repos: ur
   analytics_day: ad
   unloaded_libraries: ul
-  mls: ls
-  mgrep: grep
-  mwhich: which
   reload: re
   boson_library: bl
   boson_command: bc
