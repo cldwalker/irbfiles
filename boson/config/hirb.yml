@@ -27,10 +27,3 @@
   WWW::Delicious::Element:
     :ancestor: true
     :class: :object_table
-  # for google reader posts
-  OpenStruct:
-    :class: Hirb::Helpers::ObjectTable
-    :options:
-      :fields:
-      - :title
-      - :google_id

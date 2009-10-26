@@ -10,7 +10,7 @@ module AliasLib
   end
 
   def self.after_included
-    Alias.create :file=>"~/.alias.yml", :verbose=>true
+    ::Alias.create :file=>"~/.alias.yml", :verbose=>true
   end
 
   # @render_options :sort=>{:values=>[:type, :alias, :class, :name]}
