@@ -1,5 +1,9 @@
 # API ref: http://forum.brightbox.co.uk/forums/isitruby19-com/topics/api-is-added
 module IsItRuby19
+  def self.config
+    {:dependencies=>['httparty']}
+  end
+
   # @render_options :fields=>{:values=>%w{version works_for_me platform body name url}}
   def gem(name)
     comment_feed(name).each {|e| e["platform"] = e['platform']['name']; e["body"] = e["body"].gsub(/\r?\n\r?/,";") }

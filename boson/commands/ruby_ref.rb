@@ -6,7 +6,7 @@ module RubyRef
     global_variables.sort.map {|e| [e, (eval e).inspect] }
   end
 
-  # @render_options :fields=>{:default=>[:require_path, :full_path]}, :sort=>'require_path'
+  # @render_options :fields=>[:require_path, :full_path], :sort=>'require_path'
   # @options :reload=>:boolean
   # Prints loaded paths and their full paths
   def loaded_paths(options={})

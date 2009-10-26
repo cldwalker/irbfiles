@@ -5,6 +5,10 @@
 module History
   class<<self; attr_accessor :original_history_size ; end
 
+  def self.config
+    {:dependencies=>['console', 'boson'] }
+  end
+
   def self.included(mod)
     require 'readline'
   end

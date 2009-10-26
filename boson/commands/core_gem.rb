@@ -10,6 +10,9 @@ module CoreGem
         require e
       end
     end
+  end
+
+  def self.after_included
     ::Core.default_library = MyCore
     libraries = {
       :activesupport=>{:base_class=>"ActiveSupport::CoreExtensions", :base_path=>"active_support/core_ext"},

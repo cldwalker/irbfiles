@@ -9,6 +9,7 @@ module Misc
   def to_s_id(obj)
     "0x%x" % [obj.object_id*2]
   end
+
   # Hash of class dependencies excluding error-related ones
   def dependencies
     deps = {}

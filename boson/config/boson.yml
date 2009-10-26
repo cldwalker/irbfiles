@@ -19,6 +19,12 @@
 - rails/rails_core
 - irb_core
 :libraries:
+  # file libraries- personal prefs
+  alias:
+    :object_methods: false
+    :class_commands:
+      create_aliases: Alias::Console.create_aliases
+      save_aliases: Alias::Console.save_aliases
   gem_brain:
     :namespace: g
     :command_aliases:
@@ -26,64 +32,8 @@
       tag: t
       add: a
       remove: rm
-  method_lister:
-    :object_methods: false
-    :command_aliases:
-      mls: ls
-      mgrep: grep
-      mwhich: which
-    :commands:
-    - mls
-    - mwhich
-    - mgrep
-  alias:
-    :object_methods: false
-    :class_commands:
-      create_aliases: Alias::Console.create_aliases
-      save_aliases: Alias::Console.save_aliases
-  completion:
-    :class_commands:
-      spy: Bond.spy
-  history:
-    :dependencies:
-      - console
-      - boson
-  highline:
-    :commands:
-    - agree
-    - ask
-    - choose
-    - say
-    :object_namespace: true
-  site/delicious:
-    :object_namespace: true
-    :commands:
-    - bundles_all
-    - posts_all
-    - posts_recent
-  what_methods:
-  andand:
-  sketches:
-  site/github:
-    :dependencies:
-    - boson
-  site/wolfram:
   site/is_it_ruby19:
     :namespace: r19
-    :dependencies:
-    - httparty
-  rails/personal:
-    :class_commands:
-      reconnect: 'ActiveRecord::Base.connection.reconnect!'
-      recognize_path: ActionController::Routing::Routes.recognize_path
-      generate: ActionController::Routing::Routes.generate
-  httparty:
-    :force: true
-    :class_commands:
-      get: HTTParty.get
-      post: HTTParty.post
-      put: HTTParty.put
-      delete: HTTParty.delete
   boson:
     :force: true
     :class_commands:
@@ -95,6 +45,64 @@
         :description: Detect modules, gems and kernel methods loaded
       any_const_get:
         :description: Converts a string to a constant if it exists
+  # personal file libraries
+  core_gem:
+    :gems:
+    - core
+  clipboard:
+    :commands:
+      paste:
+        :description: Paste to clipboard
+      copy:
+        :description: Copy to clipboard
+    :class_commands:
+      paste: Clipboard.read
+      copy: Clipboard.write
+  rails/personal:
+    :class_commands:
+      reconnect: 'ActiveRecord::Base.connection.reconnect!'
+      recognize_path: ActionController::Routing::Routes.recognize_path
+      generate: ActionController::Routing::Routes.generate
+  site/delicious:
+    :object_namespace: true
+    :commands:
+    - bundles_all
+    - posts_all
+    - posts_recent
+  completion:
+    :class_commands:
+      spy: Bond.spy
+  tree:
+    :dependencies:
+    - core_gem
+  # gem libraries
+  method_lister:
+    :object_methods: false
+    :command_aliases:
+      mls: ls
+      mgrep: grep
+      mwhich: which
+    :commands:
+    - mls
+    - mwhich
+    - mgrep
+  highline:
+    :commands:
+    - agree
+    - ask
+    - choose
+    - say
+    :object_namespace: true
+  what_methods:
+  andand:
+  sketches:
+  httparty:
+    :force: true
+    :class_commands:
+      get: HTTParty.get
+      post: HTTParty.post
+      put: HTTParty.put
+      delete: HTTParty.delete
   restclient:
     :force: true
     :class_commands:
@@ -104,15 +112,6 @@
       - post
       - put
       - delete
-  clipboard:
-    :commands:
-      paste: 
-        :description: Paste to clipboard
-      copy:
-        :description: Copy to clipboard
-    :class_commands:
-      paste: Clipboard.read
-      copy: Clipboard.write
   unroller:
     :object_methods: false
     :class_commands:
@@ -124,15 +123,6 @@
       - local_require
     :gems:
     - local_gem
-  tree:
-    :dependencies:
-    - core_gem
-  hirb:
-    :gems:
-    - hirb
-  core_gem:
-    :gems:
-    - core
 :command_aliases:
   render: v
   libraries: lib

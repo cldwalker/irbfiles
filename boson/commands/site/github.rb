@@ -65,25 +65,6 @@ module Github
     github_get("/user/show/#{user}/following")['users']
   end
 
-  # sample url: http://github.com/takai/twitty-console
-  # Clones a github repo and opens in textmate
-  def checkout(url)
-    user, repo = /github.com\/([^\/]+)\/([^\/]+)/.match(url)[1,2]
-    if user.nil? || repo.nil? 
-      puts "Couldn't match user or repo from url"
-    else
-      clone_url = "git://github.com/#{user}/#{repo}.git"
-      cmd = "cd ~/code/world; git clone #{clone_url} && mate #{repo}"
-      system(cmd)
-    end
-  end
-
-  # boson library needed for download()
-  # Downloads the raw form of a github repo file url
-  def raw_file(file_url)
-    download file_url.sub('blob','raw')
-  end
-
   # Opens a repo with an optional path in a browser
   def repo(user_repo, file=nil)
     convert_user_repo(user_repo)
