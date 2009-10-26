@@ -1,58 +1,42 @@
 # Gives useful info about current environment
 module RubyRef
+  # @render_options :headers=>{:default=>{0=>"variable",1=>"value"}}
   # Prints global variables and their values
   def global_var
-    render global_variables.sort.map {|e| [e, (eval e).inspect] }, :headers=>{0=>"variable",1=>"value"}
+    global_variables.sort.map {|e| [e, (eval e).inspect] }
   end
-  
+
+  # @render_options :fields=>{:default=>[:require_path, :full_path]}, :sort=>'require_path'
+  # @options :reload=>:boolean
   # Prints loaded paths and their full paths
-  def loaded_paths(reload=false)
-    @loaded_paths = get_loaded_paths if reload || @loaded_paths.nil?
-    render @loaded_paths.inject([]) {|t,(k,v)| t << {:require_path=>k, :full_path=>v } }.sort_by {|e| e[:require_path]},
-      :fields=>[:require_path, :full_path]
+  def loaded_paths(options={})
+    @loaded_paths = RubyRef.get_loaded_paths if options[:reload] || @loaded_paths.nil?
+    @loaded_paths.inject([]) {|t,(k,v)| t << {:require_path=>k, :full_path=>v } }
   end
 
-  # Hash of class dependencies excluding error-related ones
-  def dependencies
-    deps = {}
-    ObjectSpace.each_object Class do |mod|
-    next if mod.name =~ /Errno/
-    next if mod < Exception
-    deps[mod.to_s] = mod.superclass.to_s
-    end
-    deps
-  end
-
-  # Array of full paths
-  def full_paths
-    get_loaded_paths.values
-  end
-
+  # @render_options :headers=>{:default=>{0=>"name", 1=>"value"}}
   # Rbconfig constants and their values
   def rbconfig
     require 'rbconfig'
-    render RbConfig::CONFIG , :header=>{0=>"name", 1=>"value"}
-  end
-
-  # Table of an object's instance variables
-  def instance_var_table(obj)
-    render obj.instance_variables.map {|e| [e, obj.instance_variable_get(e).inspect] }
-  end
-
-  # From http://solutious.com/blog/2009/09/22/secret-of-object-to_s/
-  # Calculates id found in :to_s of most objects
-  def to_s_id(obj)
-    "0x%x" % [obj.object_id*2]
+    RbConfig::CONFIG
   end
 
   # @render_options {}
-  # List versions of currently loaded gems
-  def version_list
-    Gem.loaded_specs.values.map {|e| [e.name, e.version.to_s] }
+  # Table of an object's instance variables
+  def instance_var_table(obj)
+    obj.instance_variables.map {|e| [e, obj.instance_variable_get(e).inspect] }
   end
 
-  private
-  def get_loaded_paths
+  # @render_options :headers=>{:default=>{0=>'name', 1=>'version'}}
+  # @options :loaded_path=>:boolean
+  # List versions of currently loaded gems
+  def version_list(options)
+    options[:loaded_path] ? $:.map {|e| e =~ /\/([\w-]+)-(\d\.\d(\.\d)?)\/lib/ ?
+      [$1,$2] : nil }.compact.uniq :
+      Gem.loaded_specs.values.map {|e| [e.name, e.version.to_s] }
+  end
+
+  def self.get_loaded_paths
     hash = {}
     $".each { |f|
       $:.each { |d|

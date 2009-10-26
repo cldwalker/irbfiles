@@ -8,7 +8,6 @@
 - ruby_core
 - method_lister
 - core_gem
-- misc
 - boson
 - irb_features
 - local_gem
@@ -163,3 +162,4 @@
   errorless_inheritance_tree: eit
   show_command: sc
   edit: e
+  instance_var_table: ivt
