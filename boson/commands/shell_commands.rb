@@ -81,6 +81,12 @@ module ShellCommands
     end
   end
 
+  # from http://gist.github.com/217660
+  # Checks to see if domain is registered
+  def registered(domain)
+    system("dig soa #{domain} | grep -q ^#{domain}") ? "Yes" : "No"
+  end
+
   private
   # converts du -sh style number ie 23M or 42.0G to a ruby float
   def numerical_value(dir_line)

@@ -130,12 +130,9 @@
   nested_tree: ntree
   inheritance_tree: itree
   load_library: ll
-  reload_library: rl
   history: hi
-  edit_string: es
   toggle_echo: te
   delicious: del
-  github: g
   highline: h
   toggle_hirb: th
   trace: tr
