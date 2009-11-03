@@ -3,7 +3,7 @@
 module Syntax
   # @options :verbose=>:boolean, :extension=>'rb'
   # Find all .rb files in the current directory tree and report any syntax errors
-  def ruby(options={})
+  def ruby_check(options={})
     require 'open3'
     Dir["**/*.#{options[:extension]}"].each do |file|
       next if file.match("vendor/rails")
@@ -21,7 +21,7 @@ module Syntax
 
   # @options :verbose=>:boolean
   # Find all .erb or .rhtml files in the current directory tree and report any syntax errors
-  def erb(options={})
+  def erb_check(options={})
     require 'erb'
     require 'open3'
     (Dir["**/*.erb"] + Dir["**/*.rhtml"]).each do |file|
@@ -41,7 +41,7 @@ module Syntax
 
   # @options :verbose=>:boolean
   # Find all .yml files in the current directory tree and report any syntax errors
-  def yaml(options={})
+  def yaml_check(options={})
     require 'yaml'
     Dir['**/*.yml'].each do |file|
       puts file if options[:verbose]

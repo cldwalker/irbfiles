@@ -24,6 +24,9 @@
     :commands:
       loaded_paths:
         :default_option: query
+  # thanks rake
+  ruby_core:
+    :force: true
   site/github:
     :commands:
       user_repos:
