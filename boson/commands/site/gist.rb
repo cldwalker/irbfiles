@@ -11,7 +11,7 @@ module Gist
   def gist(*args)
     options = args[-1].is_a?(Hash) ? args.pop : {}
     if options[:file] || options[:string] || !$stdin.tty?
-      string = options[:string] || options[:file] ? File.read(options[:file]) : $stdin.read
+      string = options[:string] || (options[:file] ? File.read(options[:file]) : $stdin.read)
       Gist.write(string, options)
     else
       puts Gist.read(args.first)

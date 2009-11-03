@@ -1,7 +1,7 @@
 # API ref: http://forum.brightbox.co.uk/forums/isitruby19-com/topics/api-is-added
 module IsItRuby19
   def self.config
-    {:dependencies=>['httparty']}
+    {:namespace=>'r19', :dependencies=>['httparty']}
   end
 
   # @render_options :fields=>{:values=>%w{version works_for_me platform body name url}}

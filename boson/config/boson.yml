@@ -1,8 +1,8 @@
 # :auto_namespace: true
-:bin_defaults:
+:defaults:
 - boson_method_missing
+- options
 :console_defaults:
-- boson_method_missing
 - completion
 - alias
 - ruby_core
@@ -20,6 +20,17 @@
 - irb_core
 :libraries:
   # file libraries- personal prefs
+  ruby_ref:
+    :commands:
+      loaded_paths:
+        :default_option: query
+  site/github:
+    :commands:
+      user_repos:
+        :render_options:
+          :reverse_sort: true
+          :sort:
+            :default: :watchers
   alias:
     :object_methods: false
     :class_commands:
@@ -32,10 +43,7 @@
       tag: t
       add: a
       remove: rm
-  site/is_it_ruby19:
-    :namespace: r19
   boson:
-    :force: true
     :class_commands:
       Boson::Util:
       - any_const_get
@@ -150,3 +158,32 @@
   show_command: sc
   edit: e
   instance_var_table: ivt
+:global_options:
+  :browser:
+    :type: :boolean
+    :desc: Open in browser
+    :pipe: true
+  :copy:
+    :type: :boolean
+    :desc: Copy to clipboard
+    :pipe: true
+  :pastie:
+    :alias: P
+    :type: :boolean
+    :desc: Paste to pastie
+    :pipe: true
+  # :slicer:
+  #   :type: :numeric
+  #   :desc: slice it
+  #   :pipe: true
+  #   :filter: true
+:render_options:
+  :all_fields:
+    :type: :boolean
+    :desc: Show all fields
+  :number:
+    :type: :boolean
+    :desc: Number rows
+  :method:
+    :type: :string
+    :desc: Render method

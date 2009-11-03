@@ -8,6 +8,7 @@ module BosonCommand
     end
   end
 
+  # @render_options :method=>'puts'
   def show_command(name)
     return "No method location for #{name}" unless (loc = method_location(name))
     lines = IO.readlines(loc[0])
@@ -18,6 +19,6 @@ module BosonCommand
       method_lines << lines[index]
       index +=1 
     end
-    puts (method_lines << lines[index])
+    (method_lines << lines[index]).join("")
   end
 end

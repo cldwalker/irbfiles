@@ -4,7 +4,7 @@ module Pastie
   # Paste string to pastie
   def pastie(string, options={})
     string = File.read(string) if options[:file]
-    pastie_url = post("http://pastie.org/pastes/create",
+    post("http://pastie.org/pastes/create",
       {"paste_parser" => "ruby", "paste[authorization]" => "burger","paste[body]" => string}).
       body.match(/href="([^\"]+)"/)[1]
   end

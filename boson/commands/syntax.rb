@@ -39,7 +39,7 @@ module Syntax
     end
   end
 
-  # options :verbose=>:boolean
+  # @options :verbose=>:boolean
   # Find all .yml files in the current directory tree and report any syntax errors
   def yaml(options={})
     require 'yaml'
