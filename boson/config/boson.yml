@@ -1,7 +1,7 @@
 # :auto_namespace: true
 :defaults:
-- plugins/method_missing
-- plugins/options
+- public/plugins/method_missing
+- public/plugins/options
 :console_defaults:
 - personal/completion
 - personal/alias
@@ -14,9 +14,9 @@
 - public/duration
 - personal/hirb
 - every
-- rails/logger
-- rails/personal
-- rails/rails_core
+- public/rails/logger
+- personal/rails
+- public/rails/rails_core
 - public/irb_core
 :libraries:
   # file libraries- personal prefs
@@ -69,7 +69,7 @@
     :class_commands:
       paste: Clipboard.read
       copy: Clipboard.write
-  rails/personal:
+  personal/rails:
     :class_commands:
       reconnect: 'ActiveRecord::Base.connection.reconnect!'
       recognize_path: ActionController::Routing::Routes.recognize_path

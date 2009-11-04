@@ -1,4 +1,4 @@
-module Personal
+module RailsLib
   def self.append_features(mod)
     super if ENV['RAILS_ENV']
   end
