@@ -1,6 +1,6 @@
 module MiscLib
   def self.config
-    {:dependencies=>['boson']}
+    {:dependencies=>['public/boson']}
   end
 
   # Downloads the raw form of a github repo file url

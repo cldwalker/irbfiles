@@ -6,7 +6,7 @@ module History
   class<<self; attr_accessor :original_history_size ; end
 
   def self.config
-    {:dependencies=>['console', 'boson'] }
+    {:dependencies=>['public/console', 'public/boson'] }
   end
 
   def self.included(mod)

@@ -5,29 +5,29 @@
 :console_defaults:
 - completion
 - personal/alias
-- ruby_core
+- public/ruby_core
 - method_lister
 - personal/core_gem
-- boson
-- irb_features
+- public/boson
+- public/irb_features
 - local_gem
-- duration
+- public/duration
 - personal/hirb
 - every
 - rails/logger
 - rails/personal
 - rails/rails_core
-- irb_core
+- public/irb_core
 :libraries:
   # file libraries- personal prefs
-  ruby_ref:
+  public/ruby_ref:
     :commands:
       loaded_paths:
         :default_option: query
   # thanks rake
-  ruby_core:
+  public/ruby_core:
     :force: true
-  site/github:
+  public/site/github:
     :commands:
       user_repos:
         :render_options:
@@ -74,7 +74,7 @@
       reconnect: 'ActiveRecord::Base.connection.reconnect!'
       recognize_path: ActionController::Routing::Routes.recognize_path
       generate: ActionController::Routing::Routes.generate
-  site/delicious:
+  public/site/delicious:
     :object_namespace: true
     :commands:
     - bundles_all
