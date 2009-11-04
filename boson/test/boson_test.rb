@@ -1,9 +1,10 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
-require 'commands/boson'
+require 'commands/public/boson'
 
+# currently broken
 class BosonTest < Test::Unit::TestCase
   before(:all) {
-    @higgs = Object.new.extend BosonLib
+    @higgs = Object.new.extend ::BosonLib
     # # reset_boson
     # @higgs = Boson.main_object
     # ancestors = class <<Boson.main_object; self end.ancestors
@@ -17,8 +18,6 @@ class BosonTest < Test::Unit::TestCase
   end
 
   test "unloaded_libraries detect libraries in :libraries config" do
-    with_config :libraries=>{'yada'=>{}} do
-      @higgs.unloaded_libraries.should == ['yada']
-    end
+    @higgs.unloaded_libraries.should == ['yada']
   end
 end

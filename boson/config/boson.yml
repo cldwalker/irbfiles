@@ -74,7 +74,7 @@
       reconnect: 'ActiveRecord::Base.connection.reconnect!'
       recognize_path: ActionController::Routing::Routes.recognize_path
       generate: ActionController::Routing::Routes.generate
-  public/site/delicious:
+  exp/delicious:
     :object_namespace: true
     :commands:
     - bundles_all

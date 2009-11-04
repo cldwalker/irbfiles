@@ -6,18 +6,24 @@ These libraries are managed and run by my command framework, [boson](http://gith
 Despite what the project name implies, all these commands can be used within irb or from the
 commandline thanks to boson.
 
-Command Libraries
+Outline of this Repo
 ====================
 
-Here's a brief outline of how command libraries under commands/ are organized:
+Here's a brief outline and description of major directories under boson/:
 
-* public/: Public libraries that I encourage everyone to use. If something is buggy here feel free to fork and pull.
-** plugins/: Plugin libraries that extend Boson's behavior.
-** site/: Libraries related to specific websites and their APIs.
-** rails/: Rails-related libraries.
-* exp/: Experimental libraries that one day should be public. These libraries are usually half-baked good ideas that
+* config/: Boson config directory
+* commands/: Contains all currently used libraries.
+** public/: Public libraries that I encourage everyone to use. Commands should have descriptions. If something
+   is buggy here feel free to fork and pull.
+*** plugins/: Plugin libraries that extend Boson's behavior.
+*** site/: Libraries related to specific websites and their APIs.
+*** rails/: Rails-related libraries.
+** exp/: Experimental libraries that one day should be public. These libraries are usually half-baked good ideas that
   haven't quite realized their full potential.
-* personal/: Personal libraries that are specific to my computer setup i.e. my system files or operating system setup.
+** personal/: Personal libraries that are specific to my computer setup i.e. my system files or operating system setup.
+* lib/: A local loaded_path containing classes used by commands.
+* test/: Tests to go along with commands.
+* todo/: Interesting snippets, mostly copied, I've not yet converted to commands.
 
 Using a Library
 ===============

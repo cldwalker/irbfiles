@@ -1,5 +1,5 @@
 # Provides descriptions and aliases of commands that come with irb.
-module Boson::Commands::IrbCore
+module IrbCore
   def self.append_features(mod)
     super if Object.const_defined?(:IRB) && IRB.const_defined?(:ExtendCommandBundle)
   end
