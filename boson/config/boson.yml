@@ -3,7 +3,7 @@
 - plugins/method_missing
 - plugins/options
 :console_defaults:
-- completion
+- exp/completion
 - personal/alias
 - public/ruby_core
 - method_lister
@@ -39,14 +39,14 @@
     :class_commands:
       create_aliases: Alias::Console.create_aliases
       save_aliases: Alias::Console.save_aliases
-  gem_brain:
+  exp/gem_brain:
     :namespace: g
     :command_aliases:
       list: l
       tag: t
       add: a
       remove: rm
-  boson:
+  public/boson:
     :class_commands:
       Boson::Util:
       - any_const_get
@@ -80,7 +80,7 @@
     - bundles_all
     - posts_all
     - posts_recent
-  completion:
+  personal/completion:
     :class_commands:
       spy: Bond.spy
   personal/tree:
@@ -97,7 +97,7 @@
     - mls
     - mwhich
     - mgrep
-  highline:
+  exp/highline:
     :commands:
     - agree
     - ask
