@@ -1,4 +1,5 @@
 module BosonCommand
+  # Returns a method's file and line no for a given command
   def method_location(name)
     return nil unless (com = Boson::Command.find(name))
     if RUBY_VERSION < '1.9'
@@ -9,6 +10,7 @@ module BosonCommand
   end
 
   # @render_options :method=>'puts'
+  # Returns the method body of a command using method_location.
   def show_command(name)
     return "No method location for #{name}" unless (loc = method_location(name))
     lines = IO.readlines(loc[0])

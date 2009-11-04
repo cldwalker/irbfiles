@@ -4,6 +4,7 @@ module Wolfram
     require 'cgi'
   end
 
+  # Takes a wolfram query and tries to format its returned text
   def wolfram(query)
     result = wolfram_query(query)
     result.delete_if {|e| e.nil? || e.empty? }

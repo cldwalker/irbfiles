@@ -4,6 +4,8 @@ module Ri
     require 'rdoc/ri/driver'
   end
 
+  # @desc Wraps around ri to provide a menu when there are multiple matches.
+  # Enter * at menu prompt to view all matching methods.
   def ri(original_query, regex=nil)
     query = original_query.to_s
     if query =~ /::|\#|\./
@@ -38,6 +40,7 @@ module Ri
     nil
   end
 
+  private
   def system_ri(*queries)
     ::Hirb::View.capture_and_render { RDoc::RI::Driver.run(queries) }
   rescue SystemExit

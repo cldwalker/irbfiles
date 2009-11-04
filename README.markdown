@@ -13,6 +13,7 @@ Here's a brief outline and description of major directories under boson/:
 
 * config/: Boson config directory
 * commands/: Contains all currently used libraries.
+  * core/: Libraries that extend core Ruby classes.
   * public/: Public libraries that I encourage everyone to use. Commands should have descriptions. If something
     is buggy here feel free to fork and pull.
     * plugins/: Plugin libraries that extend Boson's behavior.
