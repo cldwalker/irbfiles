@@ -172,11 +172,14 @@
     :type: :boolean
     :desc: Paste to pastie
     :pipe: true
-  # :slicer:
-  #   :type: :numeric
-  #   :desc: slice it
-  #   :pipe: true
-  #   :filter: true
+  :slice:
+    :alias:
+    - S
+    - z
+    :type: :string
+    :desc: Slice a list
+    :pipe: multislice
+    :filter: true
 :render_options:
   :all_fields:
     :type: :boolean
