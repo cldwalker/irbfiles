@@ -1,18 +1,18 @@
 # :auto_namespace: true
 :defaults:
-- boson_method_missing
-- options
+- plugins/method_missing
+- plugins/options
 :console_defaults:
 - completion
-- alias
+- personal/alias
 - ruby_core
 - method_lister
-- core_gem
+- personal/core_gem
 - boson
 - irb_features
 - local_gem
 - duration
-- hirb
+- personal/hirb
 - every
 - rails/logger
 - rails/personal
@@ -34,7 +34,7 @@
           :reverse_sort: true
           :sort:
             :default: :watchers
-  alias:
+  personal/alias:
     :object_methods: false
     :class_commands:
       create_aliases: Alias::Console.create_aliases
@@ -57,7 +57,7 @@
       any_const_get:
         :description: Converts a string to a constant if it exists
   # personal file libraries
-  core_gem:
+  personal/core_gem:
     :gems:
     - core
   clipboard:
@@ -83,9 +83,9 @@
   completion:
     :class_commands:
       spy: Bond.spy
-  tree:
+  personal/tree:
     :dependencies:
-    - core_gem
+    - personal/core_gem
   # gem libraries
   method_lister:
     :object_methods: false
