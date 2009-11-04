@@ -1,36 +1,5 @@
 # Misc shell commands
 module ShellCommands
-  # Install latest tabtab + copy files + git repo
-  def tabtab
-    cmd = "install_tabtab && cp -f ~/.tabtab.bash ~/code/repo/dotfiles/.bash/completion/.tabtab.bash"
-    system(cmd)
-  end
-
-  # Diffs my latest template gitignore with current dir gitignore
-  def diff_gitignore
-    system("diff .gitignore ~/code/tmpl/gitignore-gem")
-  end
-
-  # Copies my latest template gitignore to current dir
-  def cp_gitignore
-    system "cp -fv ~/code/tmpl/gitignore-gem .gitignore"
-  end
-
-  # @options :file=>:boolean, :editor=>'vim -u NONE'
-  # Open new file in or copy existing file into sandbox
-  def try(basename=nil, options={})
-    destination = File.expand_path("~/code/sandbox")
-    if options[:file]
-      return puts("Need a file") if basename.nil?
-      cmd = "cp -iR #{basename} #{destination} && #{options[:editor]} #{File.join(destination, File.basename(basename))}"
-      system(cmd)
-    else
-      basename ||= Time.now.to_f.to_s
-      cmd = [options[:editor], File.join(destination, basename)].join(" ")
-      system(cmd)
-    end
-  end
-
   # Swaps names of two files
   def file_swap(file1, file2)
     tempfile = '_temp_file_you_should_not_have'
@@ -39,7 +8,7 @@ module ShellCommands
     File.rename(tempfile,file2)
   end
 
-  # Set a countdown timer to remind me to take a break
+  # Set a countdown timer to remind me to take a break using Mac say command.
   def reminder(minutes, message="Time is up biaaatch!")
     minutes = minutes.to_f * 60
     sleep(minutes)
@@ -66,6 +35,7 @@ module ShellCommands
   end
 
   # @options :confirm=>:boolean
+  # Renames files based on a matching regex and string to replace the matches
   def regname(regex, replace,files, options={})
     file_map = files.map {|e|
       val = [e, e.gsub(regex, replace)]

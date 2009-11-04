@@ -1,4 +1,5 @@
-module Shell
+# Different ways of implementing system()
+module System
   # @options :error=>:boolean
   # Returns stdout or stderr string from shell command
   def shell(*args)

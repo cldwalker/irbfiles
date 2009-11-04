@@ -3,7 +3,7 @@
 - plugins/method_missing
 - plugins/options
 :console_defaults:
-- exp/completion
+- personal/completion
 - personal/alias
 - public/ruby_core
 - method_lister
