@@ -7,7 +7,7 @@
 - personal/alias
 - public/ruby_core
 - method_lister
-- personal/core_gem
+# - personal/core_gem
 - public/boson
 - public/irb_features
 - local_gem
@@ -24,8 +24,8 @@
     :commands:
       loaded_paths:
         :default_option: query
-  # thanks rake
   public/ruby_core:
+    # thanks rake
     :force: true
   public/site/github:
     :commands:
@@ -34,6 +34,17 @@
           :reverse_sort: true
           :sort:
             :default: :watchers
+  public/boson:
+    :class_commands:
+      Boson::Util:
+      - any_const_get
+      - detect
+    :commands:
+      detect:
+        :description: Detect modules, gems and kernel methods loaded
+      any_const_get:
+        :description: Converts a string to a constant if it exists
+  # personal file libraries
   personal/alias:
     :object_methods: false
     :class_commands:
@@ -46,17 +57,6 @@
       tag: t
       add: a
       remove: rm
-  public/boson:
-    :class_commands:
-      Boson::Util:
-      - any_const_get
-      - detect
-    :commands:
-      detect:
-        :description: Detect modules, gems and kernel methods loaded
-      any_const_get:
-        :description: Converts a string to a constant if it exists
-  # personal file libraries
   personal/core_gem:
     :gems:
     - core
@@ -83,9 +83,6 @@
   personal/completion:
     :class_commands:
       spy: Bond.spy
-  personal/tree:
-    :dependencies:
-    - personal/core_gem
   # gem libraries
   method_lister:
     :object_methods: false
