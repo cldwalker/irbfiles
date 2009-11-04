@@ -31,8 +31,8 @@ Using a Library
 If you want to just try one or two libraries/files under boson/ without boson, simply require and include them:
 
     bash> irb -f
-    irb>> require "boson/libraries/ansi"
-    irb>> class<<self; include Ansi; end
+    irb>> require "boson/commands/public/color"
+    irb>> class<<self; include Color; end
 
 Note: this only works for libraries that don't depend on other libraries, don't use boson commands
 and don't rely on boson for default options.
@@ -40,12 +40,12 @@ and don't rely on boson for default options.
 If you want to install a boson library using boson:
 
     # make sure to point to the code only url
-    bash> boson install http://github.com/cldwalker/irbfiles/raw/master/boson/commands/irb_core.rb
+    bash> boson install http://github.com/cldwalker/irbfiles/raw/master/boson/commands/public/irb_core.rb
 
 Install
 =====
 
-If you want to use irb as a I do:
+If you want to use irb (or boson) as a I do:
 
 * Clone this project: git clone git://github.com/cldwalker/irbfiles.git
 * Install [boson](http://github.com/cldwalker/boson): gem install boson
