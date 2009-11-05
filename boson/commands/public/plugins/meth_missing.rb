@@ -1,6 +1,6 @@
 # Allows instant aliasing of commands. If only one alias matches a command,
 # the command is loaded and executed via the autoloader. Otherwise, the matching commands are printed.
-module MethodMissing
+module MethMissing
   class <<self
     def after_included
       Boson::Runner.define_autoloader

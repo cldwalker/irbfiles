@@ -1,6 +1,6 @@
 # :auto_namespace: true
 :defaults:
-- public/plugins/method_missing
+- public/plugins/meth_missing
 - public/plugins/options
 :console_defaults:
 - personal/completion

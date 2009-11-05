@@ -1,6 +1,6 @@
 module FindLib
   def self.included(mod)
-    require 'file/find' #gem install file-find
+    # require 'file/find' #gem install file-find
   end
 
   # @options :maxdepth=>:numeric, :path=>:array, :return_array=>:boolean, :prune=>:string
