@@ -43,13 +43,13 @@ module History
 
   def history_list_or_slice(*args)
     if args[0].class == String
-      multislice(Readline::HISTORY.to_a, args[0],',', original_history_size)
+      multislicer(Readline::HISTORY.to_a, args[0],',', original_history_size)
     else
       history_list(*args)
     end
   end
 
-  def multislice(array, range,splitter=',',offset=nil)
+  def multislicer(array, range,splitter=',',offset=nil)
     result = []
     for r in range.split(splitter)
     if r =~ /-/

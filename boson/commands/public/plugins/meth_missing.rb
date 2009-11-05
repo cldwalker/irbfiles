@@ -12,7 +12,7 @@ module MethMissing
       original_method_missing = Boson::Namespace.instance_method(:method_missing)
       Boson::Namespace.send(:define_method, :method_missing) do |meth,*args|
         Boson::Index.read
-        meths = MethodMissing.underscore_search(meth.to_s, self.boson_commands)
+        meths = MethMissing.underscore_search(meth.to_s, self.boson_commands)
         if meths.size > 1
           puts "Multiple methods match: #{meths.join(', ')}"
         elsif (meths.size == 1) && respond_to?(meths[0])
@@ -31,7 +31,7 @@ module MethMissing
         define_method :method_missing do |meth,*args|
           Boson::Index.read
           possible_commands = Boson::Index.all_main_methods.sort
-          meths = MethodMissing.underscore_search(meth.to_s, possible_commands)
+          meths = MethMissing.underscore_search(meth.to_s, possible_commands)
           meths = [meth.to_s] if possible_commands.include?(meth.to_s)
           if meths.size > 1
             puts "Multiple methods match: #{meths.join(', ')}"
