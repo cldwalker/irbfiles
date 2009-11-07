@@ -157,7 +157,7 @@
   errorless_inheritance_tree: eit
   show_command: sc
   edit: e
-  instance_var_table: ivt
+  instance_var: inv
 :global_options:
   :browser:
     :type: :boolean
