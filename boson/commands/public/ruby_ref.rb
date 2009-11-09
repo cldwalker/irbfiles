@@ -45,4 +45,13 @@ module RubyRef
       Gem.loaded_specs.values.map {|e| [e.name, e.version] }
     end
   end
+
+  # @render_options :change_fields=>{:default=>{0=>'class', 1=>'object_count'}}, :reverse_sort=>true,
+  #   :sort=>'object_count'
+  # Displays the number of objects per class
+  def object_count
+    object_hash = {}
+    ObjectSpace.each_object {|e| (object_hash[e.class] ||= []) << e }
+    object_hash.each {|k,v| object_hash[k] = v.size }
+  end
 end

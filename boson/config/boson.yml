@@ -39,7 +39,13 @@
       Boson::Util:
       - any_const_get
       - detect
+      boson_library: Boson.library
+      boson_command: Boson::Command.find
     :commands:
+      boson_command:
+        :description: Get command object by name or alias
+      boson_library:
+        :description: Get library object by name
       detect:
         :description: Detect modules, gems and kernel methods loaded
       any_const_get:

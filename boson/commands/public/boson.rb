@@ -46,16 +46,6 @@ module BosonLib
     Boson::Index.update(options)
   end
 
-  # Get command object by name or alias
-  def boson_command(name)
-    Boson::Command.find(name)
-  end
-
-  # Get library object by name or alias
-  def boson_library(name)
-    Boson.library(name) || Boson.library(name, :alias)
-  end
-
   # Downloads a url and saves to a local boson directory
   def download(url)
     filename = determine_download_name(url)
