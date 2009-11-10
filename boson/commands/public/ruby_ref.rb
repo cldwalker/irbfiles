@@ -54,4 +54,11 @@ module RubyRef
     ObjectSpace.each_object {|e| (object_hash[e.class] ||= []) << e }
     object_hash.each {|k,v| object_hash[k] = v.size }
   end
+
+  # @render_options :change_fields=>{:default=>{0=>'method', 1=>'value'}}, :sort=>'method'
+  # Lists an object's methods and values for methods that don't take arguments
+  def method_values(obj)
+    argumentless_methods = obj.class.instance_methods(false).select {|e| obj.method(e).arity.zero? }
+    argumentless_methods.map {|e| [e, obj.send(e)] }
+  end
 end
