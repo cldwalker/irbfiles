@@ -63,4 +63,16 @@ module HashLib
   def recursive_merge(hash, hash2)
     hash.merge(hash2) {|k,o,n| (o.is_a?(Hash)) ? recursive_hash_merge(o,n) : n}
   end
+
+  # Deletes exact key-value pair or a key from a hash.
+  def minus(hash, hash_or_key)
+    if hash_or_key.is_a? Hash
+      hash_or_key.each do |key, value|
+        hash.delete(key) if hash[key] == value
+      end
+    elsif hash.keys.include? hash_or_key
+      hash.delete(hash_or_key)
+    end
+    hash
+  end
 end

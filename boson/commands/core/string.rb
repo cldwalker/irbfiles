@@ -9,4 +9,13 @@ module StringLib
     }
     count
   end
+
+  # Pipes string to command
+  def pipe(str, cmd)
+    IO.popen(cmd, 'r+') do |pipe|
+      pipe.write(str)
+      pipe.close_write
+      pipe.read
+    end
+  end
 end
