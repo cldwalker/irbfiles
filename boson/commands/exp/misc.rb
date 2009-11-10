@@ -1,15 +1,4 @@
 module Misc
-  # Reloads a file just as you would require it.
-  def reload(require_regex)
-    $".grep(/#{require_regex}/).each {|e| $".delete(e) && require(e) }
-  end
-
-  # From http://solutious.com/blog/2009/09/22/secret-of-object-to_s/
-  # Calculates id found in :to_s of most objects
-  def to_s_id(obj)
-    "0x%x" % [obj.object_id*2]
-  end
-
   # Hash of class dependencies excluding error-related ones
   def dependencies
     deps = {}
@@ -20,5 +9,18 @@ module Misc
     end
     # dependencies.inject({}) {|h,(k,v)| (h[v] ||= []) << k; h }
     deps
+  end
+
+  # Explained http://tagaholic.blogspot.com/2009/01/simple-block-to-hash-conversion-for.html
+  # Converts a block definition into a hash
+  def block_to_hash(block=nil)
+    require 'open_struct'
+    config = OpenStruct.new
+    if block
+      block.call(config)
+      config.instance_variable_get("@table")
+    else
+      {}
+    end
   end
 end

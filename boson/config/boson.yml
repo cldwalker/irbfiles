@@ -34,6 +34,13 @@
           :reverse_sort: true
           :sort:
             :default: :watchers
+  public/file:
+    :class_commands:
+      file_read : File.read
+    :commands:
+      file_read:
+        :alias: fr
+        :description: File to string
   public/boson:
     :class_commands:
       Boson::Util:
