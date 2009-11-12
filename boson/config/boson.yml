@@ -202,3 +202,6 @@
   :method:
     :type: :string
     :desc: Render method
+  :filters:
+    :type: :hash
+    :desc: Filters to apply to fields

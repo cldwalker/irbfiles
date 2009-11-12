@@ -4,6 +4,11 @@ module HirbLib
     Hirb::View.enabled? ? Hirb.disable : Hirb.enable(HirbLib.enable_options)
   end
 
+  #@render_options :filters=>{:default=>{1=>:inspect}}
+  def hirb_config
+    Hirb::View.formatter_config
+  end
+
   def self.after_included
     Hirb.disable if Hirb::View.enabled?
     Hirb.enable(enable_options)
