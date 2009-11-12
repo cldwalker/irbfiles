@@ -1,7 +1,10 @@
 module ::Boson::Options::Date
   def create_date(value)
-   # value_shift should be mm/dd
    Date.parse(value + "/#{Date.today.year}")
+  end
+
+  def usage_for_date(opt)
+    default_usage opt, "MM/DD"
   end
 end
 

@@ -10,7 +10,6 @@
 # - personal/core_gem
 - public/boson
 - public/irb_features
-- local_gem
 - public/duration
 - personal/hirb
 - every
