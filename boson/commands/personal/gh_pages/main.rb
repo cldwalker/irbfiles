@@ -22,13 +22,15 @@ module Main
     require 'erb'
   end
 
+  # @options {}
   # Create rdoc with hanna
-  def rdoc
+  def rdoc(options={})
    directory = File.exists?("website") ? 'website/doc' : 'doc'
    FileUtils.rm_r(directory) if File.exists?(directory)
    args = ['rdoc', '-o', directory] + %w{--inline-source --format=html -T hanna} + Dir['lib/**/*.rb']
    ["README.rdoc", "LICENSE.TXT"].each {|e| args << e if File.exists?(e) }
    system(*args)
+   directory + '/index.html'
   end
 
   #@options :push=>true

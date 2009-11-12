@@ -16,8 +16,9 @@ module BosonLib
 
   # Show a library
   def show(lib)
-    file = Boson::FileLibrary.library_file(lib, Boson.repo.dir)
-    puts File.exists?(file) ? File.read(file) : "File '#{file}' doesn't exist"
+    file = Boson.repos.map {|e| Boson::FileLibrary.library_file(lib, e.dir) }.
+      find {|e| File.exists?(e) }
+    puts file ? File.read(file) : "Library file doesn't exist"
   end
 
   # Uninstall a library
@@ -42,8 +43,10 @@ module BosonLib
   # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
   # Updates/resets index of libraries and commands
   def index(options={})
-    File.unlink(Boson::Index.marshal_file) if options[:reset] && File.exists?(Boson::Index.marshal_file)
-    Boson::Index.update(options)
+    Boson::Index.indexes {|index|
+      File.unlink(index.marshal_file) if options[:reset] && File.exists?(index.marshal_file)
+      index.update(options)
+    }
   end
 
   # Downloads a url and saves to a local boson directory
