@@ -34,10 +34,13 @@ module BosonLib
   # Prints stats about boson's index
   def stats
     Boson::Index.read
-    option_cmds = Boson::Index.commands.select {|e| !e.options.to_s.empty? }
-    render_option_cmds = Boson::Index.commands.select {|e| !e.render_options.to_s.empty? }
-    render [[:libraries, Boson::Index.libraries.size], [:commands, Boson::Index.commands.size],
-      [:option_commands, option_cmds.size], [:render_option_commands, render_option_cmds.size], ]
+    Boson::Index.indexes.each do |repo|
+      option_cmds = repo.commands.select {|e| !e.options.to_s.empty? }
+      render_option_cmds = repo.commands.select {|e| !e.render_options.to_s.empty? }
+      puts "\n=== Repo at #{repo.repo.dir} ==="
+      render [[:libraries, repo.libraries.size], [:commands, repo.commands.size],
+        [:option_commands, option_cmds.size], [:render_option_commands, render_option_cmds.size], ]
+    end
   end
 
   # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
