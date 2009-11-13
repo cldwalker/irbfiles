@@ -3,14 +3,21 @@ module GemBrain
     require 'yaml'
   end
 
+  # @config :default_option=>'type'
   # @render_options :sort=>{:enum=>false, :values=>%w{to_s}}
-  # @options :github=>:boolean, :query=>:string, :approved=>:boolean, :unapproved=>:boolean,
-  #  [:strip_users, :S]=>:boolean, :tagged=>:boolean
+  # @options :type=>{:type=>:string, :values=>[:github, :query, :approved, :unapproved, :tagged, :strip_users]}
   # List gems
   def list(options={})
-    gems = options[:github] ? github_gems : (options[:approved] ? approved_gems :
-      options[:unapproved] ? unapproved_gems : options[:tagged] ? untagged_gems : all_gems(options[:query]))
-    options[:strip_users] ? strip_users(gems) : gems
+    gems = case options[:type]
+    when :github      then github_gems
+    when :approved    then approved_gems
+    when :unapproved  then unapproved_gems
+    when :tagged      then untagged_gems
+    when :strip_users then strip_users(gems)
+    when :query       then all_gems(options[:query])
+    else
+      all_gems
+    end
   end
 
   # @options :query=>'', :sudo=>:boolean, :opts=>:string

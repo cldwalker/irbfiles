@@ -170,6 +170,8 @@
   show_command: sc
   edit: e
   instance_var: inv
+:ignore_directories:
+- ~/code/gems/boson
 :global_options:
   :browser:
     :type: :boolean

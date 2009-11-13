@@ -5,6 +5,7 @@ module HirbLib
   end
 
   #@render_options :filters=>{:default=>{1=>:inspect}}
+  # Displays view config for each class
   def hirb_config
     Hirb::View.formatter_config
   end
