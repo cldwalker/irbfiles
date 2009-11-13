@@ -1,6 +1,8 @@
 module BosonCommand
   # Returns a method's file and line no for a given command
   def method_location(name)
+    !Boson.can_invoke?(name) && Boson::Index.read && (lib = Boson::Index.find_library(name)) &&
+      Boson::Manager.load(lib, :verbose=>true)
     return nil unless (com = Boson::Command.find(name))
     if RUBY_VERSION < '1.9'
       Boson::MethodInspector.mod_store[com.library.module][:method_locations][com.name] rescue nil
