@@ -37,7 +37,7 @@ module ShellCommands
   # @options :confirm=>:boolean
   # Renames files based on a matching regex and string to replace the matches
   def regname(regex, replace,files, options={})
-    file_map = files.map {|e|
+    file_map = Dir.glob(files).map {|e|
       val = [e, e.gsub(regex, replace)]
       puts "#{val[0]} -> #{val[1]}"
       val

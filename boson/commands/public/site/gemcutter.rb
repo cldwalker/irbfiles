@@ -3,7 +3,7 @@ module Gemcutter
     require 'httparty'
   end
 
-  # @render_options :change_fields=>{:default=>{0=>'field', 1=>'value'}}
+  # @render_options :change_fields=>%w{field value}
   # Lists basic gemcutter stats for gem
   def cut(gem_name)
     HTTParty.get("http://gemcutter.org/gems/#{gem_name}.json")

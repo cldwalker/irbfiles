@@ -52,7 +52,7 @@ module ArrayLib
     permutations
   end
 
-  # Assuming the array is an array of hashes, this returns a hash of the elements grouped by their
+  # @desc Assuming the array is an array of hashes, this returns a hash of the elements grouped by their
   # values for the specified hash key. 
   def group_aoh_by_key(arr, key,parallel_array=nil)
     group = {}

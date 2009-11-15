@@ -80,8 +80,6 @@ module Github
 
   def github_get(url)
     url = "http://github.com/api/v2/yaml#{url}"
-    YAML::load get(url)
-    # with next release
-    # (str = get(url, :success_only=>true)) ? YAML::load(str) : {}
+    (str = get(url, :success_only=>true)) ? YAML::load(str) : {}
   end
 end
