@@ -172,20 +172,17 @@
   instance_var: inv
 :ignore_directories:
 - ~/code/gems/boson
-:global_options:
+:pipe_options:
   :browser:
     :type: :boolean
     :desc: Open in browser
-    :pipe: true
   :copy:
     :type: :boolean
     :desc: Copy to clipboard
-    :pipe: true
   :pastie:
     :alias: P
     :type: :boolean
     :desc: Paste to pastie
-    :pipe: true
   :slice:
     :alias:
     - S

@@ -51,4 +51,13 @@ module SystemMisc
       system(cmd)
     end
   end
+
+  # @options :force=>:boolean, :verbose=>true, :noop=>:boolean, :dir=>'~/code/world'
+  # Deletes paths with menu and FileUtils
+  def delete_paths(options={})
+    dir = File.expand_path options.delete(:dir)
+    menu(Dir.entries(dir)) do |paths|
+      FileUtils.rm_r paths.map {|e| "#{dir}/#{e}"}, options
+    end
+  end
 end
