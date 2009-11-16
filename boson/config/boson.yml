@@ -168,6 +168,7 @@
   boson_command: bc
   errorless_inheritance_tree: eit
   show_command: sc
+  show_library: sl
   edit: e
   instance_var: inv
 :ignore_directories:
@@ -183,6 +184,14 @@
     :alias: P
     :type: :boolean
     :desc: Paste to pastie
+    :pipe: pastie_string
+    :filter: true
+  :gist:
+    :alias: G
+    :type: :boolean
+    :desc: Paste as gist
+    :pipe: gist_string
+    :filter: true
   :slice:
     :alias:
     - S

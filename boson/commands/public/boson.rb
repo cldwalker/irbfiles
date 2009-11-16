@@ -14,11 +14,12 @@ module BosonLib
     File.open(file) {|f| f.read } if File.exists?(file) && options[:string]
   end
 
+  # @render_options :method=>'puts'
   # Show a library
-  def show(lib)
+  def show_library(lib)
     file = Boson.repos.map {|e| Boson::FileLibrary.library_file(lib, e.dir) }.
       find {|e| File.exists?(e) }
-    puts file ? File.read(file) : "Library file doesn't exist"
+    file ? File.read(file) : "Library file doesn't exist"
   end
 
   # Uninstall a library

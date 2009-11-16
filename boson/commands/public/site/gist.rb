@@ -18,6 +18,11 @@ module Gist
     end
   end
 
+  # Wrapper around gist to be used as a pipe command.
+  def gist_string(string)
+    gist(:string=>string, :private=>true)
+  end
+
   class << self
     GIST_URL = 'http://gist.github.com/%s.txt'
     @proxy = ENV['http_proxy'] ? URI(ENV['http_proxy']) : nil
