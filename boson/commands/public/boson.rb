@@ -42,6 +42,7 @@ module BosonLib
       render [[:libraries, repo.libraries.size], [:commands, repo.commands.size],
         [:option_commands, option_cmds.size], [:render_option_commands, render_option_cmds.size], ]
     end
+    nil
   end
 
   # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
