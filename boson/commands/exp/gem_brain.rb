@@ -135,17 +135,17 @@ module GemBrain
 
   class <<self
     def remove(name)
-      approved = config[:approved]
+      approved = gem_config[:approved]
       approved.delete(name.to_s)
       save(approved)
     end
 
     def add(name)
-      save config[:approved] << name
+      save gem_config[:approved] << name
     end
 
     def save(approved)
-      new_config = config.merge(:approved=>approved)
+      new_config = gem_config.merge(:approved=>approved)
       File.open(gem_file, 'w') {|f| f.write(new_config.to_yaml) }
     end
 

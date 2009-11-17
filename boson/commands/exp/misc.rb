@@ -23,4 +23,27 @@ module Misc
       {}
     end
   end
+
+  # from http://stackoverflow.com/questions/1744424/handling-data-structures-hashes-etc-gracefully-in-ruby
+  # Iterates over a nested data structure and stops to yield at a non-array/non-hash elements
+  def iterate_nested(array_or_hash, depth = [], &block)
+    case array_or_hash
+      when Array:
+        array_or_hash.each_with_index do |item, key|
+          if item.class == Array || item.class == Hash
+            iterate_nested(item, depth + [key], &block)
+          else
+            block.call(key, item, depth + [key])
+          end
+        end
+      when Hash:
+        array_or_hash.each do |key, item|
+          if item.class == Array || item.class == Hash
+            iterate_nested(item, depth + [key], &block)
+          else
+            block.call(key, item, depth + [key])
+          end
+        end
+    end
+  end
 end
