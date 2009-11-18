@@ -24,7 +24,9 @@ module BosonLib
 
   # Uninstall a library
   def uninstall(lib)
-    File.unlink Boson::FileLibrary.library_file(lib, Boson.repo.dir)
+    file = Boson::FileLibrary.library_file(lib, Boson.repo.dir)
+    File.unlink file
+    puts("Deleted '#{file}'.")
   end
 
   # List libraries that haven't been loaded yet

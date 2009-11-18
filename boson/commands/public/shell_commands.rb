@@ -57,6 +57,11 @@ module ShellCommands
     system("dig soa #{domain} | grep -q ^#{domain}") ? "Yes" : "No"
   end
 
+  # @render_options {}
+  # Lists voices available to mac's say command
+  def voices
+    Dir.glob('/System/Library/Speech/Voices/*').map {|e| e[/\/(\w+)\.SpeechVoice/, 1] }
+  end
   private
   # converts du -sh style number ie 23M or 42.0G to a ruby float
   def numerical_value(dir_line)
