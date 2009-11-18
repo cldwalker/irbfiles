@@ -43,7 +43,7 @@ module Completion
     # place it before symbols
     Bond.complete(:on=>/^((([a-z][^:.\(]*)+):)+/, :search=>false, :action=>:alias_constants, :place=>6)
     Bond.complete(:method=>"reload") {|e| $" }
-    Bond.complete(:method=>/ll|bl/) {|e|
+    Bond.complete(:method=>/ll|bl|rl/) {|e|
       (Boson::Runner.all_libraries + Boson::Runner.all_libraries.map {|e| File.basename e }).uniq
     }
     Bond.complete(:method=>'r', :action=>:method_require, :search=>false)

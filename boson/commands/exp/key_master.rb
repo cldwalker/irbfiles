@@ -1,9 +1,8 @@
 module KeyMaster
+  # @render_options :change_fields=>%w{function key}, :sort=>'function',
+  #   :filters=>{:default=>{'key'=>[:join, ","]}}
+  # Lists keys used
   def keys_used
-    render functions_hash.to_a.sort, :headers=>%w{function key}, :filters=>{1=>proc {|e| e.join(",")}}
-  end
-
-  def functions_hash
     @functions_hash ||= begin
       hash = IO.readlines(File.expand_path("~/.key_bindings")).select {|e| e =~ /^[^\n#]/ }.
         inject({}) {|h,e| k,v = e.chomp.split(/\s*:\s*/); (h[v] ||= []) << k ; h}

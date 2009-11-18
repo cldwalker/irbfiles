@@ -4,7 +4,7 @@ module HirbLib
     Hirb::View.enabled? ? Hirb.disable : Hirb.enable(HirbLib.enable_options)
   end
 
-  #@render_options :filters=>{:default=>{1=>:inspect}}
+  #@render_options :change_fields=>%w{class config}
   # Displays view config for each class
   def hirb_config
     Hirb::View.formatter_config
