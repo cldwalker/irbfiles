@@ -29,6 +29,7 @@
   public/site/github:
     :commands:
       user_repos:
+        :alias: ur
         :render_options:
           :reverse_sort: true
           :sort:
@@ -160,7 +161,6 @@
   current_variables: cv
   gem_recursive_uninstall: sgu
   checkout: co
-  user_repos: ur
   analytics_day: ad
   unloaded_libraries: ul
   reload: re
