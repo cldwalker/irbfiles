@@ -48,6 +48,7 @@
       - detect
       boson_library: Boson.library
       boson_command: Boson::Command.find
+      autoload_command: Boson::Runner.autoload_command
     :commands:
       boson_command:
         :description: Get command object by name or alias
@@ -151,6 +152,7 @@
   nested_tree: ntree
   inheritance_tree: itree
   load_library: ll
+  reload_library: rl
   history: hi
   toggle_echo: te
   delicious: del
