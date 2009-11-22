@@ -75,4 +75,18 @@ module HashLib
     end
     hash
   end
+
+  # from http://avdi.org/devblog/2009/11/20/hash-transforms-in-ruby/
+  # Maps hash with a block passing in hash,key + block
+  def map_hash(hash, options={}, &block)
+    hash.inject({}){|result, (key,value)|
+      value = if (options[:deep] && Hash === value)
+                transform_hash(value, options, &block)
+              else
+                value
+              end
+      block.call(result,key,value)
+      result
+    }
+  end
 end
