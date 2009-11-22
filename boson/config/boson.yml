@@ -7,7 +7,6 @@
 - personal/alias
 - public/ruby_core
 - method_lister
-# - personal/core_gem
 - public/boson
 - public/irb_features
 - public/duration
@@ -61,9 +60,6 @@
   # personal file libraries
   personal/alias:
     :object_methods: false
-    :class_commands:
-      create_aliases: Alias::Console.create_aliases
-      save_aliases: Alias::Console.save_aliases
   exp/gem_brain:
     :namespace: g
     :command_aliases:
@@ -145,6 +141,19 @@
       - local_require
     :gems:
     - local_gem
+  fileutils:
+    :class_commands:
+      FileUtils:
+      - mv
+      - cp
+      - rm
+    :commands:
+      mv:
+        :options:
+          :force: :boolean
+          :noop: :boolean
+          :verbose: :boolean
+
 :command_aliases:
   render: v
   libraries: lib
