@@ -8,8 +8,8 @@ module BosonLib
       Boson::FileLibrary.library_file(options[:library], Boson.repo.dir)
     elsif options[:library_command]
       Boson::Index.read
-      (lib = Boson::Index.find_library(options[:library_command])) &&
-      Boson::FileLibrary.library_file(lib, Boson.repo.dir)
+      (lib = Boson::Index.find_library(options[:library_command], true)) &&
+      lib.lib_file
     elsif options[:config]
       config_dir + '/boson.yml'
     else
@@ -18,7 +18,7 @@ module BosonLib
         Tempfile.new('edit_string').path
       end
     end
-    return puts("File '#{file}' not found.") unless File.exists? file
+    return puts("File '#{file}' not found.") unless File.exists? file.to_s
     File.open(file,'w') {|f| f.write(options[:string]) } if options[:string]
     system(options[:editor], file)
     File.open(file) {|f| f.read } if File.exists?(file) && options[:string]
