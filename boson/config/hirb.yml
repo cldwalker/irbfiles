@@ -1,6 +1,12 @@
 ---
 :pager_command: less -r
 :output:
+  Grit::Commit:
+    :options:
+      :fields:
+      - committed_date
+      - author
+      - message
   WWW::Delicious::Post:
     :options:
       :fields:
