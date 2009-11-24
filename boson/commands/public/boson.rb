@@ -18,9 +18,8 @@ module BosonLib
         Tempfile.new('edit_string').path
       end
     end
-    return puts("File '#{file}' not found.") unless File.exists? file.to_s
     File.open(file,'w') {|f| f.write(options[:string]) } if options[:string]
-    system(options[:editor], file)
+    system(options[:editor], file || '')
     File.open(file) {|f| f.read } if File.exists?(file) && options[:string]
   end
 
