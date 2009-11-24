@@ -39,17 +39,20 @@ module SystemMisc
     browser url
   end
 
-  # sample url: http://github.com/takai/twitty-console
-  # Clones a github repo and opens in textmate
-  def checkout(url)
-    user, repo = /github.com\/([^\/]+)\/([^\/]+)/.match(url)[1,2]
-    if user.nil? || repo.nil?
-      puts "Couldn't match user or repo from url"
+  # @options :clone_directory=>'.', :editor=>'mate'
+  # Clones a github repo or gist and opens in editor
+  def checkout(url, options={})
+    clone_url, dest = if url[/^\d+$/]
+      ["git://gist.github.com/#{url}.git", "gist-#{url}"]
+    elsif (id = url[/gist.github.com\/(\d+)$/, 1])
+      ["git://gist.github.com/#{id}.git", "gist-#{id}"]
     else
-      clone_url = "git://github.com/#{user}/#{repo}.git"
-      cmd = "cd ~/code/world; git clone #{clone_url} && mate #{repo}"
-      system(cmd)
+      user, repo = /github.com\/([^\/]+)\/([^\/]+)/.match(url)[1,2]
+      return  puts("Couldn't match user or repo from url") if user.nil? || repo.nil?
+      ["git://github.com/#{user}/#{repo}.git", repo]
     end
+    cmd = "cd #{options[:directory]}; git clone #{clone_url} #{dest} && #{options[:editor]} #{dest}"
+    system(cmd)
   end
 
   # @options :force=>:boolean, :verbose=>true, :noop=>:boolean, :dir=>'~/code/world'

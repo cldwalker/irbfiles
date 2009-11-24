@@ -58,6 +58,11 @@
       any_const_get:
         :description: Converts a string to a constant if it exists
   # personal file libraries
+  personal/system_misc:
+    :commands:
+      checkout:
+        :options:
+          :directory: ~/code/world
   personal/alias:
     :object_methods: false
   exp/gem_brain:

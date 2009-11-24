@@ -40,11 +40,10 @@ module GemBrain
     if deps.empty?
       system('sudo','gem','uninstall',name)
     else
-      puts("Uninstall #{name} with dependencies: #{deps.join(', ')}? [y/n]")
-      if gets.chomp[/y/]
-        system(*(%w{sudo gem uninstall} + [name] + deps))
-      else
-        false
+      menu(deps, :ask=>false) do |gems|
+        gems.unshift name
+        system(*(%w{sudo gem uninstall} + gems))
+        puts("Uninstalled gems: #{gems.join(', ')}")
       end
     end
   end
@@ -73,6 +72,12 @@ module GemBrain
   # Gemspec for latest version of gem
   def latest_gemspec(name)
     ::Gem.source_index.gems.values.select {|e| e.name == name }.sort_by {|e| e.version }[-1]
+  end
+
+  # @config :global_options=>true
+  # Homepage of gem
+  def homepage(name)
+    (spec = latest_gemspec(name)) && spec.homepage
   end
 
   # Dependencies that depend on a gem
