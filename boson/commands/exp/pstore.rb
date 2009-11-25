@@ -1,4 +1,8 @@
 module Pstore
+  def self.config
+    {:namespace=>true}
+  end
+
   def self.included(mod)
     require 'pstore'
   end

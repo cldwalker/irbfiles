@@ -18,4 +18,9 @@ module RailsCore
     extend ActionController::UrlWriter
     default_url_options[:host] = 'example.com'
   end
+
+  # Execute sql query
+  def sql(query)
+    ActiveRecord::Base.connection.select_all(query)
+  end
 end

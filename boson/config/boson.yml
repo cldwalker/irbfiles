@@ -89,6 +89,7 @@
       reconnect: 'ActiveRecord::Base.connection.reconnect!'
       recognize_path: ActionController::Routing::Routes.recognize_path
       generate: ActionController::Routing::Routes.generate
+      db_version: ActiveRecord::Migrator.current_version
   exp/delicious:
     :object_namespace: true
     :commands:
