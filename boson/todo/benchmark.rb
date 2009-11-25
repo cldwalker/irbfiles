@@ -7,6 +7,27 @@ def time(times=1)
   ret
 end
 
+# next two from http://pastie.org/private/lx4szvl91miofmyjl46va
+def bench(n=100, runs=10, &b)
+  n = n.to_i
+  t = []
+  runs.times do
+    a = Time.now
+    n.times(&b)
+    t << (Time.now-a)*1000/n
+  end
+  mean   = t.inject { |a,b| a+b }.quo(t.size)
+  stddev = t.map { |a| (a-mean)**2 }.inject { |a,b| a+b }.quo(t.size)**0.5
+  [mean, stddev]
+end
+
+# tiny bench method with nice printing
+ def pbench(n=1, runs=5, &b)
+   m, s = *bench(n,runs,&b)
+   p    = (100.0*s)/m
+   printf "ø %fms (%.1f%%)\n", m, p
+ end
+
 #from http://github.com/mislav/dotfiles/tree/master/irbrc
 if defined? Benchmark
   class Benchmark::ReportProxy
