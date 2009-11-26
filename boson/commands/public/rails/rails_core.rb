@@ -23,4 +23,14 @@ module RailsCore
   def sql(query)
     ActiveRecord::Base.connection.select_all(query)
   end
+
+  # Execute sql query and format mysql records
+  def mysql_sql(query)
+    ActiveRecord::Base.connection.execute(query).all_hashes
+  end
+
+  # Dumps current schema
+  def schema_dump
+    ActiveRecord::SchemaDumper.dump ActiveRecord::Base.connection
+  end
 end

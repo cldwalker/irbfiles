@@ -22,4 +22,14 @@ module FileLib
       File.compare(file1, file2)
     end
   end
+
+  def encrypt(file, encrypted_file)
+    args = %w{openssl des3 -salt -in} << file << '-out' << encrypted_file
+    system *args
+  end
+
+  def decrypt(encrypted_file, normal_file)
+    args = %w{openssl des3 -d -salt -in} << encrypted_file << '-out' << normal_file
+    system *args
+  end
 end

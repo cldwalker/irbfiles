@@ -1,7 +1,7 @@
 module Github
   # @render_options :fields=>{:default=>[:name, :watchers, :forks, :homepage, :description],
   #  :values=>[:homepage, :name, :forks, :private, :watchers, :fork, :url, :description, :owner, :open_issues]}
-  # @options :user=>'cldwalker', [:fork_included,:F]=>true, [:stats,:S]=>true
+  # @options :user=>'cldwalker', [:fork_included,:F]=>:boolean, [:stats,:S]=>true
   # Displays a user's repositories
   def user_repos(options={})
     repos = github_get("/repos/show/#{options[:user]}")['repositories']
