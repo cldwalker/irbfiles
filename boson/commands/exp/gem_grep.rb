@@ -9,18 +9,18 @@ module Gemgrep
     require 'rubygems/specification_hack'
   end
 
+  # @render_options :fields=>{:default=>GemGrep.display_fields, :values=>GemGrep.valid_gemspec_columns}
+  # @options :grep_fields=>{:default=>GemGrep.grep_fields, :values=>GemGrep.valid_gemspec_columns}
   def gem_grep(term, options={})
-    GemGrep.grep_fields = GemGrep.parse_input(options[:g]) if options[:g]
-    GemGrep.display_fields = GemGrep.parse_input(options[:d]) if options[:d]
+    GemGrep.grep_fields = options[:grep_fields]
 
-    total_records = indexes.map {|index|
+    indexes.map {|index|
       records = index.search(term)
       unique_records = records.map {|e| e.name}.uniq.map {|name|
         records.select {|e| e.name == name }.sort_by {|e| e.version }[-1]
       }
       # versions = records.inject({}) {|t,e| (t[e.name] ||= []) << e.version.to_s; t }
     }.flatten
-    render total_records, :fields=>GemGrep.display_fields
   end
 
   def indexes
@@ -28,6 +28,6 @@ module Gemgrep
   end
 
   def servers
-    @servers ||= [:github]
+    @servers ||= [:gemcutter]
   end
 end
