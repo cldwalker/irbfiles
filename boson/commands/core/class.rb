@@ -13,7 +13,7 @@ module ClassLib
 
   # Return a class' immediate children.
   def class_children(klass)
-  (@class_objects ||= ::Class.objects).select {|e| e.superclass == klass }
+  (@class_objects ||= objects(Class)).select {|e| e.superclass == klass }
   end
 
   # from http://blog.jayfields.com/2007/11/ruby-testing-private-methods.html

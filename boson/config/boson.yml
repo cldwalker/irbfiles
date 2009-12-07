@@ -188,6 +188,7 @@
   show_library: sl
   edit: e
   instance_var: inv
+  tagged_gems: tg
 :ignore_directories:
 - ~/code/gems/boson
 :pipe_options:

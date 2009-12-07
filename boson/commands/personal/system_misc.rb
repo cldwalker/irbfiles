@@ -55,6 +55,14 @@ module SystemMisc
     system(cmd)
   end
 
+  # Delete backup files left by text editors
+  def delete_backups
+    backups = Dir.glob('**/*~')
+    menu(backups) do |paths|
+      paths.each {|e| File.unlink(e) }
+    end
+  end
+
   # @options :force=>:boolean, :verbose=>true, :noop=>:boolean, :dir=>'~/code/world'
   # Deletes paths with menu and FileUtils
   def delete_paths(options={})
