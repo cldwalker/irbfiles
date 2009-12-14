@@ -15,7 +15,8 @@ module GoogleReader
     search ? feeds.select {|e| e.send(options[:query_field]) =~ /#{search}/ } : feeds
   end
   
-  # @render_options :fields=>{:values=>[:google_id, :count], :default=>[:google_id, :count]}
+  # @render_options :fields=>{:values=>[:google_id, :count], :default=>[:google_id, :count]},
+  #   :reverse_sort=>true, :sort=>{:default=>:count}
   # List unread feeds
   def unread_feeds
     Google::Reader::Count.all
