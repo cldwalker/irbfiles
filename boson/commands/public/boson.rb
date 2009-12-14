@@ -8,7 +8,7 @@ module BosonLib
       Boson::FileLibrary.library_file(options[:library], Boson.repo.dir)
     elsif options[:library_command]
       Boson::Index.read
-      (lib = Boson::Index.find_library(options[:library_command], true)) &&
+      (lib = Boson.library Boson::Runner.autoload_command(options[:library_command])) &&
       lib.lib_file
     elsif options[:config]
       config_dir + '/boson.yml'

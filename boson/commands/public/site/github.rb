@@ -65,11 +65,13 @@ module Github
     github_get("/user/show/#{user}/following")['users']
   end
 
+  # @options :user=>'cldwalker', :file=>:string
   # Opens a repo with an optional path in a browser
-  def repo(user_repo, file=nil)
-    convert_user_repo(user_repo)
-    repo_url = "http://github.com/#{convert_user_repo user_repo}"
-    repo_url += "/blob/master/" + file if file
+  def repo(user_repo, options={})
+    user_repo = convert_user_repo(user_repo)
+    user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']
+    repo_url = "http://github.com/#{user_repo}"
+    repo_url += "/blob/master/" + options[:file] if options[:file]
     browser repo_url
   end
 
