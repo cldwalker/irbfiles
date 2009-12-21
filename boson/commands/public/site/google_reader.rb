@@ -23,7 +23,6 @@ module GoogleReader
   end
 
   # @render_options {:fields=>{:values=>[:title, :url, :published]}}
-  # @options :offset=>:numeric
   # List latest 20 stories by label
   def stories(label)
     records = Google::Reader::Label.new(label).entries

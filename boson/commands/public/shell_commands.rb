@@ -34,7 +34,7 @@ module ShellCommands
     end
   end
 
-  # @options :confirm=>:boolean
+  # @options :confirm=>{:type=>:boolean, :desc=>"Ask for confirmation before proceeding"}
   # Renames files based on a matching regex and string to replace the matches
   def regname(regex, replace,files, options={})
     file_map = Dir.glob(files).map {|e|

@@ -1,6 +1,10 @@
 module BosonLib
-  # @options :editor=>ENV['EDITOR'], :string=>:string, :file=>:string, :config=>:boolean,
-  #  :library=>:string, :library_command=>:string
+  # @options :editor=>{:default=>ENV['EDITOR'], :desc=>'Editor to use for editing'},
+  #  :string=>{:type=>:string, :desc=>'Edit string'},
+  #  :file=>{:type=>:string, :desc=>'Edit file'},
+  #  :config=>{:type=>:boolean, :desc=>'Edit main boson config file'},
+  #  :library=>{:type=>:string, :desc=>'Edit boson library'},
+  #  :library_command=>{:type=>:string, :desc=>'Edit boson command' }
   # Edit a file or string, boson's main config file or a boson library file
   def edit(options={})
     options[:editor] ||= ENV['EDITOR']
@@ -54,15 +58,6 @@ module BosonLib
         [:option_commands, option_cmds.size], [:render_option_commands, render_option_cmds.size], ]
     end
     nil
-  end
-
-  # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
-  # Updates/resets index of libraries and commands
-  def index(options={})
-    Boson::Index.indexes {|index|
-      File.unlink(index.marshal_file) if options[:reset] && File.exists?(index.marshal_file)
-      index.update(options)
-    }
   end
 
   # Aliases a command

@@ -1,7 +1,9 @@
 module Github
   # @render_options :fields=>{:default=>[:name, :watchers, :forks, :homepage, :description],
   #  :values=>[:homepage, :name, :forks, :private, :watchers, :fork, :url, :description, :owner, :open_issues]}
-  # @options :user=>'cldwalker', [:fork_included,:F]=>:boolean, [:stats,:S]=>true
+  # @options :user=>{:default=>'cldwalker', :desc=>'Github user' },
+  #  [:forks,:F]=>{:type=>:boolean, :desc=>'Display forked repositories'},
+  #  [:stats,:S]=>{:default=>true, :desc=>'Display repository statistics i.e. averages'}
   # Displays a user's repositories
   def user_repos(options={})
     repos = github_get("/repos/show/#{options[:user]}")['repositories']
@@ -26,7 +28,7 @@ module Github
 
   # @render_options :fields=>{:values=>[:homepage, :name, :watchers, :private, :forks, :fork, :url, :description, :owner, :open_issues],
   #  :default=>[:owner, :watchers, :forks, :homepage, :description]}
-  # @options :user=>'cldwalker'
+  # @options :user=>{:default=>'cldwalker', :desc=>'Github user'}
   # Displays network of a given user-repo i.e. wycats-thor or defunkt/rip
   def repo_network(user_repo, options={})
     user_repo = convert_user_repo(user_repo)
@@ -45,7 +47,7 @@ module Github
   # td: /commits/list/:user_id/:repository/:branch/*path
   # @render_options :fields=>{:values=>%w{id url committed_date authored_date message},
   #  :default=>%w{id authored_date message}}
-  # @options :branch=>'master'
+  # @options :branch=>{:default=>'master', :desc=>'Git repo branch'}
   # List commits of a given user-repo
   def commit_list(user_repo, options={})
     user_repo = convert_user_repo(user_repo)
@@ -65,7 +67,8 @@ module Github
     github_get("/user/show/#{user}/following")['users']
   end
 
-  # @options :user=>'cldwalker', :file=>:string
+  # @options :user=>{:default=>'cldwalker', :desc=>'Github user'},
+  #  :file=>{:type=>:string, :desc=>'Relative file path within repository' }
   # Opens a repo with an optional path in a browser
   def repo(user_repo, options={})
     user_repo = convert_user_repo(user_repo)

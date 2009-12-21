@@ -1,4 +1,13 @@
-module BosonLib
+module BosonLib  
+  # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
+  # Updates/resets index of libraries and commands
+  def index(options={})
+    Boson::Index.indexes {|index|
+      File.unlink(index.marshal_file) if options[:reset] && File.exists?(index.marshal_file)
+      index.update(options)
+    }
+  end
+
   # Downloads a url and saves to a local boson directory
   def download(url)
     filename = determine_download_name(url)

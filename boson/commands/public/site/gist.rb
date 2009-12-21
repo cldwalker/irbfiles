@@ -6,7 +6,9 @@ module Gist
     require 'net/http'
   end
 
-  # @options :private=>:boolean, :string=>:string, :file=>:string
+  # @options :private=>{:type=>:boolean, :desc=>'Private gist'},
+  #  :string=>{:type=>:string, :desc=>'Paste string'},
+  #  :file=>{:type=>:string, :desc=>'Paste file' }
   # @desc gist < file.txt ; echo secret | gist -p ; gist 1234 > something.txt
   def gist(*args)
     options = args[-1].is_a?(Hash) ? args.pop : {}

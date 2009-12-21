@@ -7,7 +7,7 @@ module Links
 
   # @render_options :fields=>{:default=>[:title, :href],
   #  :values=>[:title, :link]}
-  # @options :external=>false
+  # @options :external=>{:type=>:boolean, :desc=>'External links only'}
   # Displays the links from a URL
   def links_in(url, options={})
     links = []

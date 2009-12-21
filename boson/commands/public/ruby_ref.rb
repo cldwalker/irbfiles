@@ -37,8 +37,8 @@ module RubyRef
   end
 
   # @render_options :change_fields=>{:default=>{0=>'name', 1=>'version'}}
-  # @options :loaded_path=>:boolean
-  # List versions of currently loaded gems
+  # @options :loaded_path=>{:type=>:boolean, :desc=>'Use $LOADED_PATH to detect gems'}
+  # List versions of currently loaded gems by using Gem's loaded_specs
   def gem_versions(options={})
     if options[:loaded_path]
       $:.map {|e| e =~ /\/([\w-]+)-(\d\.\d(\.\d)?)\/lib/ ? [$1,$2] : nil }.compact.uniq

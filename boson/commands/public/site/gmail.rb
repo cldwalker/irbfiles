@@ -6,7 +6,7 @@ module GmailLib
   end
 
   #@render_options :fields=>[:uid, :body], :filters=>{:default=>{:body=>[:[], /Subject: (.*)\r\n/, 1]}}
-  #@options :unread=>true
+  #@options :unread=>{:default=>true, :desc=>"Only unread emails"}
   # Lists emails in inbox folder
   def inbox(options={})
     options[:unread] ? gmail.inbox.emails(:unread) : gmail.inbox.emails

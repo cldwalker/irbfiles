@@ -3,11 +3,12 @@ module RakeLib
     require 'rake'
   end
 
-  # @options :benchmark=>:boolean, :run=>:boolean
+  # @options :benchmark=>{:type=>:boolean, :desc=>'Benchmarks a task by setting ENV[BENCHMARK]'},
+  #   :run=>{:type=>:boolean, :desc=>"Run rake task once by using run() instead of invoke_task()"}
   # Execute a rake task
   def rake(task='default', options={})
     clean_argv
-    ENV['BENCHMARK'] = options[:benchmark] ? 'true' : 'false' # to enable benchmark gem
+    ENV['BENCHMARK'] = options[:benchmark] ? 'true' : 'false' # to enable test_benchmark gem
     if options[:run]
       ARGV.replace [task]
       Rake.application.run
