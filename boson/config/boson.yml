@@ -49,6 +49,8 @@
       boson_command: Boson::Command.find
       autoload_command: Boson::Runner.autoload_command
     :commands:
+      autoload_command:
+        :description: autoloads command by its associated library
       boson_command:
         :description: Get command object by name or alias
       boson_library:

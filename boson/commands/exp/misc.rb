@@ -51,4 +51,12 @@ module Misc
         end
     end
   end
+
+  # @options :real=>:boolean
+  # Strip whitespace from files
+  def whitespace(files, options={})
+    string = options[:real] ? "ruby -pi" : "ruby -p"
+    string += ' -e "gsub(/\s+$/, $/)" ' + files
+    system(string)
+  end
 end
