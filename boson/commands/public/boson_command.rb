@@ -13,8 +13,8 @@ module BosonCommand
 
   # @render_options :method=>'puts'
   # Returns the method body of a command using method_location.
-  def show_command(name)
-    return "No method location for #{name}" unless (loc = method_location(name))
+  def show_command(command)
+    return "No method location for #{command}" unless (loc = method_location(command))
     lines = IO.readlines(loc[0])
     method_lines = []
     index = loc[1] - 1

@@ -4,6 +4,11 @@ module ::Boson::Args
     ::Boson::Util.any_const_get(val)
   end
 
+  def command_argument(val)
+    Boson::Index.read
+    unalias Boson::Index.all_main_methods, val
+  end
+
   def unalias(possible, value)
     possible.sort.grep(/^#{value}/)[0] || value
   end
