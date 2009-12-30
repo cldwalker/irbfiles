@@ -22,15 +22,15 @@ module GemBrain
 
   # @options :query=>'', :sudo=>:boolean, :opts=>:string
   # Execute gem command for matching gems
-  def execute(command, options={})
+  def execute(subcommand, options={})
     local_commands = %w{add recursive_uninstall remove reverse_dependencies}
-    local_command = local_commands.find {|e| e =~ /^#{command}/}
-    args = ['gem', command]
+    local_command = local_commands.find {|e| e =~ /^#{subcommand}/}
+    args = ['gem', subcommand]
     args.unshift 'sudo' if options[:sudo]
     menu(all_gems(options[:query]), :ask=>false) do |e|
-      puts "Executing #{local_command || command} for #{e.inspect}"
+      puts "Executing #{local_command || subcommand} for #{e.inspect}"
       local_command ? send(local_command, *e) : options[:opts] ?
-        Boson.full_invoke(command, (e << options[:opts]).join(' ')) : system(*(args + e))
+        Boson.full_invoke(subcommand, (e << options[:opts]).join(' ')) : system(*(args + e))
     end
   end
 

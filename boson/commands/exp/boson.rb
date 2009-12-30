@@ -1,4 +1,20 @@
-module BosonLib  
+module BosonLib
+  # @render_options :change_fields=>['arguments', 'commands']
+  # @options :count=>true
+  def arguments(options={})
+    Boson::Index.read
+    hash = Boson::Index.commands.inject({}) {|t,com|
+      (com.args || []).each {|arg|
+        (t[arg[0]] ||= []) << com.name
+      }
+      t
+    }
+    hash.inject({}) {|h,(k,v)|
+      h[k] = options[:count] ? v.size : v.inspect
+      h
+    }
+  end
+
   # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
   # Updates/resets index of libraries and commands
   def index(options={})
