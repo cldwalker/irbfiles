@@ -29,15 +29,15 @@ module BosonLib
 
   # @render_options :method=>'puts'
   # Show a library
-  def show_library(lib)
-    file = Boson.repos.map {|e| Boson::FileLibrary.library_file(lib, e.dir) }.
+  def show_library(lib_path)
+    file = Boson.repos.map {|e| Boson::FileLibrary.library_file(lib_path, e.dir) }.
       find {|e| File.exists?(e) }
     file ? File.read(file) : "Library file doesn't exist"
   end
 
   # Uninstall a library
-  def uninstall(lib)
-    file = Boson::FileLibrary.library_file(lib, Boson.repo.dir)
+  def uninstall(lib_path)
+    file = Boson::FileLibrary.library_file(lib_path, Boson.repo.dir)
     File.unlink file
     puts("Deleted '#{file}'.")
   end

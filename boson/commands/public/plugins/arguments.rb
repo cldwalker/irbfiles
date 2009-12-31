@@ -4,9 +4,22 @@ module ::Boson::Args
     ::Boson::Util.any_const_get(val)
   end
 
+  def library_argument(val)
+    Boson::Index.read
+    unalias Boson::Index.libraries.map {|e| e.name }, val
+  end
+
+  def lib_path_argument(val)
+    Boson::Index.read
+    lib_hash = Boson::Index.libraries.map {|e| e.name}.inject({}) {|a,e|
+      a[File.basename(e)] = e; a }
+    val = unalias lib_hash.keys, val
+    lib_hash[val] || val
+  end
+
   def command_argument(val)
     Boson::Index.read
-    unalias Boson::Index.all_main_methods, val
+    unalias Boson::Index.commands.map {|e| e.name }, val
   end
 
   def unalias(possible, value)

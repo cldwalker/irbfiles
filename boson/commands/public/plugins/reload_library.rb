@@ -1,22 +1,22 @@
 # This file contains the beginnings of reloading libraries in the console. Only
 # implemented for FileLibrary kind of.
 class ::Boson::Manager
-  def self.reload(source, options={})
-    if (lib = Boson.library(source))
+  def self.reload(library, options={})
+    if (lib = Boson.library(library))
       if lib.loaded
         command_size = Boson.commands.size
         @options = options
         if (result = rescue_load_action(lib.name, :reload) { lib.reload })
           after_reload(lib)
-          puts "Reloaded library #{source}: Added #{Boson.commands.size - command_size} commands" if options[:verbose]
+          puts "Reloaded library #{library}: Added #{Boson.commands.size - command_size} commands" if options[:verbose]
         end
         result
       else
-        puts "Library hasn't been loaded yet. Loading library #{source}..." if options[:verbose]
-        load(source, options)
+        puts "Library hasn't been loaded yet. Loading library #{library}..." if options[:verbose]
+        load(library, options)
       end
     else
-      puts "Library #{source} doesn't exist." if options[:verbose]
+      puts "Library #{library} doesn't exist." if options[:verbose]
       false
     end
   end

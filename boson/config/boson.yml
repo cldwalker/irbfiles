@@ -57,6 +57,8 @@
         - command
         :description: Get command object by name or alias
       boson_library:
+        :args:
+        - lib_path
         :description: Get library object by name
       detect:
         :description: Detect modules, gems and kernel methods loaded
