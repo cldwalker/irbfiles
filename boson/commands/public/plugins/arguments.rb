@@ -1,8 +1,13 @@
 module ::Boson::Args
+  def url_argument(val)
+    val[/:\/\//] ? val : "http://#{val}"
+  end
+
   def klass_argument(val)
     val = unalias(Object.constants, val)
     ::Boson::Util.any_const_get(val)
   end
+  alias_method :mod_argument, :klass_argument
 
   def library_argument(val)
     Boson::Index.read
@@ -33,7 +38,8 @@ class ::Boson::OptionCommand
 
   def add_default_args(args, obj)
     args.each_with_index do |arg,i|
-      break unless (arg_name = @command.args[i])
+      break unless @command.args[i] && (arg_name = @command.args[i][0])
+      arg_name.gsub!(/^\*|s$/,'')
       if respond_to?("#{arg_name}_argument")
         args[i] = send("#{arg_name}_argument", arg)
         puts "#{arg.inspect} -> #{args[i].inspect}" if (Boson::BinRunner.options[:verbose] rescue nil)

@@ -8,11 +8,9 @@ module GoogleReader
   end
 
   # @render_options :fields=>{:default=>[:title, :google_id] }
-  # @options :query_field=>{:values=>%w{google_id title}, :default=>'google_id'}
   # List feeds and their google ids
-  def all_feeds(search=nil, options={})
-    feeds = Google::Reader::Subscription.all
-    search ? feeds.select {|e| e.send(options[:query_field]) =~ /#{search}/ } : feeds
+  def all_feeds
+    Google::Reader::Subscription.all
   end
   
   # @render_options :fields=>{:values=>[:google_id, :count], :default=>[:google_id, :count]},
