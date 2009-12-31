@@ -53,6 +53,8 @@
       autoload_command:
         :description: autoloads command by its associated library
       boson_command:
+        :args:
+        - command
         :description: Get command object by name or alias
       boson_library:
         :description: Get library object by name

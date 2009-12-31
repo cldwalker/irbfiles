@@ -31,5 +31,9 @@ class ::Boson::OptionCommand
   end
 end
 
+# This plugin interprets arguments from commands that are overridden by Boson::Scientist
+# and Boson::OptionCommand.
+# Arguments are intercepted by name and aliased if possible by an aliasing
+# method defined in Boson::Args.
 module Arguments
 end
