@@ -1,8 +1,8 @@
 module ExtLoader
   # Loads an extension library i.e. libraries under core/*.
-  def load_extension(name)
-    return "Extension not found" unless (lib = Boson.library(name))
-    basename = File.basename(name)
+  def load_extension(lib_path)
+    return "Extension not found" unless (lib = Boson.library(lib_path))
+    basename = File.basename(lib_path)
     eval %[module Boson::Commands::NewCore ; end]
     new_mod = Boson::Util.camelize "boson/commands/new_core/#{basename}"
     eval ExtLoader.generate_extension_module(new_mod, lib.module)

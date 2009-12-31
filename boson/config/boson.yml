@@ -51,6 +51,8 @@
       autoload_command: Boson::Runner.autoload_command
     :commands:
       autoload_command:
+        :args:
+        - command
         :description: autoloads command by its associated library
       boson_command:
         :args:

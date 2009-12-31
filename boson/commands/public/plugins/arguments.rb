@@ -32,12 +32,11 @@ class ::Boson::OptionCommand
   alias_method :_add_default_args, :add_default_args
 
   def add_default_args(args, obj)
-    # p [@command.name, args]
     args.each_with_index do |arg,i|
       break unless (arg_name = @command.args[i])
       if respond_to?("#{arg_name}_argument")
         args[i] = send("#{arg_name}_argument", arg)
-        puts "#{arg.inspect} -> #{args[i].inspect}"
+        puts "#{arg.inspect} -> #{args[i].inspect}" if (Boson::BinRunner.options[:verbose] rescue nil)
       end
     end
     _add_default_args(args, obj)
