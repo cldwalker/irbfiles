@@ -6,14 +6,14 @@ module IsItRuby19
 
   # @render_options :fields=>{:values=>%w{version works_for_me platform body name url}}
   # List all comments for a given gem
-  def gem(name)
-    comment_feed(name).each {|e| e["platform"] = e['platform']['name']; e["body"] = e["body"].gsub(/\r?\n\r?/,";") }
+  def gem(rubygem)
+    comment_feed(rubygem).each {|e| e["platform"] = e['platform']['name']; e["body"] = e["body"].gsub(/\r?\n\r?/,";") }
   end
 
   # @render_options :fields=>[:name, :stat]
   # Compares given gems by % of users that report success with gems
-  def gems(*names)
-    names.map {|e| stat(e) }
+  def gems(*rubygems)
+    rubygems.map {|e| stat(e) }
   end
 
   private

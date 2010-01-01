@@ -36,10 +36,14 @@ class ::Boson::OptionCommand
   include ::Boson::Args
   alias_method :_add_default_args, :add_default_args
 
+  def self.extract_argument(arg_name)
+    arg_name.gsub(/^\*(.*?)s?$/, '\1')
+  end
+
   def add_default_args(args, obj)
     args.each_with_index do |arg,i|
       break unless @command.args[i] && (arg_name = @command.args[i][0])
-      arg_name.gsub!(/^\*|s$/,'')
+      arg_name = self.class.extract_argument(arg_name)
       if respond_to?("#{arg_name}_argument")
         args[i] = send("#{arg_name}_argument", arg)
         puts "#{arg.inspect} -> #{args[i].inspect}" if (Boson::BinRunner.options[:verbose] rescue nil)

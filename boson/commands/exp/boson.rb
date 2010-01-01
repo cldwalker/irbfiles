@@ -1,11 +1,12 @@
 module BosonLib
   # @render_options :change_fields=>['arguments', 'commands']
   # @options :count=>true, :transform=>true
+  # This command lists arguments and depends on arguments plugin
   def arguments(options={})
     Boson::Index.read
     hash = Boson::Index.commands.inject({}) {|t,com|
       (com.args || []).each {|arg|
-        arg_name = options[:transform] ? arg[0].to_s.gsub(/^\*|s$/,'')  : arg[0]
+        arg_name = options[:transform] ? Boson::OptionCommand.extract_argument(arg[0].to_s) : arg[0]
         (t[arg_name] ||= []) << com.name
       }
       t

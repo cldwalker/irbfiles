@@ -35,13 +35,13 @@ module GemBrain
   end
 
   # Uninstall gem and all its dependencies
-  def recursive_uninstall(name)
-    deps = dependencies(name)
+  def recursive_uninstall(rubygem)
+    deps = dependencies(rubygem)
     if deps.empty?
-      system('sudo','gem','uninstall',name)
+      system('sudo','gem','uninstall',rubygem)
     else
       menu(deps, :ask=>false) do |gems|
-        gems.unshift name
+        gems.unshift rubygem
         system(*(%w{sudo gem uninstall} + gems))
         puts("Uninstalled gems: #{gems.join(', ')}")
       end
@@ -49,20 +49,20 @@ module GemBrain
   end
 
   # Add gem to approved list
-  def add(name)
-    GemBrain.add(name)
+  def add(rubygem)
+    GemBrain.add(rubygem)
   end
 
   # @options :uninstall=>:boolean
   # Recursively uninstall gem and remove it from approved list
-  def remove(name, options={})
-    recursive_uninstall(name) if options[:uninstall]
-    GemBrain.remove(name)
+  def remove(rubygem, options={})
+    recursive_uninstall(rubygem) if options[:uninstall]
+    GemBrain.remove(rubygem)
   end
 
   # Runtime dependencies for latest version of gem
-  def dependencies(name)
-    if (latest = latest_gemspec(name))
+  def dependencies(rubygem)
+    if (latest = latest_gemspec(rubygem))
       latest.dependencies.select {|e| e.type == :runtime }.map {|e| e.name}
     else
       []
@@ -70,25 +70,25 @@ module GemBrain
   end
 
   # Gemspec for latest version of gem
-  def latest_gemspec(name)
-    ::Gem.source_index.gems.values.select {|e| e.name == name }.sort_by {|e| e.version }[-1]
+  def latest_gemspec(rubygem)
+    ::Gem.source_index.gems.values.select {|e| e.name == rubygem }.sort_by {|e| e.version }[-1]
   end
 
   # @config :global_options=>true
   # Homepage of gem
-  def homepage(name)
-    (spec = latest_gemspec(name)) && spec.homepage
+  def homepage(rubygem)
+    (spec = latest_gemspec(rubygem)) && spec.homepage
   end
 
   # Dependencies that depend on a gem
-  def reverse_dependencies(name)
-    ::Gem.source_index.gems.values.select {|e| e.dependencies.any? {|e| e.name == name && e.type == :runtime}}.
+  def reverse_dependencies(rubygem)
+    ::Gem.source_index.gems.values.select {|e| e.dependencies.any? {|e| e.name == rubygem && e.type == :runtime}}.
       map {|e| "#{e.name}-#{e.version}" }
   end
 
   # Version of currently loaded gem starting with name
-  def version(name)
-    (spec = Gem.loaded_specs.values.find {|e| e.name =~ /(-|^)#{name}/ }) &&
+  def version(rubygem)
+    (spec = Gem.loaded_specs.values.find {|e| e.name =~ /(-|^)#{rubygem}/ }) &&
       spec.version.to_s
   end
 
@@ -100,11 +100,11 @@ module GemBrain
 
   # @options :tags=>[], :menu=>:boolean
   # Tag gem(s)
-  def tag(*gems)
-    options = gems[-1].is_a?(Hash) ? gems.pop : {}
-    gems = menu(untagged_gems) if options[:menu]
+  def tag(*rubygems)
+    options = rubygems[-1].is_a?(Hash) ? rubygems.pop : {}
+    rubygems = menu(untagged_gems) if options[:menu]
     return "Tags required" if options[:tags].empty?
-    GemTagger.add(gems, options[:tags])
+    GemTagger.add(rubygems, options[:tags])
   end
 
   private
@@ -117,8 +117,8 @@ module GemBrain
     gems.map {|e| ghub_gems.include?(e) ? e.split('-', 2)[-1]: e}
   end
 
-  def recursive_dependencies(name)
-    dependencies(name).map {|e| [e] + recursive_dependencies(e) }.flatten.uniq
+  def recursive_dependencies(rubygem)
+    dependencies(rubygem).map {|e| [e] + recursive_dependencies(e) }.flatten.uniq
   end
 
   def untagged_gems
