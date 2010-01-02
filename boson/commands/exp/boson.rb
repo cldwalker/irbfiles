@@ -1,7 +1,7 @@
 module BosonLib
   # @render_options :change_fields=>['arguments', 'commands']
   # @options :count=>true, :transform=>true
-  # This command lists arguments and depends on arguments plugin
+  # Lists arguments from all known commands. Depends on option_command_filters plugin.
   def arguments(options={})
     Boson::Index.read
     hash = Boson::Index.commands.inject({}) {|t,com|
@@ -10,6 +10,23 @@ module BosonLib
         (t[arg_name] ||= []) << com.name
       }
       t
+    }
+    hash.inject({}) {|h,(k,v)|
+      h[k] = options[:count] ? v.size : v.inspect
+      h
+    }
+  end
+
+  # @render_options :change_fields=>['name', 'count']
+  # @options :type=>:boolean, :count=>true
+  # Lists option stats from all known commands.
+  def options(options={})
+    Boson::Index.read
+    hash = Boson::Index.commands.select {|e| e.options}.inject({}) {|a,com|
+      (options[:type] ? com.option_parser.types : com.option_parser.names).each {|e|
+        (a[e] ||= []) << com.name
+      }
+      a
     }
     hash.inject({}) {|h,(k,v)|
       h[k] = options[:count] ? v.size : v.inspect

@@ -2,7 +2,8 @@
 :defaults:
 - public/plugins/meth_missing
 - public/plugins/options
-- public/plugins/arguments
+- public/plugins/option_command_filters
+- public/plugins/my_filters
 :console_defaults:
 - personal/completion
 - personal/alias
