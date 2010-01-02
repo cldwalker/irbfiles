@@ -1,19 +1,19 @@
 module StringLib
   # @desc Counts # of times the given string is in the string. This is unlike String.count which
   # only counts the given characters.
-  def count_any(str)
+  def count_any(string)
     count = 0
-    self.gsub(str) {|s| 
+    self.gsub(string) {|s| 
       count += 1
-      str
+      string
     }
     count
   end
 
-  # Pipes string to command
-  def pipe(str, cmd)
+  # Pipes stringing to command
+  def pipe(string, cmd)
     IO.popen(cmd, 'r+') do |pipe|
-      pipe.write(str)
+      pipe.write(string)
       pipe.close_write
       pipe.read
     end

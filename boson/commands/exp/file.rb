@@ -1,14 +1,14 @@
 module FileLib
   # @options :file=>true
-  def md5_hash(str, options={})
+  def md5_hash(string, options={})
     require 'digest/md5'
-    Digest::MD5.hexdigest(options[:file] ? File.read(str) : str)
+    Digest::MD5.hexdigest(options[:file] ? File.read(string) : string)
   end
 
   # @options :file=>true
-  def sha1_hash(str, options={})
+  def sha1_hash(string, options={})
     require 'digest/sha1'
-    Digest::SHA1.hexdigest(options[:file] ? File.read(str) : str)
+    Digest::SHA1.hexdigest(options[:file] ? File.read(string) : string)
   end
 
   # @options :file=>true, :algorithm=>{:type=>:string, :values=>[:sha1, :md5]}

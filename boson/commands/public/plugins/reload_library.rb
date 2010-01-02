@@ -55,8 +55,8 @@ end
 
 module ReloadLibrary
   # Reloads a library or an array of libraries
-  def reload_library(source, options={})
-    Boson::Manager.reload(source, options)
+  def reload_library(library, options={})
+    Boson::Manager.reload(library, options)
   end
 end
 
