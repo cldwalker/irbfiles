@@ -206,6 +206,8 @@
     :type: :boolean
     :desc: Open in browser
   :copy:
+    :alias:
+    - y
     :type: :boolean
     :desc: Copy to clipboard
   :pastie:
@@ -228,6 +230,13 @@
     :desc: Slice a list
     :pipe: multislice
     :filter: true
+  :command:
+    :alias:
+    - C
+    :type: :string
+    :desc: Call any command
+    :filter: true
+    :pipe: post_command
 :render_options:
   :all_fields:
     :type: :boolean

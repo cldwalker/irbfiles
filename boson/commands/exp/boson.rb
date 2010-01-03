@@ -11,10 +11,7 @@ module BosonLib
       }
       t
     }
-    hash.inject({}) {|h,(k,v)|
-      h[k] = options[:count] ? v.size : v.inspect
-      h
-    }
+    count_or_inspect(hash, options)
   end
 
   # @render_options :change_fields=>['name', 'count']
@@ -32,10 +29,19 @@ module BosonLib
       }
       a
     }
+    count_or_inspect(hash, options)
+  end
+
+  def count_or_inspect(hash, options)
     hash.inject({}) {|h,(k,v)|
       h[k] = options[:count] ? v.size : v.inspect
       h
     }
+  end
+
+  # Used as a pipe option to pipe to any command
+  def post_command(arg, command)
+    Boson.full_invoke(command, [arg])
   end
 
   # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
