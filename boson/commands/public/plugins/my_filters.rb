@@ -36,6 +36,8 @@ module ::Boson::OptionCommand::Filters
   def library_opt(val)
     lib_path_argument(val)
   end
+
+  alias_method :command_opt, :command_argument
 end
 
 module MyFilters

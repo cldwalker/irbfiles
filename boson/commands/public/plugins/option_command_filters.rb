@@ -42,6 +42,6 @@ end
 # This plugin filters arguments and options passed to option commands (Boson::OptionCommand).
 # Arguments and options are intercepted by name and filtered by corresponding methods defined in
 # the module Boson::OptionCommand::Filters. For example, an argument or option named 'klass' is filtered by
-# methods 'klass_argument' or 'klass_opt'.
+# a method 'klass_argument' or 'klass_opt'.
 module OptionCommandFilters
 end

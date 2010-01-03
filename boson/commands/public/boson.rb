@@ -4,15 +4,15 @@ module BosonLib
   #  :file=>{:type=>:string, :desc=>'Edit file'},
   #  :config=>{:type=>:boolean, :desc=>'Edit main boson config file'},
   #  :library=>{:type=>:string, :desc=>'Edit boson library'},
-  #  :library_command=>{:type=>:string, :desc=>'Edit boson command' }
+  #  [:command, :L]=>{:type=>:string, :desc=>'Edit boson command' }
   # Edit a file or string, boson's main config file or a boson library file
   def edit(options={})
     options[:editor] ||= ENV['EDITOR']
     file = if options[:library]
       Boson::FileLibrary.library_file(options[:library], Boson.repo.dir)
-    elsif options[:library_command]
+    elsif options[:command]
       Boson::Index.read
-      (lib = Boson.library Boson::Runner.autoload_command(options[:library_command])) &&
+      (lib = Boson.library Boson::Runner.autoload_command(options[:command])) &&
       lib.lib_file
     elsif options[:config]
       config_dir + '/boson.yml'
