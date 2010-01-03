@@ -4,6 +4,7 @@
 - public/plugins/options
 - public/plugins/option_command_filters
 - public/plugins/my_filters
+- exp/plugins/object_namespace
 :console_defaults:
 - personal/completion
 - personal/alias
