@@ -8,6 +8,6 @@ class ::Boson::Command
 end
 
 # This plugin forces all commands to be wrapped by an OptionCommand.
-# This is useful when using the arguments plugin on non-option commands.
+# This is useful when wanting to use the option_command_filters plugin on non-option commands.
 module OptionCommands
 end
