@@ -20,7 +20,7 @@ class ::Boson::OptionCommand
       arg_name = self.class.extract_argument(arg_name)
       if respond_to?("#{arg_name}_argument")
         args[i] = send("#{arg_name}_argument", arg)
-        if (Boson::BinRunner.options || {})[:verbose]
+        if (Boson::BinRunner.options[:verbose] rescue false)
           puts "argument: #{arg.inspect} -> #{args[i].inspect}"
         end
       end
@@ -31,7 +31,7 @@ class ::Boson::OptionCommand
     options.each do |name,value|
       if respond_to?("#{name}_opt")
         options[name] = send("#{name}_opt", value)
-        if (Boson::BinRunner.options || {})[:verbose]
+        if (Boson::BinRunner.options[:verbose] rescue false)
           puts "option: #{value.inspect} -> #{options[name].inspect}"
         end
       end
