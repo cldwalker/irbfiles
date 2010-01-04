@@ -4,7 +4,6 @@
 - public/plugins/options
 - public/plugins/option_command_filters
 - public/plugins/my_filters
-- exp/plugins/object_namespace
 :console_defaults:
 - personal/completion
 - personal/alias
@@ -102,6 +101,8 @@
       generate: ActionController::Routing::Routes.generate
       db_version: ActiveRecord::Migrator.current_version
   exp/delicious:
+    :dependencies:
+    - exp/plugins/object_namespace
     :object_namespace: true
     :commands:
     - bundles_all
@@ -122,6 +123,8 @@
     - mwhich
     - mgrep
   exp/highline:
+    :dependencies:
+    - exp/plugins/object_namespace
     :commands:
     - agree
     - ask
