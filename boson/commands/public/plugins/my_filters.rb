@@ -25,6 +25,7 @@ module ::Boson::OptionCommand::Filters
 
   def command_argument(val)
     Boson::Index.read
+    return val if Boson::Index.find_command(val)
     unalias Boson::Index.commands.map {|e| e.name }, val
   end
 

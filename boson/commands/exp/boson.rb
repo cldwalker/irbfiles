@@ -1,6 +1,6 @@
 module BosonLib
   # @render_options :change_fields=>['arguments', 'commands']
-  # @options :count=>true, :transform=>true
+  # @options :count=>:boolean, :transform=>true
   # Lists arguments from all known commands. Depends on option_command_filters plugin.
   def arguments(options={})
     Boson::Index.read
