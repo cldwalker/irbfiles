@@ -18,6 +18,9 @@ Here's a brief outline and description of major directories under boson/:
     is buggy here feel free to fork and pull.
     * plugins/: Plugin libraries that extend Boson's behavior.
     * site/: Libraries related to specific websites and their APIs.
+    * url/: Libraries that generate url strings. When used in conjunction with
+      exp/plugins/url_libraries plugin, can be used to open browser to generated urls.
+      Inspired by [queriac](http://github.com/cldwalker/queriac).
     * rails/: Rails-related libraries.
   * exp/: Experimental libraries that one day should be public. These libraries are usually half-baked good ideas that
     haven't quite realized their full potential.

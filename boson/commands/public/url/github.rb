@@ -14,8 +14,8 @@ module GithubUrl
 
   # @options :user=>{:default=>'cldwalker', :desc=>'Github user'},
   #  :file=>{:type=>:string, :desc=>'Relative file path within repository' },
-  #  :subpage=>{:type=>:string, :values=>%w{wiki issues network commits traffic punch_card timeline},
-  #    :desc=>'Subpage belonging to repo' }
+  #  :subpage=>{:type=>:string, :values=>%w{readme wiki issues network commits traffic punch_card timeline},
+  #    :desc=>'Subpage belonging to repo', :bool_default=>'readme' }
   # Opens a repo with an optional path in a browser
   def repo(user_repo, options={})
     user_repo = default_user_repo(user_repo)
@@ -32,6 +32,8 @@ module GithubUrl
       when 'traffic' then repo_url << '/graphs/traffic'
       when 'punch_card' then repo_url << '/graphs/punch_card'
       when 'timeline' then repo_url << '/graphs/impact'
+      else
+        repo_url << '#readme'
       end
     end
     repo_url
