@@ -1,9 +1,9 @@
 class ::Boson::Command
-  def self.create(name, library)
-    new (library.commands_hash[name] || {}).merge(
-      {:name=>name, :lib=>library.name, :namespace=>library.namespace}.
-      merge!(:global_options=>true)
-    )
+  class <<self
+    alias_method :_new_options, :new_options
+    def new_options(name, library)
+      _new_options(name, library).merge!(:global_options=>true)
+    end
   end
 end
 
