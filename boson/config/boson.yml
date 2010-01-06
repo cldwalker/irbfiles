@@ -42,6 +42,8 @@
       user_repos:
         :alias: ur
         :render_options:
+          :command:
+            :default: average
           :reverse_sort: true
           :sort:
             :default: :watchers
