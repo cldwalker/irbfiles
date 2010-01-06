@@ -4,6 +4,7 @@
 - public/plugins/options
 - public/plugins/option_command_filters
 - public/plugins/my_filters
+- exp/plugins/global_option_defaults
 :bin_defaults:
 - exp/plugins/url_libraries
 :console_defaults:

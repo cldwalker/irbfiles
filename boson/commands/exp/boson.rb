@@ -1,5 +1,6 @@
 module BosonLib
-  # @render_options :change_fields=>['arguments', 'commands']
+  # @render_options :change_fields=>['arguments', 'commands'],
+  #  :filters=>{:default=>{'commands'=>:inspect}}
   # @options :count=>:boolean, :transform=>true
   # Lists arguments from all known commands. Depends on option_command_filters plugin.
   def arguments(options={})
@@ -11,10 +12,9 @@ module BosonLib
       }
       t
     }
-    count_or_inspect(hash, options)
   end
 
-  # @render_options :change_fields=>['name', 'count']
+  # @render_options :change_fields=>['name', 'count'], :filters=>{:default=>{'count'=>:inspect}}
   # @options :type=>:boolean, :count=>true, [:skip_booleans, :S]=>true
   # @desc Lists option stats from all known commands. Doesn't include boolean options
   # if listing option names.
@@ -28,14 +28,6 @@ module BosonLib
         (a[e] ||= []) << com.name
       }
       a
-    }
-    count_or_inspect(hash, options)
-  end
-
-  def count_or_inspect(hash, options)
-    hash.inject({}) {|h,(k,v)|
-      h[k] = options[:count] ? v.size : v.inspect
-      h
     }
   end
 
