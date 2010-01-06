@@ -14,17 +14,19 @@ module BosonLib
     }
   end
 
-  # @render_options :change_fields=>['name', 'count'], :filters=>{:default=>{'count'=>:inspect}}
-  # @options :type=>:boolean, :count=>true, [:skip_booleans, :S]=>true
+  # @render_options :change_fields=>['name', 'commands'], :filters=>{:default=>{'commands'=>:inspect}}
+  # @options :type=>:boolean, [:skip_booleans, :S]=>true, :toggle_global_parser=>:boolean
   # @desc Lists option stats from all known commands. Doesn't include boolean options
   # if listing option names.
   def options(options={})
     Boson::Index.read
     hash = Boson::Index.commands.select {|e| e.options}.inject({}) {|a,com|
-      (options[:type] ? com.option_parser.types : com.option_parser.names).each {|e|
+      opt_parser = options[:toggle_global_parser] ?
+        Boson::Scientist.option_command(com).option_parser : com.option_parser
+      (options[:type] ? opt_parser.types : opt_parser.names).each {|e|
         # skip boolean options
         next if options[:skip_booleans] && !options[:type] &&
-          (com.option_parser.option_type(com.option_parser.dasherize(e)) == :boolean)
+          (opt_parser.option_type(opt_parser.dasherize(e)) == :boolean)
         (a[e] ||= []) << com.name
       }
       a

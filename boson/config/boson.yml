@@ -95,6 +95,7 @@
       tag: t
       add: a
       remove: rm
+      recursive_uninstall: rmr
   personal/core_gem:
     :gems:
     - core

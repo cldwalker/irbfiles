@@ -40,7 +40,7 @@ module GemBrain
     if deps.empty?
       system('sudo','gem','uninstall',rubygem)
     else
-      menu(deps, :ask=>false) do |gems|
+      menu(deps) do |gems|
         gems.unshift rubygem
         system(*(%w{sudo gem uninstall} + gems))
         puts("Uninstalled gems: #{gems.join(', ')}")
@@ -108,6 +108,11 @@ module GemBrain
   end
 
   private
+  # work around for block bug
+  def menu(*args, &block)
+    Boson.invoke(:menu, *args, &block)
+  end
+
   def approved_gems
     GemBrain.gem_config[:approved].sort
   end
