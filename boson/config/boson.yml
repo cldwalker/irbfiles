@@ -22,6 +22,14 @@
 - public/irb_core
 :libraries:
   # file libraries- personal prefs
+  public/url/google:
+    :commands:
+      google_movies:
+        :options:
+          :zip: 32605
+  public/url/github:
+    :command_aliases:
+      repo: rp
   public/ruby_ref:
     :commands:
       loaded_paths:
