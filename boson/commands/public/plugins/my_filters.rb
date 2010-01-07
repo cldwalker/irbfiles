@@ -29,6 +29,12 @@ module ::Boson::OptionCommand::Filters
     unalias Boson::Index.commands.map {|e| e.name }, val
   end
 
+  def command_obj_argument(val)
+    command = command_argument(val)
+    !Boson.can_invoke?(command) && Boson::Runner.autoload_command(command)
+    command
+  end
+
   def unalias(possible, value)
     possible.sort.grep(/^#{value}/)[0] || value
   end

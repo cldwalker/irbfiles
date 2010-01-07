@@ -18,7 +18,7 @@ module BosonLib
   # @options :type=>:boolean, [:skip_booleans, :S]=>true, :toggle_global_parser=>:boolean
   # @desc Lists option stats from all known commands. Doesn't include boolean options
   # if listing option names.
-  def options(options={})
+  def opts(options={})
     Boson::Index.read
     hash = Boson::Index.commands.select {|e| e.options}.inject({}) {|a,com|
       opt_parser = options[:toggle_global_parser] ?

@@ -70,7 +70,7 @@
         :description: autoloads command by its associated library
       boson_command:
         :args:
-        - - command
+        - - command_obj
         :description: Get command object by name or alias
       boson_library:
         :args:
@@ -192,6 +192,7 @@
   render: v
   libraries: lib
   commands: com
+  browser: o
   nested_tree: ntree
   inheritance_tree: itree
   load_library: ll
