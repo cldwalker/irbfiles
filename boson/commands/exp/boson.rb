@@ -20,7 +20,7 @@ module BosonLib
   # if listing option names.
   def opts(options={})
     Boson::Index.read
-    hash = Boson::Index.commands.select {|e| e.options}.inject({}) {|a,com|
+    hash = Boson::Index.commands.select {|e| e.option_command? }.inject({}) {|a,com|
       opt_parser = options[:toggle_global_parser] ?
         Boson::Scientist.option_command(com).option_parser : com.option_parser
       (options[:type] ? opt_parser.types : opt_parser.names).each {|e|
