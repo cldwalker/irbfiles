@@ -12,6 +12,9 @@ module Gemcutter
   # @render_options :fields=>["name", "downloads", "info", "version", "authors", "rubyforge_project"]
   # Lists multiple gemcutter gems + stats
   def cuts(*rubygems)
-    rubygems.inject([]) {|t,e| t << HTTParty.get("http://gemcutter.org/api/v1/gems/#{e}.json") }
+    rubygems.inject([]) {|t,e|
+      response = HTTParty.get("http://gemcutter.org/api/v1/gems/#{e}.json")
+      response.is_a?(Hash) ? t << response : t
+    }
   end
 end
