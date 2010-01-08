@@ -264,6 +264,9 @@
     :bool_default: {}
     :keys:
     - :default_field
+    - :shell
+    - :pretend
+    - :once
 :render_options:
   :all_fields:
     :type: :boolean
