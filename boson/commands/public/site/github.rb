@@ -38,9 +38,11 @@ module Github
   # td: /commits/list/:user_id/:repository/:branch/*path
   # @render_options :fields=>{:values=>%w{id url committed_date authored_date message},
   #  :default=>%w{id authored_date message}}
-  # @options :branch=>{:default=>'master', :desc=>'Git repo branch'}
+  # @options :branch=>{:default=>'master', :desc=>'Git repo branch'},
+  #   :user=>{:default=>'cldwalker', :desc=>'Github user'}
   # List commits of a given user-repo
   def commit_list(user_repo, options={})
+    user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']
     github_get("/commits/list/#{user_repo}/#{options[:branch]}")['commits']
   end
 
