@@ -35,6 +35,10 @@ module ::Boson::OptionCommand::Filters
     command
   end
 
+  def user_repo_argument(val)
+    val[/^([^\/])+-/] ? val.sub('-', '/') : val
+  end
+
   def unalias(possible, value)
     possible.sort.grep(/^#{value}/)[0] || value
   end

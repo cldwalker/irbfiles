@@ -23,7 +23,6 @@ module Github
   # @options :user=>{:default=>'cldwalker', :desc=>'Github user'}
   # Displays network of a given user-repo i.e. wycats-thor or defunkt/rip
   def repo_network(user_repo, options={})
-    user_repo = convert_user_repo(user_repo)
     user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']
     github_get("/repos/show/#{user_repo}/network")['network']
   end
@@ -42,7 +41,6 @@ module Github
   # @options :branch=>{:default=>'master', :desc=>'Git repo branch'}
   # List commits of a given user-repo
   def commit_list(user_repo, options={})
-    user_repo = convert_user_repo(user_repo)
     github_get("/commits/list/#{user_repo}/#{options[:branch]}")['commits']
   end
 
@@ -60,10 +58,6 @@ module Github
   end
 
   private
-  def convert_user_repo(user_repo)
-    user_repo.include?('-') ? user_repo.split('-', 2).join('/') : user_repo
-  end
-
   def github_get(url)
     url = "http://github.com/api/v2/yaml#{url}"
     (str = get(url, :success_only=>true)) ? YAML::load(str) : {}
