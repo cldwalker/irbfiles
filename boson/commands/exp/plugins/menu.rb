@@ -3,8 +3,7 @@ module ::Boson::Scientist
   def render_or_raw(result)
     if (menu_options = @global_options.delete(:menu))
       filters = @global_options.delete(:filters)
-      table = ::Hirb::Helpers::Table.new(result, @global_options)
-      result = table.instance_eval("@rows")
+      result = ::Hirb::Helpers::AutoTable.render(result, @global_options.merge(:return_rows=>true))
       Menu.run(result, menu_options.merge(:filters=>filters), @global_options)
       nil
     else
@@ -21,6 +20,7 @@ module ::Boson::Scientist
 
     def initialize(items, options, global_options)
       @items, @options, @global_options = items, options, global_options
+      @is_hash = items[0].is_a?(Hash)
       @fields = @global_options[:fields] ? @global_options[:fields] :
         @global_options[:change_fields] ? @global_options[:change_fields] :
         items[0].is_a?(Hash) ? items[0].keys : [:to_s]
@@ -76,6 +76,10 @@ module ::Boson::Scientist
       [template, template_args]
     end
 
+    def map_item(obj, field)
+      @is_hash ? obj[field] : obj.send(field)
+    end
+
     def parse_input(input)
       @options[:template] ? parse_template(input) : parse_default(input)
     end
@@ -84,7 +88,7 @@ module ::Boson::Scientist
         num, cmd, *args = Shellwords.shellwords(input)
         chosen = ::Hirb::Util.choose_from_array(@items, num)
         template, template_args = get_template(args)
-        cmd_args = chosen.map {|e| sprintf(template, *template_args.map {|field| e[field] }) }
+        cmd_args = chosen.map {|e| sprintf(template, *template_args.map {|field| map_item(e, field) }) }
         [cmd] + cmd_args
     end
 
@@ -92,7 +96,7 @@ module ::Boson::Scientist
       Shellwords.shellwords(input).map {|word|
         if word[/^(\d(?:[^:]+)?)(?::)?(\S+)?/]
           field = $2 ? unalias_field($2) : @options[:default_field]
-          ::Hirb::Util.choose_from_array(@items, $1).map {|e| e[field] }
+          ::Hirb::Util.choose_from_array(@items, $1).map {|e| map_item(e, field) }
         else
           word
         end
