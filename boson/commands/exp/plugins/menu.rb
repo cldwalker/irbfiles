@@ -50,7 +50,7 @@ module ::Boson::Scientist
 
     def parse_and_invoke(input)
       cmd, *args = parse_input(input)
-      @options[:once] ? invoke(cmd, args.flatten) : args.flatten.each {|e| invoke(cmd, [e]) }
+      @options[:once] ? invoke(cmd, args) : args.each {|e| invoke(cmd, [e]) }
     end
 
     def invoke(cmd, args)
@@ -61,7 +61,34 @@ module ::Boson::Scientist
       end
     end
 
+    def get_template(args)
+      template = args.join(' ')
+      if template.empty?
+        template_args = [@options[:default_field]]
+        template = "%s"
+      else
+        template_args = []
+        template.gsub!(/%s|:\w+/) {|e|
+          template_args << (e == '%s' ? @options[:default_field] : unalias_field(e[/\w+/]))
+          "%s"
+        }
+      end
+      [template, template_args]
+    end
+
     def parse_input(input)
+      @options[:template] ? parse_template(input) : parse_default(input)
+    end
+
+    def parse_template(input)
+        num, cmd, *args = Shellwords.shellwords(input)
+        chosen = ::Hirb::Util.choose_from_array(@items, num)
+        template, template_args = get_template(args)
+        cmd_args = chosen.map {|e| sprintf(template, *template_args.map {|field| e[field] }) }
+        [cmd] + cmd_args
+    end
+
+    def parse_default(input)
       Shellwords.shellwords(input).map {|word|
         if word[/^(\d(?:[^:]+)?)(?::)?(\S+)?/]
           field = $2 ? unalias_field($2) : @options[:default_field]
@@ -69,7 +96,7 @@ module ::Boson::Scientist
         else
           word
         end
-      }
+      }.flatten
     end
   end
 end

@@ -190,6 +190,7 @@
           :verbose: :boolean
 
 :command_aliases:
+  repo_search: rs
   render: v
   libraries: lib
   commands: com
@@ -267,6 +268,7 @@
     - :shell
     - :pretend
     - :once
+    - :template
 :render_options:
   :all_fields:
     :type: :boolean
