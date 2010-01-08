@@ -39,7 +39,7 @@ module Git
     Git.repo_hash
   end
 
-  # @render_options :change_fields=>['repo', 'date']
+  # @render_options :change_fields=>['repo', 'date'], :sort=>'date', :reverse_sort=>true
   # Lists last commit of each repo
   def last_commits
     Git.repos.map {|e|
