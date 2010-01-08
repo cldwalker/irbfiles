@@ -24,8 +24,7 @@ module ::Boson::Scientist
       @fields = @global_options[:fields] ? @global_options[:fields] :
         @global_options[:change_fields] ? @global_options[:change_fields] :
         items[0].is_a?(Hash) ? items[0].keys : [:to_s]
-      @options[:default_field] = @options[:default_field] ?
-        unalias_field(@options[:default_field]) : @fields[0]
+      @default_field = @options[:default_field] ? unalias_field(@options[:default_field]) : @fields[0]
     end
 
     def run
@@ -41,7 +40,7 @@ module ::Boson::Scientist
     end
 
     def get_input
-      ::Boson.invoke(:menu, @items, :return_input=>true, :fields=>@fields)
+      ::Boson.invoke(:menu, @items, :return_input=>true, :fields=>@fields, :prompt=>"Default field: #{@default_field}\nChoose: ")
     end
 
     def unalias_field(field)
@@ -57,19 +56,23 @@ module ::Boson::Scientist
       if @options[:pretend]
         puts "#{cmd} #{args.inspect}"
       else
-        ::Boson.full_invoke cmd, args
+        output = ::Boson.full_invoke cmd, args
+        unless ::Boson::View.silent_object?(output)
+          opts = output.is_a?(String) ? {:method=>'puts'} : {:inspect=>!output.is_a?(Array) }
+          ::Boson::View.render(output, opts)
+        end
       end
     end
 
     def get_template(args)
       template = args.join(' ')
       if template.empty?
-        template_args = [@options[:default_field]]
+        template_args = [@default_field]
         template = "%s"
       else
         template_args = []
         template.gsub!(/%s|:\w+/) {|e|
-          template_args << (e == '%s' ? @options[:default_field] : unalias_field(e[/\w+/]))
+          template_args << (e == '%s' ? @default_field : unalias_field(e[/\w+/]))
           "%s"
         }
       end
@@ -95,7 +98,7 @@ module ::Boson::Scientist
     def parse_default(input)
       Shellwords.shellwords(input).map {|word|
         if word[/^(\d(?:[^:]+)?)(?::)?(\S+)?/]
-          field = $2 ? unalias_field($2) : @options[:default_field]
+          field = $2 ? unalias_field($2) : @default_field
           ::Hirb::Util.choose_from_array(@items, $1).map {|e| map_item(e, field) }
         else
           word
