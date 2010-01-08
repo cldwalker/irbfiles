@@ -1,4 +1,8 @@
 module GoogleUrl
+  def self.after_included
+    require 'cgi'
+  end
+
   # Opens google analytics for given date range
   def analytics_day(start_date=nil, end_date=nil)
     start_date = start_date ? Date.parse("#{start_date}/2010") : Date.today
@@ -12,6 +16,10 @@ module GoogleUrl
     "http://www.google.com/reader/view/user/-/label/#{label}"
   end
 
+  def reader_feed(feed)
+    "http://www.google.com/reader/view/#stream/" + CGI.escape(feed)
+  end
+
   # @options :query=>:string
   # @config :alias=>'gr'
   # Open google reader or search within
@@ -23,7 +31,6 @@ module GoogleUrl
   # @config :alias=>'gs'
   # Basic google search
   def google_search(*query)
-    require 'cgi'
     "http://google.com/search?q=#{CGI.escape(query.join(' '))}"
   end
 
@@ -36,7 +43,6 @@ module GoogleUrl
   # @config :alias=>'map'
   # Map search
   def google_maps(*query)
-    require 'cgi'
     "http://maps.google.com/maps?q=#{CGI.escape(query.join(' '))}"
   end
 

@@ -27,19 +27,9 @@ module GoogleReader
     records.map {|e| {:title=>e.title, :url=>e.links[0].href, :published=>e.published } }
   end
 
-  # @options :menu=>{:type=>:boolean, :desc=>"Choose labels to open in browser"}
+  # @config :global_options=>true
   # List labels
   def labels(options={})
-    results = Google::Reader::Label.all.map {|e| e.name }
-    options[:menu] ? menu(results) {|e| open_label(e[0]) } : results
-  end
-
-  private
-  def open_feed(google_feed)
-    browser("http://www.google.com/reader/view/#stream/" + google_feed)
-  end
-
-  def open_label(label)
-    browser("http://www.google.com/reader/view/user/-/label/"+label)
+    Google::Reader::Label.all.map {|e| e.name }
   end
 end
