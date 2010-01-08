@@ -16,7 +16,7 @@ module MethMissing
         if meths.size > 1
           puts "Multiple methods match: #{meths.join(', ')}"
         elsif (meths.size == 1) && respond_to?(meths[0])
-          puts "Found method #{meths[0]}"
+          puts "Found method #{meths[0]}" if Boson::Runner.verbose?
           Boson::BinRunner.command = Boson::BinRunner.command.sub(meth.to_s, meths[0]) if Boson.const_defined?(:BinRunner)
           send(meths[0], *args)
         else
@@ -36,7 +36,7 @@ module MethMissing
           if meths.size > 1
             puts "Multiple methods match: #{meths.join(', ')}"
           elsif (meths.size == 1)
-            puts "Found method #{meths[0]}"
+            puts "Found method #{meths[0]}" if Boson::Runner.verbose?
             Boson::BinRunner.command = Boson::BinRunner.command.sub(meth.to_s, meths[0]) if Boson.const_defined?(:BinRunner)
             original_method_missing.call(meths[0],*args)
           else
