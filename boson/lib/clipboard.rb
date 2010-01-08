@@ -18,8 +18,8 @@ class Clipboard
       IO.popen('pbpaste') {|clipboard| clipboard.read}
     end
 
-    def self.write(stuff)
-      IO.popen('pbcopy', 'w+') {|clipboard| clipboard.write(stuff)}
+    def self.write(*stuff)
+      IO.popen('pbcopy', 'w+') {|clipboard| clipboard.write(stuff.join(' '))}
     end
     @@implemented = true
 
@@ -33,8 +33,8 @@ class Clipboard
         Win32::Clipboard.data
       end
 
-      def self.write(stuff)
-        Win32::Clipboard.set_data(stuff)
+      def self.write(*stuff)
+        Win32::Clipboard.set_data(stuff.join(' '))
       end
       @@implemented = true
 
@@ -53,8 +53,8 @@ class Clipboard
       `xsel`
     end
     
-    def self.write(stuff)
-      `echo '#{stuff}' | xsel -i`
+    def self.write(*stuff)
+      `echo '#{stuff.join(" ")}' | xsel -i`
     end
     @@implemented = true
 
