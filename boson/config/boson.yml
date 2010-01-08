@@ -5,6 +5,7 @@
 - public/plugins/option_command_filters
 - public/plugins/my_filters
 - exp/plugins/global_option_defaults
+- exp/plugins/menu
 :bin_defaults:
 - exp/plugins/url_libraries
 :console_defaults:
@@ -256,6 +257,13 @@
     :desc: Call any command
     :filter: true
     :pipe: post_command
+  :menu:
+    :alias:
+    - m
+    :type: :hash
+    :bool_default: {}
+    :keys:
+    - :default_field
 :render_options:
   :all_fields:
     :type: :boolean
