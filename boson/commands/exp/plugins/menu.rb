@@ -14,6 +14,8 @@ module ::Boson::Scientist
 
   class Menu
     require 'shellwords'
+    CHOSEN_REGEXP = /^(\d(?:[^:]+)?)(?::)?(\S+)?/
+
     def self.run(items, options, global_options)
       new(items, options, global_options).run
     end
@@ -64,7 +66,7 @@ module ::Boson::Scientist
       end
     end
 
-    def get_template(args)
+    def process_template(args)
       template = args.join(' ')
       if template.empty?
         template_args = [@default_field]
@@ -76,7 +78,7 @@ module ::Boson::Scientist
           "%s"
         }
       end
-      [template, template_args]
+      Array(@chosen).map {|e| sprintf(template, *template_args.map {|field| map_item(e, field) }) }
     end
 
     def map_item(obj, field)
@@ -84,20 +86,26 @@ module ::Boson::Scientist
     end
 
     def parse_input(input)
-      @options[:template] ? parse_template(input) : parse_default(input)
+      @options[:multi] ? parse_multi(input) : parse_template(input)
     end
 
     def parse_template(input)
-        num, cmd, *args = Shellwords.shellwords(input)
-        chosen = ::Hirb::Util.choose_from_array(@items, num)
-        template, template_args = get_template(args)
-        cmd_args = chosen.map {|e| sprintf(template, *template_args.map {|field| map_item(e, field) }) }
-        [cmd] + cmd_args
+      args = Shellwords.shellwords(input).map do |word|
+        if word[CHOSEN_REGEXP] && !@seen
+          field = $2 ? ":#{unalias_field($2)}" : '%s'
+          @chosen = ::Hirb::Util.choose_from_array(@items, $1)
+          @seen = true
+          field
+        else
+          word
+        end
+      end
+      [args.shift] + process_template(args)
     end
 
-    def parse_default(input)
+    def parse_multi(input)
       Shellwords.shellwords(input).map {|word|
-        if word[/^(\d(?:[^:]+)?)(?::)?(\S+)?/]
+        if word[CHOSEN_REGEXP]
           field = $2 ? unalias_field($2) : @default_field
           ::Hirb::Util.choose_from_array(@items, $1).map {|e| map_item(e, field) }
         else

@@ -268,7 +268,7 @@
     - :shell
     - :pretend
     - :once
-    - :template
+    - :multi
 :render_options:
   :all_fields:
     :type: :boolean
