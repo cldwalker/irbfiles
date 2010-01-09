@@ -8,6 +8,3 @@ class ::Boson::OptionCommand
     opts
   end
 end
-
-module GlobalOptionDefaults
-end

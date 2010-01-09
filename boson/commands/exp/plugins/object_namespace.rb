@@ -1,3 +1,5 @@
+# Plugin that delegates namespace calls to an object defined by a method whose name is the same
+# as its library.
 class ::Boson::Namespace
   class<<self
     alias_method :_create, :create
@@ -21,9 +23,4 @@ class ::Boson::Namespace
   end
 
   def object_delegate?; false; end
-end
-
-# Plugin that delegates namespace calls to an object defined by a method whose name is the same
-# as its library.
-module ObjectNamespace
 end

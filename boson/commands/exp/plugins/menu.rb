@@ -107,6 +107,3 @@ module ::Boson::Scientist
     end
   end
 end
-
-module Menu
-end

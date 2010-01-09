@@ -1,3 +1,5 @@
+# All libraries under a url/ directory default to having their commands' string outputs passed to browser() to
+# be opened in a browser.
 class ::Boson::Command
   class<<self
     alias_method :_newer_options, :new_options
@@ -7,9 +9,4 @@ class ::Boson::Command
       opt
     end
   end
-end
-
-# All libraries under a url/ directory default to having their commands' string outputs passed to browser() to
-# be opened in a browser.
-module UrlLibraries
 end
