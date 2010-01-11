@@ -6,6 +6,7 @@
 - public/plugins/my_filters
 - exp/plugins/global_option_defaults
 - exp/plugins/menu
+- exp/plugins/auto_pipe
 - public/plugins/all_option_commands
 :bin_defaults:
 - exp/plugins/url_libraries
@@ -210,7 +211,7 @@
   current_variables: cv
   gem_recursive_uninstall: sgu
   checkout: co
-  analytics_day: ad
+  google_analytics: ga
   unloaded_libraries: ul
   reload: re
   boson_library: bl
