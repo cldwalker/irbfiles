@@ -12,8 +12,9 @@ module AllOptionCommands
         alias_method :_new_options, :new_options
         def new_options(name, library)
           opts = _new_options(name, library)
-          !opts.key?(:render_options) && !opts.key?(:options) ?
-            opts.merge!(:global_options=>true) : opts
+          # commandifying all cmds causes rendering issues with ur
+          [name, opts[:alias]].include?(BinRunner.command) && !opts.key?(:render_options) &&
+           !opts.key?(:options) ? opts.merge!(:global_options=>true) : opts
         end
       end
     end
