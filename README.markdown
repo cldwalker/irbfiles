@@ -23,7 +23,8 @@ Here's a brief outline and description of major directories under boson/:
       Inspired by [queriac](http://github.com/cldwalker/queriac).
     * rails/: Rails-related libraries.
   * exp/: Experimental libraries that one day should be public. These libraries are usually half-baked good ideas that
-    haven't quite realized their full potential.
+    haven't quite realized their full potential. You'll probably to need to run edge versions of
+    hirb and boson for these to work.
   * personal/: Personal libraries that are specific to my computer setup i.e. my system files or operating system setup.
 * lib/: A local loaded\_path containing classes used by commands.
 * test/: Tests to go along with libraries.
