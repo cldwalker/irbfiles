@@ -6,6 +6,7 @@
 - public/plugins/my_filters
 - exp/plugins/global_option_defaults
 - exp/plugins/menu
+- public/plugins/all_option_commands
 :bin_defaults:
 - exp/plugins/url_libraries
 :console_defaults:
