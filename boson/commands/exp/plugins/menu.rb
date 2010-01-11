@@ -1,3 +1,7 @@
+::Boson::OptionCommand::PIPE_OPTIONS[:menu] = { :bool_default=>{},
+  :alias=>['m'], :type=>:hash, :keys=>[:default_field, :shell, :pretend, :once, :multi]
+}
+
 module ::Boson::Scientist
   alias_method :_render_or_raw, :render_or_raw
   def render_or_raw(result)

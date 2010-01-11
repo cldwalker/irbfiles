@@ -259,17 +259,6 @@
     :desc: Call any command
     :filter: true
     :pipe: post_command
-  :menu:
-    :alias:
-    - m
-    :type: :hash
-    :bool_default: {}
-    :keys:
-    - :default_field
-    - :shell
-    - :pretend
-    - :once
-    - :multi
 :render_options:
   :all_fields:
     :type: :boolean
