@@ -15,6 +15,7 @@ class ::Boson::OptionCommand
   end
 
   def filter_args(args)
+    return unless @command.args #not all commands have args detected
     args.each_with_index do |arg,i|
       break unless @command.args[i] && (arg_name = @command.args[i][0])
       arg_name = self.class.extract_argument(arg_name)
@@ -40,4 +41,10 @@ end
 # the module Boson::OptionCommand::Filters. For example, an argument or option named 'klass' is filtered by
 # a method 'klass_argument' or 'klass_opt'.
 module OptionCommandFilters
+  # @options :options=>:boolean
+  # @render_options {}
+  def filters(options={})
+    str = options[:options] ? '_opt' : '_argument'
+    ::Boson::OptionCommand.instance_methods.grep(/#{str}$/).map {|e| e.gsub(str, '') }.sort
+  end
 end
