@@ -11,6 +11,7 @@ module Stats
 
   class <<self
     def calculate(enumerable, stat)
+      return enumerable if enumerable.size.zero?
       numeric_keys = enumerable[0].select {|k,v| v.is_a?(Numeric) }.map {|e| e[0] }
       totals = enumerable[0].keys.inject({}) {|t,key|
         t[key] = numeric_keys.include?(key) ? 
