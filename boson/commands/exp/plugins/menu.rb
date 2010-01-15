@@ -1,5 +1,5 @@
 ::Boson::OptionCommand::PIPE_OPTIONS[:menu] = { :bool_default=>{},
-  :alias=>['m'], :type=>:hash, :keys=>[:default_field, :shell, :pretend, :once, :multi]
+  :alias=>['m'], :type=>:hash, :keys=>[:default_field, :shell, :pretend, :once, :multi, :object]
 }
 
 module ::Boson::Scientist
@@ -7,8 +7,8 @@ module ::Boson::Scientist
   def render_or_raw(result)
     if (menu_options = @global_options.delete(:menu))
       filters = @global_options.delete(:filters)
-      result = ::Hirb::Helpers::AutoTable.render(result, @global_options.merge(:return_rows=>true))
-      Menu.run(result, menu_options.merge(:filters=>filters), @global_options)
+      new_result = ::Hirb::Helpers::AutoTable.render(result, @global_options.merge(:return_rows=>true))
+      Menu.run(new_result, menu_options.merge(:filters=>filters, :items=>result), @global_options)
       nil
     else
       # @global_options[:render] = true
@@ -31,6 +31,7 @@ module ::Boson::Scientist
         @global_options[:change_fields] ? @global_options[:change_fields] :
         items[0].is_a?(Hash) ? items[0].keys : [:to_s]
       @default_field = @options[:default_field] ? unalias_field(@options[:default_field]) : @fields[0]
+      @items = @options[:items] if @options[:object]
     end
 
     def run
@@ -46,16 +47,17 @@ module ::Boson::Scientist
     end
 
     def get_input
-      ::Boson.invoke(:menu, @items, :return_input=>true, :fields=>@fields, :prompt=>"Default field: #{@default_field}\nChoose: ")
-    end
-
-    def unalias_field(field)
-      @fields.sort_by {|e| e.to_s }.find {|e| e.to_s[/^#{field}/] } || field
+      @prompt ||= @options[:object] ? "Choose objects: " : "Default field: #{@default_field}\nChoose rows: "
+      ::Boson.invoke(:menu, @items, :return_input=>true, :fields=>@fields, :prompt=>@prompt)
     end
 
     def parse_and_invoke(input)
       cmd, *args = parse_input(input)
       @options[:once] ? invoke(cmd, args) : args.each {|e| invoke(cmd, [e]) }
+    end
+
+    def parse_input(input)
+      @options[:multi] ? parse_multi(input) : parse_template(input)
     end
 
     def invoke(cmd, args)
@@ -71,6 +73,7 @@ module ::Boson::Scientist
     end
 
     def process_template(args)
+      return args if @options[:object]
       template = args.join(' ')
       if template.empty?
         template_args = [@default_field]
@@ -85,21 +88,13 @@ module ::Boson::Scientist
       Array(@chosen).map {|e| sprintf(template, *template_args.map {|field| map_item(e, field) }) }
     end
 
-    def map_item(obj, field)
-      @is_hash ? obj[field] : obj.send(field)
-    end
-
-    def parse_input(input)
-      @options[:multi] ? parse_multi(input) : parse_template(input)
-    end
-
     def parse_template(input)
       args = Shellwords.shellwords(input).map do |word|
         if word[CHOSEN_REGEXP] && !@seen
           field = $2 ? ":#{unalias_field($2)}" : '%s'
           @chosen = ::Hirb::Util.choose_from_array(@items, $1)
           @seen = true
-          field
+          @options[:object] ? @chosen : field
         else
           word
         end
@@ -107,6 +102,7 @@ module ::Boson::Scientist
       [args.shift] + process_template(args)
     end
 
+    # doesn't work w/ :object
     def parse_multi(input)
       Shellwords.shellwords(input).map {|word|
         if word[CHOSEN_REGEXP]
@@ -116,6 +112,14 @@ module ::Boson::Scientist
           word
         end
       }.flatten
+    end
+
+    def map_item(obj, field)
+      @is_hash ? obj[field] : obj.send(field)
+    end
+
+    def unalias_field(field)
+      @fields.sort_by {|e| e.to_s }.find {|e| e.to_s[/^#{field}/] } || field
     end
   end
 end

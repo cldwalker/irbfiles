@@ -52,6 +52,7 @@ module Backup
   end
 
   # @options :file=>:string, :db=>'tag_tree_dev'
+  # @config :alias=>'dbd'
   # Dumps db to a file
   def db_dump(options={})
     file = options[:file] || "#{options[:db]}-mysql.sql"
