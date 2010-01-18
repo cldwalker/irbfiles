@@ -2,6 +2,7 @@ module ::Boson::Scientist
   alias_method :_render_or_raw, :render_or_raw
   def render_or_raw(result)
     if (menu_options = @global_options.delete(:menu))
+      menu_options = ((@command.config[:menu] || {}) rescue {}).merge menu_options
       filters = @global_options.delete(:filters)
       new_result = ::Hirb::Helpers::AutoTable.render(result, @global_options.merge(:return_rows=>true))
       Menu.run(new_result, menu_options.merge(:filters=>filters, :items=>result), @global_options)
@@ -16,7 +17,7 @@ module ::Boson::Scientist
     require 'shellwords'
     CHOSEN_REGEXP = /^(\d(?:[^:]+)?)(?::)?(\S+)?/
     OPTIONS = {:default_field=>:string, :shell=>:boolean, :pretend=>:boolean, :once=>:boolean,
-      :multi=>:boolean, :object=>:boolean}
+      :multi=>:boolean, :object=>:boolean, :command=>:string, :template_args=>:string}
 
     def self.run(items, options, global_options)
       new(items, options, global_options).run
@@ -78,7 +79,7 @@ module ::Boson::Scientist
 
     def process_template(args)
       return args if @options[:object]
-      template = args.join(' ')
+      template = @options[:template_args] || args.join(' ')
       if template.empty?
         template_args = [default_field]
         template = "%s"
@@ -103,7 +104,9 @@ module ::Boson::Scientist
           word
         end
       end
-      [args.shift] + process_template(args)
+      cmd = args.size == 1 ? @options[:command] : args.shift
+      raise "No command given" unless cmd
+      [cmd] + process_template(args)
     end
 
     # doesn't work w/ :object

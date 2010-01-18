@@ -1,6 +1,7 @@
 module Xmms2
   # @render_options :fields=>{:default=>[:track, :title, :time]}
   # @options :menu=>true
+  # @config :menu=>{:command=>'play_track'}
   # Searches for songs, displays results in menu and lets you jump to chosen song
   def songs_jump(query, options={})
     results = search_songs(query)

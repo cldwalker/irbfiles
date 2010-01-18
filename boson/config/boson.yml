@@ -43,7 +43,28 @@
     :force: true
   public/site/github:
     :commands:
+      user_search:
+        :config:
+          :menu:
+            :command: github_user
+      user_follows:
+        :config:
+          :menu:
+            :command: github_user
+      repo_search:
+        :config:
+          :menu:
+            :command: repo
+            :template_args: ':username/:name'
+      repos_watched:
+        :config:
+          :menu:
+            :command: repo
+            :template_args: ':owner/:name'
       user_repos:
+        :config:
+          :menu:
+            :command: ur
         :alias: ur
         :render_options:
           :command:
@@ -83,6 +104,22 @@
         :description: Detect modules, gems and kernel methods loaded
       any_const_get:
         :description: Converts a string to a constant if it exists
+  public/site/google_reader:
+    :commands:
+      unread_feeds:
+        :config:
+          :menu:
+            :command: reader_feed
+            :template_args: ':google_id'
+      all_feeds:
+        :config:
+          :menu:
+            :command: reader_feed
+            :template_args: ':google_id'
+      labels:
+        :config:
+          :menu:
+            :command: reader_label
   # personal file libraries
   personal/system_misc:
     :commands:
