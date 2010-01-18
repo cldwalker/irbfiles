@@ -1,17 +1,9 @@
 module Xmms2
   # @render_options :fields=>{:default=>[:track, :title, :time]}
-  # @options :menu=>true
-  # @config :menu=>{:command=>'play_track'}
+  # @config :alias=>'ss', :menu=>{:command=>'play_track'}
   # Searches for songs, displays results in menu and lets you jump to chosen song
-  def songs_jump(query, options={})
-    results = search_songs(query)
-    if options[:menu]
-      if (chosen = menu(results, :fields=>[:track, :title, :time], :validate_one=>true))
-        system('xmms2', 'jump', chosen[:track].to_s)
-      end
-    else
-      results
-    end
+  def search_songs(query, options={})
+    parse_songs `xmms2 list |grep #{query}`.split("\n")
   end
 
   # Plays everything under a given directory
@@ -23,8 +15,8 @@ module Xmms2
   end
 
   private
-  def search_songs(query, options={})
-    parse_songs `xmms2 list |grep #{query}`.split("\n")
+  def play_track(track)
+    system('xmms2', 'jump', track.to_s)
   end
 
   def parse_songs(songs)
