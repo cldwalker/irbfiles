@@ -1,7 +1,3 @@
-::Boson::OptionCommand::PIPE_OPTIONS[:menu] = { :bool_default=>{},
-  :alias=>['m'], :type=>:hash, :keys=>[:default_field, :shell, :pretend, :once, :multi, :object]
-}
-
 module ::Boson::Scientist
   alias_method :_render_or_raw, :render_or_raw
   def render_or_raw(result)
@@ -19,19 +15,25 @@ module ::Boson::Scientist
   class Menu
     require 'shellwords'
     CHOSEN_REGEXP = /^(\d(?:[^:]+)?)(?::)?(\S+)?/
+    OPTIONS = {:default_field=>:string, :shell=>:boolean, :pretend=>:boolean, :once=>:boolean,
+      :multi=>:boolean, :object=>:boolean}
 
     def self.run(items, options, global_options)
       new(items, options, global_options).run
     end
 
+    def self.option_parser
+      @option_parser ||= ::Boson::OptionParser.new OPTIONS
+    end
+
     def initialize(items, options, global_options)
-      @items, @options, @global_options = items, options, global_options
+      @items, @default_options, @global_options = items, options, global_options
+      @options = @default_options.dup
       @is_hash = items[0].is_a?(Hash)
       @fields = @global_options[:fields] ? @global_options[:fields] :
         @global_options[:change_fields] ? @global_options[:change_fields] :
         items[0].is_a?(Hash) ? items[0].keys : [:to_s]
-      @default_field = @options[:default_field] ? unalias_field(@options[:default_field]) : @fields[0]
-      @items = @options[:items] if @options[:object]
+      @items = @default_options[:items] if @default_options[:object]
     end
 
     def run
@@ -47,8 +49,8 @@ module ::Boson::Scientist
     end
 
     def get_input
-      @prompt ||= @options[:object] ? "Choose objects: " : "Default field: #{@default_field}\nChoose rows: "
-      ::Boson.invoke(:menu, @items, :return_input=>true, :fields=>@fields, :prompt=>@prompt)
+      prompt = @options[:object] ? "Choose objects: " : "Default field: #{default_field}\nChoose rows: "
+      ::Boson.invoke(:menu, @items, :return_input=>true, :fields=>@fields, :prompt=>prompt)
     end
 
     def parse_and_invoke(input)
@@ -57,7 +59,9 @@ module ::Boson::Scientist
     end
 
     def parse_input(input)
-      @options[:multi] ? parse_multi(input) : parse_template(input)
+      args = Shellwords.shellwords(input)
+      @options = @default_options.merge self.class.option_parser.parse(args, :opts_before_args=>true)
+      @options[:multi] ? parse_multi(args) : parse_template(args)
     end
 
     def invoke(cmd, args)
@@ -76,20 +80,20 @@ module ::Boson::Scientist
       return args if @options[:object]
       template = args.join(' ')
       if template.empty?
-        template_args = [@default_field]
+        template_args = [default_field]
         template = "%s"
       else
         template_args = []
         template.gsub!(/%s|:\w+/) {|e|
-          template_args << (e == '%s' ? @default_field : unalias_field(e[/\w+/]))
+          template_args << (e == '%s' ? default_field : unalias_field(e[/\w+/]))
           "%s"
         }
       end
       Array(@chosen).map {|e| sprintf(template, *template_args.map {|field| map_item(e, field) }) }
     end
 
-    def parse_template(input)
-      args = Shellwords.shellwords(input).map do |word|
+    def parse_template(args)
+      args = args.map do |word|
         if word[CHOSEN_REGEXP] && !@seen
           field = $2 ? ":#{unalias_field($2)}" : '%s'
           @chosen = ::Hirb::Util.choose_from_array(@items, $1)
@@ -103,15 +107,19 @@ module ::Boson::Scientist
     end
 
     # doesn't work w/ :object
-    def parse_multi(input)
-      Shellwords.shellwords(input).map {|word|
+    def parse_multi(args)
+      args.map {|word|
         if word[CHOSEN_REGEXP]
-          field = $2 ? unalias_field($2) : @default_field
+          field = $2 ? unalias_field($2) : default_field
           ::Hirb::Util.choose_from_array(@items, $1).map {|e| map_item(e, field) }
         else
           word
         end
       }.flatten
+    end
+
+    def default_field
+      @options[:default_field] ? unalias_field(@options[:default_field]) : @fields[0]
     end
 
     def map_item(obj, field)
@@ -123,3 +131,7 @@ module ::Boson::Scientist
     end
   end
 end
+
+::Boson::OptionCommand::PIPE_OPTIONS[:menu] = { :bool_default=>{},
+  :alias=>['m'], :type=>:hash, :keys=>::Boson::Scientist::Menu::OPTIONS.keys
+}
