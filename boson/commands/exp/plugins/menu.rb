@@ -17,7 +17,7 @@ module ::Boson::Scientist
     require 'shellwords'
     CHOSEN_REGEXP = /^(\d(?:[^:]+)?)(?::)?(\S+)?/
     OPTIONS = {:default_field=>:string, :shell=>:boolean, :pretend=>:boolean, :once=>:boolean,
-      :multi=>:boolean, :object=>:boolean, :command=>:string, :template_args=>:string}
+      :multi=>:boolean, :object=>:boolean, :command=>:string, :template_args=>:string, :splat=>:boolean}
 
     def self.run(items, options, global_options)
       new(items, options, global_options).run
@@ -34,7 +34,6 @@ module ::Boson::Scientist
       @fields = @global_options[:fields] ? @global_options[:fields] :
         @global_options[:change_fields] ? @global_options[:change_fields] :
         items[0].is_a?(Hash) ? items[0].keys : [:to_s]
-      @items = @default_options[:items] if @default_options[:object]
     end
 
     def run
@@ -56,7 +55,7 @@ module ::Boson::Scientist
 
     def parse_and_invoke(input)
       cmd, *args = parse_input(input)
-      @options[:once] ? invoke(cmd, args) : args.each {|e| invoke(cmd, [e]) }
+      @options[:once] ? invoke(cmd, args) : args.flatten.each {|e| invoke(cmd, [e]) }
     end
 
     def parse_input(input)
@@ -69,7 +68,9 @@ module ::Boson::Scientist
       if @options[:pretend]
         puts "#{cmd} #{args.inspect}"
       else
-        output = ::Boson.full_invoke cmd, args
+        @options[:splat] = true if ::Boson::Index.read && (cmd_obj = ::Boson::Index.find_command(cmd)) &&
+          cmd_obj.has_splat_args?
+        output = @options[:splat] ? (::Boson.full_invoke cmd, *args) : ::Boson.full_invoke(cmd, args)
         unless ::Boson::View.silent_object?(output)
           opts = output.is_a?(String) ? {:method=>'puts'} : {:inspect=>!output.is_a?(Array) }
           ::Boson::View.render(output, opts)
@@ -97,7 +98,7 @@ module ::Boson::Scientist
       args = args.map do |word|
         if word[CHOSEN_REGEXP] && !@seen
           field = $2 ? ":#{unalias_field($2)}" : '%s'
-          @chosen = ::Hirb::Util.choose_from_array(@items, $1)
+          @chosen = ::Hirb::Util.choose_from_array(items, $1)
           @seen = true
           @options[:object] ? @chosen : field
         else
@@ -114,11 +115,15 @@ module ::Boson::Scientist
       args.map {|word|
         if word[CHOSEN_REGEXP]
           field = $2 ? unalias_field($2) : default_field
-          ::Hirb::Util.choose_from_array(@items, $1).map {|e| map_item(e, field) }
+          ::Hirb::Util.choose_from_array(items, $1).map {|e| map_item(e, field) }
         else
           word
         end
       }.flatten
+    end
+
+    def items
+      @options[:object] ? @default_options[:items] : @items
     end
 
     def default_field
