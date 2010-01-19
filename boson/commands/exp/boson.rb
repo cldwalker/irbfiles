@@ -1,19 +1,4 @@
 module BosonLib
-  # @render_options :change_fields=>['arguments', 'commands'],
-  #  :filters=>{:default=>{'commands'=>:inspect}}
-  # @options :count=>:boolean, :transform=>true
-  # Lists arguments from all known commands. Depends on option_command_filters plugin.
-  def arguments(options={})
-    Boson::Index.read
-    hash = Boson::Index.commands.inject({}) {|t,com|
-      (com.args || []).each {|arg|
-        arg_name = options[:transform] ? Boson::OptionCommand.extract_argument(arg[0].to_s) : arg[0]
-        (t[arg_name] ||= []) << com.name
-      }
-      t
-    }
-  end
-
   # @render_options :change_fields=>['name', 'commands'], :filters=>{:default=>{'commands'=>:inspect}}
   # @options :type=>:boolean, [:skip_booleans, :S]=>true, :toggle_global_options=>:boolean, :use_parser=>true
   # @desc Lists option stats from all known commands. Doesn't include boolean options
