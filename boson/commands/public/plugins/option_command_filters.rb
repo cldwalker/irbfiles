@@ -18,7 +18,8 @@ class ::Boson::OptionCommand
     else
       args.each_with_index do |arg,i|
         break unless @command.args[i] && (arg_name = @command.args[i][0])
-        arg_name[/s$/] ? call_plural_arg_filter(arg, arg_name) : call_arg_filter(args, i, arg_name, arg)
+        arg_name[/s$/] ? call_plural_arg_filter(arg, arg_name) :
+          ( respond_to?("#{arg_name}_argument") && call_arg_filter(args, i, arg_name, arg) )
       end
     end
   end
@@ -29,17 +30,18 @@ class ::Boson::OptionCommand
       puts "argument: #{args.inspect} -> #{new_args.inspect}" if Boson::Runner.verbose?
       args.replace new_args
     else
-      args.each_with_index {|arg, i|
-        call_arg_filter(args, i, arg_name.gsub(/s$/,''), arg)
-      }
+      arg_name.gsub!(/s$/,'')
+      if respond_to?("#{arg_name}_argument")
+        args.each_with_index {|arg, i|
+          call_arg_filter(args, i, arg_name, arg)
+        }
+      end
     end
   end
 
   def call_arg_filter(args, i, arg_name, arg)
-    if respond_to?("#{arg_name}_argument")
-      args[i] = send("#{arg_name}_argument", arg)
-      puts "argument: #{arg.inspect} -> #{args[i].inspect}" if Boson::Runner.verbose?
-    end
+    args[i] = send("#{arg_name}_argument", arg)
+    puts "argument: #{arg.inspect} -> #{args[i].inspect}" if Boson::Runner.verbose?
   end
 
   def filter_options(options)
