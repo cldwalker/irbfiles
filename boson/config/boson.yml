@@ -55,16 +55,16 @@
         :config:
           :menu:
             :command: repo
-            :template_args: ':username/:name'
+            :args: ':username/:name'
       repos_watched:
         :config:
           :menu:
             :command: repo
-            :template_args: ':owner/:name'
+            :args: ':owner/:name'
       user_repos:
         :config:
           :menu:
-            :command: ur
+            :command: repo
         :alias: ur
         :render_options:
           :command:
@@ -110,12 +110,12 @@
         :config:
           :menu:
             :command: reader_feed
-            :template_args: ':google_id'
+            :args: ':google_id'
       all_feeds:
         :config:
           :menu:
             :command: reader_feed
-            :template_args: ':google_id'
+            :args: ':google_id'
       labels:
         :config:
           :menu:

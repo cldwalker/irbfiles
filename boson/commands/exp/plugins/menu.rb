@@ -16,8 +16,8 @@ module ::Boson::Scientist
   class Menu
     require 'shellwords'
     CHOSEN_REGEXP = /^(\d(?:[^:]+)?)(?::)?(\S+)?/
-    OPTIONS = {:default_field=>:string, :shell=>:boolean, :pretend=>:boolean, :once=>:boolean,
-      :multi=>:boolean, :object=>:boolean, :command=>:string, :template_args=>:string, :splat=>:boolean}
+    OPTIONS = {:default_field=>:string, :shell=>:boolean, :pretend=>:boolean, :once=>:boolean, :help=>:boolean,
+      :multi=>:boolean, :object=>:boolean, :command=>:string, :args=>:string, :splat=>:boolean}
 
     def self.run(items, options, global_options)
       new(items, options, global_options).run
@@ -55,12 +55,17 @@ module ::Boson::Scientist
 
     def parse_and_invoke(input)
       cmd, *args = parse_input(input)
-      @options[:once] ? invoke(cmd, args) : args.flatten.each {|e| invoke(cmd, [e]) }
+      if @options[:help]
+        self.class.option_parser.print_usage_table
+      else
+        @options[:once] ? invoke(cmd, args) : args.flatten.each {|e| invoke(cmd, [e]) }
+      end
     end
 
     def parse_input(input)
       args = Shellwords.shellwords(input)
       @options = @default_options.merge self.class.option_parser.parse(args, :opts_before_args=>true)
+      return if @options[:help]
       @options[:multi] ? parse_multi(args) : parse_template(args)
     end
 
@@ -80,7 +85,7 @@ module ::Boson::Scientist
 
     def process_template(args)
       return args if @options[:object]
-      template = @options[:template_args] || args.join(' ')
+      template = @options[:args] && args.size <= 1 ? @options[:args] : args.join(' ')
       if template.empty?
         template_args = [default_field]
         template = "%s"
