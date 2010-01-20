@@ -30,7 +30,7 @@ module MethMissing
         original_method_missing = Boson.main_object.method(:method_missing)
         define_method :method_missing do |meth,*args|
           Boson::Index.read
-          possible_commands = Boson::Index.all_main_methods.sort
+          possible_commands = (Boson.commands.map {|e| e.name} + Boson::Index.all_main_methods).uniq.sort
           meths = MethMissing.underscore_search(meth.to_s, possible_commands)
           meths = [meth.to_s] if possible_commands.include?(meth.to_s)
           if meths.size > 1
@@ -38,7 +38,7 @@ module MethMissing
           elsif (meths.size == 1)
             puts "Found method #{meths[0]}" if Boson::Runner.verbose?
             Boson::BinRunner.command = Boson::BinRunner.command.sub(meth.to_s, meths[0]) if Boson.const_defined?(:BinRunner)
-            original_method_missing.call(meths[0],*args)
+            Boson.can_invoke?(meths[0]) ? Boson.invoke(meths[0], *args) : original_method_missing.call(meths[0],*args)
           else
             original_method_missing.call(meth,*args)
           end
