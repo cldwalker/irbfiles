@@ -70,12 +70,12 @@ module ::Boson::Scientist
     end
 
     def invoke(cmd, args)
+      @options[:splat] = true if ::Boson::Index.read && (cmd_obj = ::Boson::Index.find_command(cmd)) &&
+        cmd_obj.has_splat_args?
       if @options[:pretend]
-        puts "#{cmd} #{args.inspect}"
+        puts "#{cmd} #{@options[:splat] ? '*' : ''}#{args.inspect}"
       else
-        @options[:splat] = true if ::Boson::Index.read && (cmd_obj = ::Boson::Index.find_command(cmd)) &&
-          cmd_obj.has_splat_args?
-        output = @options[:splat] ? (::Boson.full_invoke cmd, *args) : ::Boson.full_invoke(cmd, args)
+        output = @options[:splat] ? (::Boson.full_invoke cmd, args.flatten) : ::Boson.full_invoke(cmd, args)
         unless ::Boson::View.silent_object?(output)
           opts = output.is_a?(String) ? {:method=>'puts'} : {:inspect=>!output.is_a?(Array) }
           ::Boson::View.render(output, opts)
