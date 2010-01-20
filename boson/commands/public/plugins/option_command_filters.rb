@@ -1,5 +1,5 @@
 class ::Boson::OptionCommand
-  module Filters; end
+  module Filters; extend self end
   include Filters
   alias_method :_parse, :parse
 
@@ -61,9 +61,17 @@ end
 module OptionCommandFilters
   # @options :options=>:boolean
   # @render_options {}
+  # Lists filters
   def filters(options={})
-    str = options[:options] ? '_opt' : '_argument'
-    ::Boson::OptionCommand.instance_methods.grep(/#{str}$/).map {|e| e.gsub(str, '') }.sort
+    filter_type = options[:options] ? '_opt' : '_argument'
+    ::Boson::OptionCommand.instance_methods.grep(/#{filter_type}$/).map {|e| e.gsub(filter_type, '') }.sort
+  end
+
+  # @options :options=>:boolean
+  # Calls filters
+  def call_filter(filter, filter_arg, options={})
+    filter_type = options[:options] ? '_opt' : '_argument'
+    ::Boson::OptionCommand::Filters.send "#{filter}#{filter_type}", filter_arg
   end
 
   # @render_options :change_fields=>['arguments', 'commands'],
