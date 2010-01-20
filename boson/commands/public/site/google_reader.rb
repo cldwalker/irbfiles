@@ -27,7 +27,7 @@ module GoogleReader
     records.map {|e| {:title=>e.title, :url=>e.links[0].href, :published=>e.published } }
   end
 
-  # @config :global_options=>true
+  # @config :option_command=>true
   # List labels
   def labels(options={})
     Google::Reader::Label.all.map {|e| e.name }

@@ -74,7 +74,7 @@ module GemBrain
     ::Gem.source_index.gems.values.select {|e| e.name == rubygem }.sort_by {|e| e.version }[-1]
   end
 
-  # @config :global_options=>true
+  # @config :option_command=>true
   # Homepage of gem
   def homepage(rubygem)
     (spec = latest_gemspec(rubygem)) && spec.homepage
