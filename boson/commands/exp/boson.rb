@@ -28,6 +28,12 @@ module BosonLib
     Boson.full_invoke(command, [arg])
   end
 
+  # Use in console to make an existing command an option command
+  def commandify(command)
+    return "Command not found" unless (cmd = Boson::Command.find(command))
+    Boson::Scientist.redefine_command Boson.main_object, cmd
+  end
+
   # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
   # Updates/resets index of libraries and commands
   def index(options={})
