@@ -9,6 +9,16 @@ module Stats
     Stats.calculate(enumerable, :average)
   end
 
+  # Calculates standard deviation for all numeric keys in aoh
+  def stddev(enumerable)
+    Stats.calculate(enumerable, :stddev)
+  end
+
+  # Calculates median for all numeric keys in aoh
+  def median(enumerable)
+    Stats.calculate(enumerable, :median)
+  end
+
   class <<self
     def calculate(enumerable, stat)
       return enumerable if enumerable.size.zero?
@@ -22,8 +32,24 @@ module Stats
     end
 
     def calculate_average(enumerable, key)
-      float = enumerable.inject(0) {|t,e| t + e[key]} / enumerable.size.to_f
-      sprintf("%.2f", float).to_f
+      round exact_average(enumerable, key)
+    end
+
+    def round(num)
+      sprintf("%.2f", num).to_f
+    end
+
+    def calculate_stddev(enumerable, key)
+      avg = exact_average(enumerable, key)
+      round Math.sqrt(enumerable.inject(0) {|t,e| t + (e[key] - avg) ** 2 } / enumerable.size.to_f )
+    end
+
+    def calculate_median(enumerable, key)
+      enumerable.map {|e| e[key] }.sort[enumerable.size / 2]
+    end
+
+    def exact_average(enumerable, key)
+      enumerable.inject(0) {|t,e| t + e[key]} / enumerable.size.to_f
     end
 
     def calculate_total(enumerable, key)

@@ -48,7 +48,7 @@ module BosonLib
   end
 
   # Prints stats about boson's index
-  def stats
+  def index_stats
     Boson::Index.read
     Boson::Index.indexes.each do |repo|
       option_cmds = repo.commands.select {|e| !e.options.to_s.empty? }
