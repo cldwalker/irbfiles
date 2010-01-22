@@ -6,45 +6,42 @@ class ::Boson::OptionCommand
   def parse(args)
     global_options, parsed_options, args = _parse(args)
     filter_options(parsed_options) if parsed_options
-    filter_args(args)
-    [global_options, parsed_options, args]
+    filtered_args = filter_args(args)
+    [global_options, parsed_options, filtered_args]
   end
 
   def filter_args(args)
-    return unless @command.args #not all commands have args detected
+    return args unless @command.args #not all commands have args detected
+    new_args = []
     args.each_with_index do |arg,i|
       break unless @command.args[i] && (arg_name = @command.args[i][0])
 
       if arg_name[/^\*/]
-        new_args = call_plural_arg_filter(args[i..-1], arg_name.sub(/^\*/,''))
-        previous_new_args = i.zero? ? [] : Array(args[0..i-1])
-        args.replace  previous_new_args + Array(new_args)
+        new_args += call_plural_arg_filter(args[i..-1], arg_name.sub(/^\*/,''))
         break
       else
-        arg_name[/s$/] ? call_plural_arg_filter(arg, arg_name) :
-          ( respond_to?("#{arg_name}_argument") && call_arg_filter(args, i, arg_name, arg) )
+        new_arg = arg_name[/s$/] ? call_plural_arg_filter(arg, arg_name) :
+          respond_to?("#{arg_name}_argument") ? call_arg_filter(arg_name, arg) : arg
+        new_args << new_arg
       end
     end
+    new_args
   end
 
   def call_plural_arg_filter(args, arg_name)
     if respond_to?("#{arg_name}_argument")
-      new_args = send("#{arg_name}_argument", args)
-      puts "argument: #{args.inspect} -> #{new_args.inspect}" if Boson::Runner.verbose?
-      args.replace new_args
+      call_arg_filter(arg_name, args)
+    elsif arg_name.gsub!(/s$/,'') && respond_to?("#{arg_name}_argument") && args.is_a?(Array)
+      args.map {|e| call_arg_filter(arg_name, e) }
     else
-      arg_name.gsub!(/s$/,'')
-      if respond_to?("#{arg_name}_argument")
-        args.each_with_index {|arg, i|
-          call_arg_filter(args, i, arg_name, arg)
-        }
-      end
+      args
     end
   end
 
-  def call_arg_filter(args, i, arg_name, arg)
-    args[i] = send("#{arg_name}_argument", arg)
-    puts "argument: #{arg.inspect} -> #{args[i].inspect}" if Boson::Runner.verbose?
+  def call_arg_filter(arg_name, arg)
+    new_arg = send("#{arg_name}_argument", arg)
+    puts "argument: #{arg.inspect} -> #{new_arg.inspect}" if Boson::Runner.verbose?
+    new_arg
   end
 
   def filter_options(options)
