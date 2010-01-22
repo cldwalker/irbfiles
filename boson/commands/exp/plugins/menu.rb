@@ -50,7 +50,7 @@ module ::Boson::Scientist
 
     def get_input
       prompt = @options[:object] ? "Choose objects: " : "Default field: #{default_field}\nChoose rows: "
-      ::Boson.invoke(:menu, @items, :return_input=>true, :fields=>@fields, :prompt=>prompt)
+      ::Boson.invoke(:menu, @items, :return_input=>true, :fields=>@fields, :prompt=>prompt, :readline=>true)
     end
 
     def parse_and_invoke(input)

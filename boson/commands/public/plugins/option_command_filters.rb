@@ -12,12 +12,15 @@ class ::Boson::OptionCommand
 
   def filter_args(args)
     return unless @command.args #not all commands have args detected
-    if @command.has_splat_args?
-      arg_name = (@command.args[0][0] || '').sub(/^\*/, '')
-      call_plural_arg_filter(args, arg_name)
-    else
-      args.each_with_index do |arg,i|
-        break unless @command.args[i] && (arg_name = @command.args[i][0])
+    args.each_with_index do |arg,i|
+      break unless @command.args[i] && (arg_name = @command.args[i][0])
+
+      if arg_name[/^\*/]
+        new_args = call_plural_arg_filter(args[i..-1], arg_name.sub(/^\*/,''))
+        previous_new_args = i.zero? ? [] : Array(args[0..i-1])
+        args.replace  previous_new_args + Array(new_args)
+        break
+      else
         arg_name[/s$/] ? call_plural_arg_filter(arg, arg_name) :
           ( respond_to?("#{arg_name}_argument") && call_arg_filter(args, i, arg_name, arg) )
       end

@@ -14,7 +14,7 @@ module AllOptionCommands
           opts = _new_attributes(name, library)
           # commandifying all cmds causes rendering issues with ur
           [name, opts[:alias]].include?(BinRunner.command) && !opts.key?(:render_options) &&
-           !opts.key?(:options) ? opts.merge!(:global_options=>true) : opts
+           !opts.key?(:options) ? opts.merge!(:option_command=>true) : opts
         end
       end
     end
