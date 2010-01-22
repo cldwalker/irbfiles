@@ -37,15 +37,9 @@ module GemBrain
   # Uninstall gem and all its dependencies
   def recursive_uninstall(rubygem)
     deps = dependencies(rubygem)
-    if deps.empty?
-      system('sudo','gem','uninstall',rubygem)
-    else
-      menu(deps) do |gems|
-        gems.unshift rubygem
-        system(*(%w{sudo gem uninstall} + gems))
-        puts("Uninstalled gems: #{gems.join(', ')}")
-      end
-    end
+    gems = [rubygem] + menu(deps)
+    system(*(%w{sudo gem uninstall} + gems))
+    puts("Uninstalled gems: #{gems.join(', ')}")
   end
 
   # Add gem to approved list
