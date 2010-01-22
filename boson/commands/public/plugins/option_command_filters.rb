@@ -46,8 +46,8 @@ class ::Boson::OptionCommand
 
   def filter_options(options)
     options.each do |name,value|
-      if respond_to?("#{name}_opt")
-        options[name] = send("#{name}_opt", value)
+      if respond_to?("#{name}_option")
+        options[name] = send("#{name}_option", value)
         puts "option: #{value.inspect} -> #{options[name].inspect}" if Boson::Runner.verbose?
       end
     end
@@ -57,20 +57,20 @@ end
 # This plugin filters arguments and options passed to option commands (Boson::OptionCommand).
 # Arguments and options are intercepted by name and filtered by corresponding methods defined in
 # the module Boson::OptionCommand::Filters. For example, an argument or option named 'klass' is filtered by
-# a method 'klass_argument' or 'klass_opt'.
+# a method 'klass_argument' or 'klass_option'.
 module OptionCommandFilters
   # @options :options=>:boolean
   # @render_options {}
   # Lists filters
   def filters(options={})
-    filter_type = options[:options] ? '_opt' : '_argument'
+    filter_type = options[:options] ? '_option' : '_argument'
     ::Boson::OptionCommand.instance_methods.grep(/#{filter_type}$/).map {|e| e.gsub(filter_type, '') }.sort
   end
 
   # @options :options=>:boolean
   # Calls filters
   def call_filter(filter, filter_arg, options={})
-    filter_type = options[:options] ? '_opt' : '_argument'
+    filter_type = options[:options] ? '_option' : '_argument'
     ::Boson::OptionCommand::Filters.send "#{filter}#{filter_type}", filter_arg
   end
 

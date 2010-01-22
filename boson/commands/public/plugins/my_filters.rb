@@ -1,3 +1,4 @@
+# My filters for option_command_filters plugin
 module ::Boson::OptionCommand::Filters
   # Argument filters
   def url_argument(val)
@@ -57,12 +58,9 @@ module ::Boson::OptionCommand::Filters
   end
 
   # Option filters
-  def library_opt(val)
+  def library_option(val)
     lib_path_argument(val)
   end
 
-  alias_method :command_opt, :command_argument
-end
-
-module MyFilters
+  alias_method :command_option, :command_argument
 end

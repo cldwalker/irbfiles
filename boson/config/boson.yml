@@ -25,6 +25,9 @@
 - public/rails/rails_core
 - public/irb_core
 :libraries:
+  public/plugins/option_command_filters:
+    :command_aliases:
+      call_filter: cf
   # file libraries- personal prefs
   public/url/google:
     :commands:
