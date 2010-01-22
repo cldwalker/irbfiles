@@ -1,4 +1,8 @@
 module Github
+  def self.included(mod)
+    require 'cgi'
+  end
+
   # @render_options :fields=>{:default=>[:name, :watchers, :forks, :homepage, :description],
   #  :values=>[:homepage, :name, :forks, :private, :watchers, :fork, :url, :description, :owner, :open_issues]}
   # @options :user=>{:default=>'cldwalker', :desc=>'Github user' },
@@ -15,7 +19,7 @@ module Github
   #   'followers','language','pushed','score','description']}, :sort=>'score', :reverse_sort=>true
   #  Search repositories
   def repo_search(query)
-    github_get("/repos/search/#{query}")['repositories']
+    github_get("/repos/search/#{CGI.escape(query)}")['repositories']
   end
 
   # @render_options :fields=>{:values=>[:homepage, :name, :watchers, :private, :forks, :fork, :url, :description, :owner, :open_issues],
@@ -32,7 +36,7 @@ module Github
   #  'pushed', 'language', 'location', 'score']}
   # Search users
   def user_search(query)
-    github_get("/user/search/#{query}")['users']
+    github_get("/user/search/#{CGI.escape(query)}")['users']
   end
 
   # td: /commits/list/:user_id/:repository/:branch/*path

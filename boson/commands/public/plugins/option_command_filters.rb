@@ -79,11 +79,12 @@ module OptionCommandFilters
 
   # @render_options :change_fields=>['arguments', 'commands'],
   #  :filters=>{:default=>{'commands'=>:inspect}}
-  # @options :count=>:boolean, :transform=>:boolean
+  # @options :current_commands=>:boolean, :transform=>:boolean
   # Lists arguments from all known commands. Depends on option_command_filters plugin.
   def arguments(options={})
-    Boson::Index.read
-    hash = Boson::Index.commands.inject({}) {|t,com|
+    commands = options[:current_commands] ? Boson.commands.select {|e| e.option_command? } :
+      Boson::Index.read && Boson::Index.commands
+    commands.inject({}) {|t,com|
       (com.args || []).each {|arg|
         arg_name = options[:transform] ? arg[0].to_s.gsub(/^\*|s$/, '') : arg[0]
         (t[arg_name] ||= []) << com.name
