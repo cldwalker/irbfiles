@@ -23,7 +23,7 @@ module IrbCore
       :irb_load=>"Evals file like load line by line", :irb_jobs=>"List workspaces/subsessions",
       :irb_kill=>"Kills a given workspace/subsession", :include=>"Works same as module#include",
       :irb_require=>"Evals file like require line by line"}
-    commands = descriptions.inject({}) {|h,(k,v)| h[k.to_s] = {:description=>v}; h}
+    commands = descriptions.inject({}) {|h,(k,v)| h[k.to_s] = {:desc=>v}; h}
     other_commands = %w{irb_load irb_require irb include private public install_alias_method}
     {:no_alias_creation=>true, :commands=>command_aliases.keys + other_commands, :command_aliases=>command_aliases,
       :commands=>commands }

@@ -81,7 +81,7 @@
     :commands:
       file_read:
         :alias: fr
-        :description: File to string
+        :desc: File to string
   public/boson:
     :class_commands:
       Boson::Util:
@@ -94,19 +94,19 @@
       autoload_command:
         :args:
         - - command
-        :description: autoloads command by its associated library
+        :desc: autoloads command by its associated library
       boson_command:
         :args:
         - - command_obj
-        :description: Get command object by name or alias
+        :desc: Get command object by name or alias
       boson_library:
         :args:
         - - lib_path
-        :description: Get library object by name
+        :desc: Get library object by name
       detect:
-        :description: Detect modules, gems and kernel methods loaded
+        :desc: Detect modules, gems and kernel methods loaded
       any_const_get:
-        :description: Converts a string to a constant if it exists
+        :desc: Converts a string to a constant if it exists
   public/site/google_reader:
     :commands:
       unread_feeds:
@@ -145,9 +145,9 @@
   clipboard:
     :commands:
       paste:
-        :description: Paste to clipboard
+        :desc: Paste to clipboard
       copy:
-        :description: Copy to clipboard
+        :desc: Copy to clipboard
     :class_commands:
       paste: Clipboard.read
       copy: Clipboard.write

@@ -5,10 +5,10 @@ module RailsCore
 
   def self.config
     commands = {
-      'app'=>{:description=>'A global app instance to interact with server'},
-      'new_session'=>{:description=>'Creates a new session'},
-      'reload!'=>{:description=>'Reload environment'},
-      'helper'=>{:description=>'Interact with any helper methods'}
+      'app'=>{:desc=>'A global app instance to interact with server'},
+      'new_session'=>{:desc=>'Creates a new session'},
+      'reload!'=>{:desc=>'Reload environment'},
+      'helper'=>{:desc=>'Interact with any helper methods'}
     }
     {:commands=>commands}
   end
