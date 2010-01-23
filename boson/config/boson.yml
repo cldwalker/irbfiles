@@ -7,7 +7,7 @@
 - exp/plugins/global_option_defaults
 - exp/plugins/menu
 - exp/plugins/auto_pipe
-- public/plugins/all_option_commands
+- public/plugins/current_option_command
 :bin_defaults:
 - exp/plugins/url_libraries
 :console_defaults:
