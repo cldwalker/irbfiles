@@ -15,7 +15,7 @@ module ::Boson::Scientist
 
   class Menu
     require 'shellwords'
-    CHOSEN_REGEXP = /^(\d(?:[^:]+)?)(?::)?(\S+)?/
+    CHOSEN_REGEXP = /^(\d(?:[^:]+))(?::)?(\S+)?/
     OPTIONS = {:default_field=>:string, :shell=>:boolean, :pretend=>:boolean, :once=>:boolean, :help=>:boolean,
       :multi=>:boolean, :object=>:boolean, :command=>:string, :args=>:string, :splat=>:boolean}
 
