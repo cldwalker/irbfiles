@@ -31,6 +31,7 @@ module BosonLib
   # Use in console to make an existing command an option command
   def commandify(command)
     return "Command not found" unless (cmd = Boson::Command.find(command))
+    cmd.make_option_command
     Boson::Scientist.redefine_command Boson.main_object, cmd
   end
 

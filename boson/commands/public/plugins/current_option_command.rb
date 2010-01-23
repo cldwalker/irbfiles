@@ -6,14 +6,16 @@ module CurrentOptionCommand
   end
 
   def self.after_included
+
     ::Boson::Command.module_eval do
-      class <<self
-        alias_method :_new_attributes, :new_attributes
-        def new_attributes(name, library)
-          opts = _new_attributes(name, library)
-          [name, opts[:alias]].include?(BinRunner.command) ? {:args=>'*'}.merge!(opts.merge!(:option_command=>true)) : opts
+      def self.create(name, library)
+        obj = new(new_attributes(name, library))
+        if [obj.name, obj.alias].include?(BinRunner.command)
+          obj.make_option_command(library)
         end
+        obj
       end
     end
+
   end
 end
