@@ -1,4 +1,5 @@
 # :auto_namespace: true
+:option_underscore_search: true
 :defaults:
 - public/plugins/meth_missing
 - public/plugins/options

@@ -40,21 +40,8 @@ module ::Boson::OptionCommand::Filters
     val[/^([^\/])+-/] ? val.sub('-', '/') : val
   end
 
-  # from meth_missing plugin
-  def underscore_search(input, list)
-    if input.include?("_")
-      index = 0
-      input.split('_').inject(list) {|new_list,e|
-        new_list = new_list.select {|f| f.split(/_+/)[index] =~ /^#{Regexp.escape(e)}/ };
-        index +=1; new_list
-      }
-    else
-      list.grep(/^#{Regexp.escape(input)}/)
-    end
-  end
-
   def unalias(possible, value)
-    underscore_search(value, possible.sort)[0] || value
+    ::Boson::Util.underscore_search(value, possible.sort, true) || value
   end
 
   # Option filters
