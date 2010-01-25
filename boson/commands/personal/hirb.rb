@@ -1,7 +1,7 @@
 module HirbLib
   # Toggles hirb between being enabled and disabled
   def toggle_hirb
-    Hirb::View.enabled? ? Hirb.disable : Hirb.enable(HirbLib.enable_options)
+    Hirb::View.enabled? ? Hirb.disable : Hirb.enable
   end
 
   #@render_options :change_fields=>%w{class config}
@@ -11,12 +11,11 @@ module HirbLib
   end
 
   def self.after_included
-    Hirb.disable if Hirb::View.enabled?
     Hirb.enable(enable_options)
   end
 
   def self.enable_options
-    options = {:config_file=>File.join(Boson.repo.config_dir, 'hirb.yml'), :output=>output_config}
+    options = {:output=>output_config}
     options[:output_method] = "Mini.output" if !Object.const_defined?(:IRB) && Object.const_defined?(:Mini)
     options
   end
