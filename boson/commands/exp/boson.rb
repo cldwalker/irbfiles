@@ -23,9 +23,9 @@ module BosonLib
     }
   end
 
-  # Used as a pipe option to pipe to any command
-  def post_command(arg, command)
-    Boson.full_invoke(command, [arg])
+  # Used as a pipe option to pipe commands in sequence
+  def post_command(arg, arr)
+    arr.inject(arg) {|acc,e| Boson.full_invoke(e, [acc]) }
   end
 
   # Use in console to make an existing command an option command

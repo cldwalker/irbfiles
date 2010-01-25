@@ -40,7 +40,7 @@ module Histogram
     puts records.to_s
   end
 
-  # @options :max=>:numeric, :width=>:numeric, :min=>0
+  # @options :max=>:numeric, :width=>:numeric, :min=>0, :verbose=>:boolean
   # Auto histogram divided into ten buckets by default
   def histostat(arr, options={})
     max = options[:max] || begin
@@ -48,7 +48,12 @@ module Histogram
       (1..10).find {|e| (10 ** (tens_place - 1) * e) > arr.max } * 10 ** (tens_place - 1)
     end
     min = options[:min]
-    width = options[:width] || (max - min) / 10
+    width = options[:width] || begin
+      temp = ((max - min) / (10.0)).round
+      temp.zero? ? 1 : temp
+    end
+
+    puts "min: %s, max: %s, width: %s" % [min, max, width] if options[:verbose]
     # kept throwing errors b/c of range.modulo(width) != 0
     # agg = Aggregate.new(arr.min, arr.max, (arr.max - arr.min) / 10.0)
     agg = Aggregate.new(min, max, width)

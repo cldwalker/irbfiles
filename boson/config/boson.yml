@@ -297,7 +297,7 @@
   :command:
     :alias:
     - C
-    :type: :string
+    :type: :array
     :desc: Call any command
     :filter: true
     :pipe: post_command
@@ -314,6 +314,8 @@
   :filters:
     :type: :hash
     :desc: Filters to apply to fields
+    :enum: false
     :values:
     - inspect
     - size
+    - comma_join
