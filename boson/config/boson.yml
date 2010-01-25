@@ -3,6 +3,7 @@
 :defaults:
 - public/plugins/meth_missing
 - public/plugins/options
+- exp/plugins/hash_option
 - public/plugins/option_command_filters
 - public/plugins/my_filters
 - exp/plugins/global_option_defaults
