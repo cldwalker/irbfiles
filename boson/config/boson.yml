@@ -314,3 +314,6 @@
   :filters:
     :type: :hash
     :desc: Filters to apply to fields
+    :values:
+    - inspect
+    - size

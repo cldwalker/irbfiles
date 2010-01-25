@@ -12,9 +12,4 @@ module OptionsLib
   def self.after_included
    ::Boson::OptionParser.send :include, ::Boson::Options::Date
   end
-
-  options :blah=>{:type=>:hash, :values=>[:one, :two]}
-  def ping(options)
-    options
-  end
 end
