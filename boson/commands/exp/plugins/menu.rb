@@ -15,7 +15,7 @@ module ::Boson::Scientist
 
   class Menu
     require 'shellwords'
-    CHOSEN_REGEXP = /^(\d(?:[^:]+))(?::)?(\S+)?/
+    CHOSEN_REGEXP = /^(\d([^:]+)?)(?::)?(\S+)?/
     OPTIONS = {:default_field=>:string, :shell=>:boolean, :pretend=>:boolean, :once=>:boolean, :help=>:boolean,
       :multi=>:boolean, :object=>:boolean, :command=>:string, :args=>:string, :splat=>:boolean}
 
@@ -102,7 +102,7 @@ module ::Boson::Scientist
     def parse_template(args)
       args = args.map do |word|
         if word[CHOSEN_REGEXP] && !@seen
-          field = $2 ? ":#{unalias_field($2)}" : '%s'
+          field = $3 ? ":#{unalias_field($3)}" : '%s'
           @chosen = ::Hirb::Util.choose_from_array(items, $1)
           @seen = true
           @options[:object] ? @chosen : field
@@ -119,7 +119,7 @@ module ::Boson::Scientist
     def parse_multi(args)
       args.map {|word|
         if word[CHOSEN_REGEXP]
-          field = $2 ? unalias_field($2) : default_field
+          field = $3 ? unalias_field($3) : default_field
           ::Hirb::Util.choose_from_array(items, $1).map {|e| map_item(e, field) }
         else
           word
