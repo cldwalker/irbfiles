@@ -1,7 +1,7 @@
 module MyPipeOptions
   def self.after_included
     pipes = {
-      [:command, :C]=>{:type=>:array, :desc=>"Pipe to commands sequentially", :filter=>true, :pipe=>:post_command},
+      :command=>{:alias=>'C', :type=>:array, :desc=>"Pipe to commands sequentially", :filter=>true, :pipe=>:post_command},
       :key_slice=>{:type=>:hash, :filter=>true, :no_render=>true}
     }
     ::Boson.repo.config[:pipe_options] ||= {}
