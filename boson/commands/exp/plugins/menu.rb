@@ -2,10 +2,8 @@ module ::Boson::Scientist
   alias_method :_render_or_raw, :render_or_raw
   def render_or_raw(result)
     if (menu_options = @global_options.delete(:menu))
-      menu_options = ((@command.config[:menu] || {}) rescue {}).merge menu_options
-      filters = @global_options.delete(:filters)
-      new_result = ::Hirb::Helpers::AutoTable.render(result, @global_options.merge(:return_rows=>true))
-      Menu.run(new_result, menu_options.merge(:filters=>filters, :items=>result), @global_options)
+      menu_options = (@command.config[:menu] || {}).merge menu_options
+      Menu.run(result, menu_options, @global_options)
       nil
     else
       # @global_options[:render] = true
@@ -20,7 +18,10 @@ module ::Boson::Scientist
       :multi=>:boolean, :object=>:boolean, :command=>:string, :args=>:string, :splat=>:boolean}
 
     def self.run(items, options, global_options)
-      new(items, options, global_options).run
+      filters = global_options.delete(:filters)
+      options.merge! :filters=>filters, :items=>items
+      new_items = ::Hirb::Helpers::AutoTable.render(items, global_options.merge(:return_rows=>true))
+      new(new_items, options, global_options).run
     end
 
     def self.option_parser
