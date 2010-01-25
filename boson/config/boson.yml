@@ -10,6 +10,7 @@
 - exp/plugins/menu
 - exp/plugins/auto_pipe
 - public/plugins/current_option_command
+- exp/plugins/my_pipe_options
 :bin_defaults:
 - exp/plugins/url_libraries
 :console_defaults:
@@ -294,13 +295,6 @@
     :desc: Slice a list
     :pipe: multislice
     :filter: true
-  :command:
-    :alias:
-    - C
-    :type: :array
-    :desc: Call any command
-    :filter: true
-    :pipe: post_command
 :render_options:
   :all_fields:
     :type: :boolean

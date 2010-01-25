@@ -41,6 +41,7 @@ module Histogram
   end
 
   # @options :max=>:numeric, :width=>:numeric, :min=>0, :verbose=>:boolean
+  # @config :alias=>'hs'
   # Auto histogram divided into ten buckets by default
   def histostat(arr, options={})
     max = options[:max] || begin

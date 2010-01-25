@@ -23,11 +23,6 @@ module BosonLib
     }
   end
 
-  # Used as a pipe option to pipe commands in sequence
-  def post_command(arg, arr)
-    arr.inject(arg) {|acc,e| Boson.full_invoke(e, [acc]) }
-  end
-
   # Use in console to make an existing command an option command
   def commandify(command)
     return "Command not found" unless (cmd = Boson::Command.find(command))
