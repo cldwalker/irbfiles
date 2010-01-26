@@ -2,17 +2,16 @@
 :option_underscore_search: true
 :defaults:
 - public/plugins/meth_missing
-- public/plugins/options
 - exp/plugins/hash_option
 - public/plugins/option_command_filters
 - public/plugins/my_filters
 - exp/plugins/global_option_defaults
 - exp/plugins/menu
-- exp/plugins/auto_pipe
-- public/plugins/current_option_command
 - exp/plugins/my_pipe_options
 :bin_defaults:
+- exp/plugins/current_option_command
 - exp/plugins/url_libraries
+- exp/plugins/auto_pipe
 :console_defaults:
 - personal/completion
 - personal/alias
