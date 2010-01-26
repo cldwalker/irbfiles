@@ -17,7 +17,7 @@ module MethMissing
           puts "Multiple methods match: #{meths.join(', ')}"
         elsif (meths.size == 1) && respond_to?(meths[0])
           puts "Found method #{meths[0]}" if Boson::Runner.verbose?
-          Boson::BinRunner.command = Boson::BinRunner.command.sub(meth.to_s, meths[0]) if Boson.const_defined?(:BinRunner)
+          Boson::BinRunner.command = Boson::BinRunner.command.sub(meth.to_s, meths[0]) if Boson::Runner.in_shell?
           send(meths[0], *args)
         else
           original_method_missing.bind(self).call(meth,*args)
@@ -31,13 +31,12 @@ module MethMissing
         define_method :method_missing do |meth,*args|
           Boson::Index.read
           possible_commands = (Boson.commands.map {|e| e.name} + Boson::Index.all_main_methods).uniq.sort
-          meths = Boson::Util.underscore_search(meth.to_s, possible_commands)
-          meths = [meth.to_s] if possible_commands.include?(meth.to_s)
+          meths = possible_commands.include?(meth.to_s) ? [meth.to_s] : Boson::Util.underscore_search(meth.to_s, possible_commands)
           if meths.size > 1
             puts "Multiple methods match: #{meths.join(', ')}"
           elsif (meths.size == 1)
             puts "Found method #{meths[0]}" if Boson::Runner.verbose?
-            Boson::BinRunner.command = Boson::BinRunner.command.sub(meth.to_s, meths[0]) if Boson.const_defined?(:BinRunner)
+            Boson::BinRunner.command = Boson::BinRunner.command.sub(meth.to_s, meths[0]) if Boson::Runner.in_shell?
             Boson.can_invoke?(meths[0]) ? Boson.invoke(meths[0], *args) : original_method_missing.call(meths[0],*args)
           else
             original_method_missing.call(meth,*args)
