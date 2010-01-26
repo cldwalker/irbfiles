@@ -5,7 +5,7 @@
 
 # Usage:
 # Extends an object with underscore aliasing power
-# >> object.extend UnderscoreAlias
+# >> some_object.extend UnderscoreAlias
 #
 # Gives objects of this class underscore aliasing power
 # >> SomeClass.send :include, UnderscoreAlias
@@ -36,7 +36,6 @@ module ::UnderscoreAlias
 
   module DefineMethodMissing
     def self.underscore_search(input, list)
-      input = input.to_s
       if input.include?("_")
         underscore_regex = input.split('_').map {|e| Regexp.escape(e) }.join("([^_]+)?_")
         list.select {|e| e.to_s =~ /^#{underscore_regex}/ }
