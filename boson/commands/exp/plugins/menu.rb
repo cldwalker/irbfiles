@@ -4,9 +4,10 @@ class ::Menu
   OPTIONS = {:default_field=>:string, :shell=>:boolean, :pretend=>:boolean, :once=>:boolean, :help=>:boolean,
     :multi=>:boolean, :object=>:boolean, :command=>:string, :args=>:string, :splat=>:boolean}
 
-  def self.run(items, options, global_options)
+  def self.run(items, options, env)
+    global_options = env.delete(:global_options)
     filters = global_options.delete(:filters)
-    options.merge! :filters=>filters, :items=>items
+    options = (env[:config] || {}).merge(options).merge(:filters=>filters, :items=>items)
     new_items = ::Hirb::Helpers::AutoTable.render(items, global_options.merge(:return_rows=>true))
     new(new_items, options, global_options).run
   end
@@ -132,33 +133,19 @@ class ::Menu
   end
 end
 
-# module ::Boson::Scientist
-#   alias_method :_render_or_raw, :render_or_raw
-#   def render_or_raw(result)
-#     if (menu_options = @global_options.delete(:menu))
-#       menu_options = (@command.config[:menu] || {}).merge menu_options
-#       ::Menu.run(result, menu_options, @global_options)
-#       nil
-#     else
-#       # @global_options[:render] = true
-#       _render_or_raw(result)
-#     end
-#   end
-# 
-# end
-
 module MenuLib
-  def run_menu(result, menu_opt, global_opt)
-    ::Menu.run(result, menu_opt, global_opt)
-    nil
-  end
-
   def self.after_included
     pipes = {
       :menu=>{
         :bool_default=>{}, :alias=>['m'], :type=>:hash, :keys=>::Menu::OPTIONS.keys,
-        :no_render=>true, :global_options=>true, :solo=>true, :pipe=>:run_menu, :filter=>true
+        :no_render=>true, :env=>true, :solo=>true, :pipe=>:run_menu, :filter=>true
     } }
     (::Boson.repo.config[:pipe_options] ||= {}).merge!(pipes)
+  end
+
+  # Runs an awesome menu system on top of hirb's tables
+  def run_menu(result, menu_opt, env)
+    ::Menu.run(result, menu_opt, env)
+    nil
   end
 end
