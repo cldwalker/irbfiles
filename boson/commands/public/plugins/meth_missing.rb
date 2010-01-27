@@ -3,8 +3,10 @@
 module MethMissing
   def self.after_included
     Boson::Runner.define_autoloader
-    define_method_missing class <<Boson.main_object; self end
-    define_method_missing Boson::Namespace
+    [class <<Boson.main_object; self end, Boson::Namespace].each do |klass|
+      define_method_missing klass
+      klass.send :private, :method_missing
+    end
   end
 
   def self.define_method_missing(klass)
