@@ -32,7 +32,8 @@ module SystemMisc
 
   # @options :clone_directory=>'.', :editor=>'mate'
   # Clones a github repo or gist and opens in editor
-  def checkout(url, options={})
+  def checkout(repo_url, options={})
+    url = repo_url
     clone_url, dest = if url[/^\d+$/]
       ["git://gist.github.com/#{url}.git", "gist-#{url}"]
     elsif (id = url[/gist.github.com\/(\d+)$/, 1])

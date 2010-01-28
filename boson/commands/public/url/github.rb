@@ -5,6 +5,11 @@ module GithubUrl
     "http://github.com/search?type=Repositories&q=#{query.join(' ')}"
   end
 
+  # Gist page
+  def gist_id(id)
+    "http://gist.github.com/#{id}"
+  end
+
   # @options :gist=>:boolean
   # @config :alias=>'gu'
   # Github or gist user page
