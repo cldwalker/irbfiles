@@ -33,18 +33,23 @@ module SystemMisc
   # @options :clone_directory=>'.', :editor=>'mate'
   # Clones a github repo or gist and opens in editor
   def checkout(repo_url, options={})
-    url = repo_url
-    clone_url, dest = if url[/^\d+$/]
-      ["git://gist.github.com/#{url}.git", "gist-#{url}"]
-    elsif (id = url[/gist.github.com\/(\d+)$/, 1])
+    clone_url,dest = clonable_url_and_name(repo_url)
+    if clone_url && dest
+      cmd = "cd #{options[:directory]}; git clone #{clone_url} #{dest} && #{options[:editor]} #{dest}"
+      system cmd
+    end
+  end
+
+  def clonable_url_and_name(repo_url)
+    if repo_url[/^\d+$/]
+      ["git://gist.github.com/#{repo_url}.git", "gist-#{repo_url}"]
+    elsif (id = repo_url[/gist.github.com\/(\d+)$/, 1])
       ["git://gist.github.com/#{id}.git", "gist-#{id}"]
     else
-      user, repo = /github.com\/([^\/]+)\/([^\/]+)/.match(url)[1,2]
-      return  puts("Couldn't match user or repo from url") if user.nil? || repo.nil?
+      user, repo = /github.com\/([^\/]+)\/([^\/]+)/.match(repo_url)[1,2]
+      return  puts("Couldn't match user or repo from repo_url") if user.nil? || repo.nil?
       ["git://github.com/#{user}/#{repo}.git", repo]
     end
-    cmd = "cd #{options[:directory]}; git clone #{clone_url} #{dest} && #{options[:editor]} #{dest}"
-    system(cmd)
   end
 
   # Delete backup files left by text editors
