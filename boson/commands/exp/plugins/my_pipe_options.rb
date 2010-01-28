@@ -1,10 +1,8 @@
 module MyPipeOptions
   def self.after_included
-    pipes = {
-      :command=>{:alias=>'C', :type=>:array, :desc=>"Pipe to commands sequentially", :filter=>true, :pipe=>:post_command},
+    ::Boson::Pipe.add_pipes :command=>{
+      :alias=>'C', :type=>:array, :desc=>"Pipe to commands sequentially", :filter=>true, :pipe=>:post_command},
       :key_slice=>{:type=>:hash, :filter=>true, :no_render=>true, :solo=>true}
-    }
-    (::Boson.repo.config[:pipe_options] ||= {}).merge!(pipes)
   end
 
   # Pipe command to pipe commands in sequence

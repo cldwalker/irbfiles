@@ -135,12 +135,10 @@ end
 
 module MenuLib
   def self.after_included
-    pipes = {
-      :menu=>{
-        :bool_default=>{}, :alias=>['m'], :type=>:hash, :keys=>::Menu::OPTIONS.keys,
-        :no_render=>true, :env=>true, :solo=>true, :pipe=>:run_menu, :filter=>true
-    } }
-    (::Boson.repo.config[:pipe_options] ||= {}).merge!(pipes)
+    ::Boson::Pipe.add_pipes :menu=>{
+      :bool_default=>{}, :alias=>['m'], :type=>:hash, :keys=>::Menu::OPTIONS.keys,
+      :no_render=>true, :env=>true, :solo=>true, :pipe=>:run_menu, :filter=>true
+    }
   end
 
   # Runs an awesome menu system on top of hirb's tables
