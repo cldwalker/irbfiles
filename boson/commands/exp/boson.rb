@@ -30,6 +30,11 @@ module BosonLib
     Boson::Scientist.redefine_command Boson.main_object, cmd
   end
 
+  # Just echoes arguments to act as a command
+  def echo(*args)
+    args
+  end
+
   # @options :all=>:boolean, :verbose=>true, :reset=>:boolean
   # Updates/resets index of libraries and commands
   def index(options={})

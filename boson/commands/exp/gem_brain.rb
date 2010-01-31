@@ -20,6 +20,11 @@ module GemBrain
     end
   end
 
+  # Calls a gem subcommand
+  def subcommand(*args)
+    ::Gem::CommandManager.instance.find_command(args.shift).invoke(*args)
+  end
+
   # @options :query=>'', :sudo=>:boolean, :opts=>:string
   # Execute gem command for matching gems
   def execute(subcommand, options={})

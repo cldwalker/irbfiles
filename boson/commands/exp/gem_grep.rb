@@ -9,6 +9,17 @@ module Gemgrep
     require 'rubygems/specification_hack'
   end
 
+  # @render_options :fields=>{:default=>GemGrep.display_fields, :values=>GemGrep.valid_gemspec_columns.map {|e| e.to_sym}},
+  #  :filters=>{ :default=>{:dependencies=>:comma_join, :authors=>:comma_join} }
+  # @options :grep_fields=>{:default=>GemGrep.grep_fields, :values=>GemGrep.valid_gemspec_columns}
+  def local_grep(*args)
+    options = args.pop
+    cmd = ::Gem::CommandManager.instance.find_command('grep')
+    cmd.results_only = true
+    cmd.invoke(*(args + ['-f', options[:grep_fields].join(',')]))
+    cmd.results
+  end
+
   # @render_options :fields=>{:default=>GemGrep.display_fields, :values=>GemGrep.valid_gemspec_columns}
   # @options :grep_fields=>{:default=>GemGrep.grep_fields, :values=>GemGrep.valid_gemspec_columns}
   def gem_grep(term, options={})
@@ -23,6 +34,7 @@ module Gemgrep
     }.flatten
   end
 
+  private
   def indexes
     @indexes ||= servers.map {|e| GemGrep::Index.new(e).gem_index }
   end
