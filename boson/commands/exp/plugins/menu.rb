@@ -5,20 +5,20 @@ class ::Menu
     :multi=>:boolean, :object=>:boolean, :command=>:string, :args=>:string, :splat=>:boolean}
 
   def self.run(items, options, env)
-    global_options = env.delete(:global_options)
-    filters = global_options.delete(:filters)
-    options = (env[:config] || {}).merge(options).merge(:filters=>filters, :items=>items)
-    new_items = ::Hirb::Helpers::AutoTable.render(items, global_options.merge(:return_rows=>true))
-    new(new_items, options, global_options).run
+    new(items, options, env).run
   end
 
   def self.option_parser
     @option_parser ||= ::Boson::OptionParser.new OPTIONS
   end
 
-  def initialize(items, options, global_options)
-    @items, @default_options, @global_options = items, options, global_options
+  def initialize(original_items, options, env)
+    @default_options, @global_options = (env[:config] || {}).merge(options), env[:global_options]
+    @global_options.delete(:filters)
+    @items = ::Hirb::Helpers::AutoTable.render(original_items, @global_options.merge(:return_rows=>true))
+
     @options = @default_options.dup
+    @options[:items] = original_items
     @is_hash = items[0].is_a?(Hash)
     @fields = @global_options[:fields] ? @global_options[:fields] :
       @global_options[:change_fields] ? @global_options[:change_fields] :
