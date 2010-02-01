@@ -48,6 +48,10 @@
     :force: true
   public/site/github:
     :commands:
+      user_gists:
+        :config:
+          :menu:
+            :command: gist_id
       user_search:
         :config:
           :menu:
