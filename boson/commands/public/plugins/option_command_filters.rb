@@ -75,7 +75,6 @@ module OptionCommandFilters
   end
 
   # @render_options :change_fields=>['arguments', 'commands'],
-  #  :filters=>{:default=>{'commands'=>:inspect}}
   # @options :current_commands=>:boolean, :transform=>:boolean
   # Lists arguments from all known commands. Depends on option_command_filters plugin.
   def arguments(options={})

@@ -1,5 +1,5 @@
 module BosonLib
-  # @render_options :change_fields=>['name', 'commands'], :filters=>{:default=>{'commands'=>:inspect}}
+  # @render_options :change_fields=>['name', 'commands']
   # @options :type=>:boolean, [:skip_booleans, :S]=>true, :toggle_global_options=>:boolean, :use_parser=>true
   # @desc Lists option stats from all known commands. Doesn't include boolean options
   # if listing option names.

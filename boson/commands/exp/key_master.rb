@@ -1,6 +1,5 @@
 module KeyMaster
-  # @render_options :change_fields=>%w{function key}, :sort=>'function',
-  #   :filters=>{:default=>{'key'=>[:join, ","]}}
+  # @render_options :change_fields=>%w{function key}, :sort=>'function'
   # Lists keys used
   def keys_used
     @functions_hash ||= begin
