@@ -114,6 +114,16 @@
         :desc: Detect modules, gems and kernel methods loaded
       any_const_get:
         :desc: Converts a string to a constant if it exists
+  public/site/gemcutter:
+    :commands:
+      gem_search:
+        :alias: cs
+      cuts:
+        :options:
+          :sleep:
+            :default: 0
+          :loud:
+            :default: false
   public/site/google_reader:
     :commands:
       unread_feeds:
