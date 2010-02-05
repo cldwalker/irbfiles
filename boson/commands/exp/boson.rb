@@ -23,6 +23,12 @@ module BosonLib
     }
   end
 
+  # @options :parse=>{:type=>:string, :bool_default=>true}, :raise_error=>:boolean, :any_response=>:boolean
+  # A commandified version of get
+  def fetch(url, opts={})
+    get(url, opts)
+  end
+
   # Use in console to make an existing command an option command
   def commandify(command)
     return "Command not found" unless (cmd = Boson::Command.find(command))
