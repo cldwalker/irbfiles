@@ -62,6 +62,14 @@ module ShellCommands
   def voices
     Dir.glob('/System/Library/Speech/Voices/*').map {|e| e[/\/(\w+)\.SpeechVoice/, 1] }
   end
+
+  # Originally from http://gist.github.com/raw/203861/c063260bef7f004c9db4c2a7719ff649b59d3ade/git-authors
+  # @render_options :change_fields=>%w{commits author}
+  # Display number of commits per author in current git repo
+  def git_authors
+    `git shortlog -s -n --no-merges`.split("\n").map {|e| e.split("\t") }
+  end
+
   private
   # converts du -sh style number ie 23M or 42.0G to a ruby float
   def numerical_value(dir_line)
