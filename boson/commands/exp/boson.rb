@@ -23,6 +23,15 @@ module BosonLib
     }
   end
 
+  # @render_options :fields=>{:default=>[:name, :alias, :type, :desc],
+  # :values=>[:filter, :type, :env, :no_render, :pipe, :bool_default, :alias, :keys, :solo, :desc, :name]}
+  # List pipes
+  def pipes
+    Boson::OptionCommand.default_pipe_options.inject([]) {|t,(name,h)|
+      t << h.merge(:name=>name)
+    }
+  end
+
   # @options :parse=>{:type=>:string, :bool_default=>true}, :raise_error=>:boolean, :any_response=>:boolean
   # A commandified version of get
   def fetch(url, opts={})

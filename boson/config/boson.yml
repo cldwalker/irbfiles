@@ -309,6 +309,10 @@
     :pipe: multislice
     :filter: true
 :render_options:
+  :hide_empty:
+    :alias: H
+    :type: :boolean
+    :desc: Hides empty fields
   :all_fields:
     :type: :boolean
     :desc: Show all fields
