@@ -288,18 +288,6 @@
     - y
     :type: :boolean
     :desc: Copy to clipboard
-  :pastie:
-    :alias: P
-    :type: :boolean
-    :desc: Paste to pastie
-    :pipe: pastie_string
-    :filter: true
-  :gist:
-    :alias: G
-    :type: :boolean
-    :desc: Paste as gist
-    :pipe: gist_string
-    :filter: true
   :slice:
     :alias:
     - S
