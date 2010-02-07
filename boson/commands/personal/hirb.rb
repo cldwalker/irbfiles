@@ -12,6 +12,7 @@ module HirbLib
 
   def self.after_included
     Hirb.enable(enable_options)
+    Hirb::Helpers::Table.filter_classes[Array] = [:join, ',']
   end
 
   def self.enable_options

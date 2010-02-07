@@ -9,8 +9,7 @@ module Gemgrep
     require 'rubygems/specification_hack'
   end
 
-  # @render_options :fields=>{:default=>GemGrep.display_fields, :values=>GemGrep.valid_gemspec_columns.map {|e| e.to_sym}},
-  #  :filters=>{ :default=>{:dependencies=>:comma_join, :authors=>:comma_join} }
+  # @render_options :fields=>{:default=>GemGrep.display_fields, :values=>GemGrep.valid_gemspec_columns.map {|e| e.to_sym}}
   # @options :grep_fields=>{:default=>GemGrep.grep_fields, :values=>GemGrep.valid_gemspec_columns}
   def local_grep(*args)
     options = args.pop

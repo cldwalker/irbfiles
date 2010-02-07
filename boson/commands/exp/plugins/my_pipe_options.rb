@@ -3,7 +3,13 @@ module MyPipeOptions
     ::Boson::OptionCommand::PIPE_OPTIONS[:pipes].merge! :enum=>false, :values=>%w{pastie_string gist_string}
     ::Boson::Pipe.add_pipes :command=>{
       :alias=>'C', :type=>:array, :desc=>"Pipe to commands sequentially", :filter=>true, :pipe=>:post_command},
-      :key_slice=>{:type=>:hash, :filter=>true, :no_render=>true, :solo=>true}
+      :key_slice=>{:type=>:hash, :filter=>true, :no_render=>true, :solo=>true},
+      :eval=>{:type=>:string, :filter=>true, :pipe=>:eval_pipe, :no_render=>true, :desc=>"instance eval"}
+  end
+
+  def eval_pipe(obj, eval_string)
+    eval_string = (eval_string[/^\[/] ? 'self' : 'self.') + eval_string
+    obj.instance_eval(eval_string)
   end
 
   # Pipe command to pipe commands in sequence

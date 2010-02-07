@@ -7,6 +7,7 @@
 - exp/plugins/global_option_defaults
 - exp/plugins/menu
 - exp/plugins/my_pipe_options
+- personal/hirb
 :bin_defaults:
 - exp/plugins/current_option_command
 - exp/plugins/url_libraries
@@ -19,7 +20,6 @@
 - public/boson
 - public/irb_features
 - public/duration
-- personal/hirb
 - every
 - public/rails/logger
 - personal/rails
