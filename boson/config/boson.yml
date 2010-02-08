@@ -147,6 +147,12 @@
           :directory: ~/code/world
   personal/alias:
     :object_methods: false
+  personal/xmms2:
+    :commands:
+      search_songs:
+        :render_options:
+          :menu:
+            :default: {}
   exp/gem_brain:
     :namespace: g
     :command_aliases:
@@ -301,13 +307,15 @@
     :alias: H
     :type: :boolean
     :desc: Hides empty fields
-  :all_fields:
-    :type: :boolean
-    :desc: Show all fields
+  :max_fields:
+    :alias: x
+    :type: :hash
+    :desc: Set maxes for fields
   :number:
     :type: :boolean
     :desc: Number rows
   :method:
+    :alias: false
     :type: :string
     :desc: Render method
   :filters:

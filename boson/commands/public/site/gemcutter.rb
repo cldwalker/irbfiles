@@ -31,7 +31,7 @@ module Gemcutter
   end
 
   # @render_options :fields=>{:values=>FIELDS, :default=>%w{name downloads info authors}},
-  #  :filters=>{:default=>{'dependencies'=>:inspect}}, :max_fields=>{:alias=>false, :default=>{'authors'=>30}}
+  #  :filters=>{:default=>{'dependencies'=>:inspect}}, :max_fields=>{:default=>{'authors'=>0.15}}
   # @options :page=>{:default=>1, :desc=>'page number'}
   # Search gemcutter
   def gem_search(*query)

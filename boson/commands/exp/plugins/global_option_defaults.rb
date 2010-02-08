@@ -4,6 +4,7 @@ class ::Boson::OptionCommand
     opts = _set_global_option_defaults(opts)
     if opts[:fields][:values]
       opts[:filters][:keys] ||= opts[:fields][:values]
+      opts[:max_fields][:keys] ||= opts[:fields][:values]
     end
     opts
   end

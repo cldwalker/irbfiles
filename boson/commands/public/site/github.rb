@@ -4,7 +4,8 @@ module Github
   end
 
   # @render_options :fields=>{:default=>[:name, :watchers, :forks, :homepage, :description],
-  #  :values=>[:homepage, :name, :forks, :private, :watchers, :fork, :url, :description, :owner, :open_issues]}
+  #  :values=>[:homepage, :name, :forks, :private, :watchers, :fork, :url, :description, :owner, :open_issues]},
+  #  :max_fields=>{:default=>{:homepage=>0.2, :url=>0.2} }
   # @options :user=>{:default=>'cldwalker', :desc=>'Github user' },
   #  [:forks,:F]=>{:type=>:boolean, :desc=>'Display forked repositories'}
   # Displays a user's repositories
