@@ -16,6 +16,10 @@ module MiscUrl
     "http://www.imdb.com/find?q=#{query.join(' ')}"
   end
 
+  def cutter_gem(rubygem)
+    "http://www.gemcutter.org/gems/#{rubygem}"
+  end
+
   # @config :alias=>'bts'
   # @options :remote=>:boolean
   # Machine tag search on my website or localhost version

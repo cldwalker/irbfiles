@@ -39,7 +39,8 @@ class ::Menu
 
   def get_input
     prompt = @options[:object] ? "Choose objects: " : "Default field: #{default_field}\nChoose rows: "
-    ::Boson.invoke(:menu, @items, :return_input=>true, :fields=>@fields, :prompt=>prompt, :readline=>true)
+    opts = {:return_input=>true, :fields=>@fields, :prompt=>prompt, :readline=>true}.merge(@options[:render] || {})
+    ::Boson.invoke :menu, @items, opts
   end
 
   def parse_and_invoke(input)
