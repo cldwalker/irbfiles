@@ -23,6 +23,17 @@ module BosonLib
     }
   end
 
+  # @config :alias=>'fl'
+  # Displays table's field lengths after executing command
+  def field_lengths(*args)
+    Boson.full_invoke args.shift, args
+    if (table = ::Hirb::Helpers::Table.last_table)
+      render [table.field_lengths], :fields =>table.fields
+    else
+      puts "No table detected"
+    end
+  end
+
   # @render_options :fields=>{:default=>[:name, :alias, :type, :desc],
   # :values=>[:filter, :type, :env, :no_render, :pipe, :bool_default, :alias, :keys, :solo, :desc, :name]}
   # List pipes
