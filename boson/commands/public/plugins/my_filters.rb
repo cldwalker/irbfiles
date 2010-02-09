@@ -24,6 +24,13 @@ module ::Boson::OptionCommand::Filters
     lib_hash[val] || val
   end
 
+  # an extra argument is added when used with bl
+  def library_obj_argument(val)
+    val = lib_path_argument(val)
+    ::Boson.invoke :load_library, val
+    val
+  end
+
   def command_argument(val)
     Boson::Index.read
     return val if Boson::Index.find_command(val)

@@ -3,9 +3,9 @@ module Github
     require 'cgi'
   end
 
-  # @render_options :fields=>{:default=>[:name, :watchers, :forks, :homepage, :description],
+  # @render_options :fields=>{:default=>[:name, :watchers, :forks, :homepage, :description, :url],
   #  :values=>[:homepage, :name, :forks, :private, :watchers, :fork, :url, :description, :owner, :open_issues]},
-  #  :max_fields=>{:default=>{:homepage=>0.2, :url=>0.2} }
+  #  :max_fields=>{:default=>{:homepage=>0.2, :url=>0.1} }
   # @options :user=>{:default=>'cldwalker', :desc=>'Github user' },
   #  [:forks,:F]=>{:type=>:boolean, :desc=>'Display forked repositories'}
   # Displays a user's repositories
@@ -32,7 +32,7 @@ module Github
   end
 
   # @render_options :fields=>{:values=>[:homepage, :name, :watchers, :private, :forks, :fork, :url, :description, :owner, :open_issues],
-  #  :default=>[:owner, :watchers, :forks, :homepage, :description]}
+  #  :default=>[:owner, :watchers, :forks, :homepage, :description, :url]}, :max_fields=>{:default=>{:url=>0.15}}
   # @options :user=>{:default=>'cldwalker', :desc=>'Github user'}
   # Displays network of a given user-repo i.e. wycats-thor or defunkt/rip
   def repo_network(user_repo, options={})
@@ -50,7 +50,7 @@ module Github
 
   # td: /commits/list/:user_id/:repository/:branch/*path
   # @render_options :fields=>{:values=>%w{id url committed_date authored_date message},
-  #  :default=>%w{id authored_date message}}
+  #  :default=>%w{id authored_date message url}}, :max_fields=>{:default=>{'url'=>0.1}}
   # @options :branch=>{:default=>'master', :desc=>'Git repo branch'},
   #   :user=>{:default=>'cldwalker', :desc=>'Github user'}
   # List commits of a given user-repo

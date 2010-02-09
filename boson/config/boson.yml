@@ -69,10 +69,21 @@
           :menu:
             :command: repo
             :args: ':owner/:name'
+      repo_network:
+        :config:
+          :menu:
+            :command: browser
+            :args: ':url'
+      commit_list:
+        :config:
+          :menu:
+            :command: browser
+            :args: ':url'
       user_repos:
         :config:
           :menu:
-            :command: repo
+            :command: browser
+            :args: ':url'
         :alias: ur
         :render_options:
           :command:
