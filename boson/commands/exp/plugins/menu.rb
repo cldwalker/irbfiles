@@ -38,8 +38,11 @@ class ::Menu
   end
 
   def get_input
-    prompt = @options[:object] ? "Choose objects: " : "Default field: #{default_field}\nChoose rows: "
-    opts = {:return_input=>true, :fields=>@fields, :prompt=>prompt, :readline=>true}.merge(@options[:render] || {})
+    prompt = @options[:object] ? "Choose objects: " :
+      @options[:args] ? "Default args: #{@options[:args]}\nChoose rows: " :
+      "Default field: #{default_field}\nChoose rows: "
+    opts = @global_options.merge({:return_input=>true, :fields=>@fields, :prompt=>prompt, :readline=>true}).
+      merge(@options[:render] || {})
     ::Boson.invoke :menu, @items, opts
   end
 
@@ -75,7 +78,7 @@ class ::Menu
 
   def process_template(args)
     return args if @options[:object]
-    template = @options[:args] && args.size <= 1 ? @options[:args] : args.join(' ')
+    template = @options[:args] && ['', '%s'].include?(args.to_s) ? @options[:args] : args.join(' ')
     if template.empty?
       template_args = [default_field]
       template = "%s"
