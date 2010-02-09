@@ -54,9 +54,10 @@ class ::Boson::FileLibrary
 end
 
 module ReloadLibrary
+  # @config :option_command=>true
   # Reloads a library or an array of libraries
-  def reload_library(library, options={})
-    Boson::Manager.reload(library, options)
+  def reload_library(lib_path, options={})
+    Boson::Manager.reload(lib_path, options)
   end
 end
 

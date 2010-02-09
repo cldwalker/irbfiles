@@ -22,6 +22,7 @@ module BosonCommand
       end
     end
 
+    return "File '#{loc[0]}' doesn't exist" unless File.exists? loc[0]
     lines = IO.readlines(loc[0])
     method_lines = []
     index = loc[1] - 1

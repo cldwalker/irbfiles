@@ -4,14 +4,14 @@ module GoogleUrl
   end
 
   # @options :end_date=>:string, :id=>14680769,
-  #  :subpage=>{:values=>%w{top_content referring_sources keywords}, :default=>''}
+  #  :subpage=>{:values=>%w{top_content referring_sources keywords},:type=>:string}
   # Opens google analytics for given date range
   def google_analytics(start_date=nil, options={})
     start_date = start_date ? Date.parse("#{start_date}/2010") : Date.today
     start_date = start_date.strftime("%Y%m%d")
     end_date = options[:end_date] || start_date
     params = "id=#{options[:id]}&pdr=#{start_date}-#{end_date}&trows=25"
-    "https://www.google.com/analytics/reporting/#{options[:subpage]}?#{params}"
+    "https://www.google.com/analytics/reporting/#{options[:subpage] || ''}?#{params}"
   end
 
   # Posts by label
