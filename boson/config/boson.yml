@@ -63,30 +63,30 @@
         :config:
           :menu:
             :command: repo
-            :args: ':username/:name'
+            :template: ':username/:name'
       repos_watched:
         :config:
           :menu:
             :command: repo
-            :args: ':owner/:name'
+            :template: ':owner/:name'
       repo_network:
         :config:
           :menu:
             :command: browser
-            :args: ':url'
+            :default_field: :url
       commit_list:
         :config:
           :menu:
             :command: browser
-            :args: ':url'
+            :default_field: url
       user_repos:
         :config:
           :menu:
             :command: browser
-            :args: ':url'
+            :default_field: :url
         :alias: ur
         :render_options:
-          :command:
+          :pipes:
             :default:
             - average
           :reverse_sort: true
@@ -140,12 +140,12 @@
         :config:
           :menu:
             :command: reader_feed
-            :args: ':google_id'
+            :default_field: google_id
       all_feeds:
         :config:
           :menu:
             :command: reader_feed
-            :args: ':google_id'
+            :default_field: google_id
       labels:
         :config:
           :menu:
@@ -158,12 +158,12 @@
           :directory: ~/code/world
   personal/alias:
     :object_methods: false
-  personal/xmms2:
-    :commands:
-      search_songs:
-        :render_options:
-          :menu:
-            :default: {}
+  # personal/xmms2:
+  #   :commands:
+  #     search_songs:
+  #       :render_options:
+  #         :menu:
+  #           :default: {}
   exp/gem_brain:
     :namespace: g
     :command_aliases:
@@ -308,7 +308,6 @@
   :slice:
     :alias:
     - S
-    - z
     :type: :string
     :desc: Slice a list
     :pipe: multislice
