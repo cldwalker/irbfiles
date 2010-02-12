@@ -139,7 +139,7 @@ end
 
 class ::TwoDMenu < ::Hirb::Menu
   OPTIONS = {:default_field=>:string, :pretend=>:boolean, :multiple_execute=>:boolean, :help=>:boolean,
-    [:default_command, :c]=>:string, :splat=>:boolean, :object=>:boolean}
+    [:default_command, :c]=>:string, :splat=>:boolean, :object=>:boolean, :template=>:string}
 
   def self.option_parser
     @option_parser ||= ::Boson::OptionParser.new OPTIONS
@@ -161,21 +161,25 @@ class ::TwoDMenu < ::Hirb::Menu
   end
 
   def execute(items)
-    if @options[:help]
-      self.class.option_parser.print_usage_table
-    else
-      cmd = get_command
-      if @options[:multiple_execute]
-        items.each {|e|
-          args = add_chosen_to_args(e)
-          invoke(cmd, args)
-        }
-      else
-        args = add_chosen_to_args(items)
-        invoke(cmd, args)
-      end
-    end
+    @options[:help] ? self.class.option_parser.print_usage_table :
+      super(handle_template(items))
     nil
+  end
+
+  def handle_template(items)
+    if @options[:template] && command && @new_args == [CHOSEN_ARG]
+      items = ::Hirb::Util.choose_from_array(@output, @args[-1])
+      items.map! {|e| apply_template(e) }
+    else
+      items
+    end
+  end
+
+  def apply_template(item)
+    @options[:template].gsub(/:\w+/) {|e|
+      field = unalias_field(e[/\w+/])
+      @output[0].is_a?(Hash) ? item[field] : item.send(field)
+    }
   end
 
   def invoke(cmd, args)
@@ -191,7 +195,6 @@ class ::TwoDMenu < ::Hirb::Menu
       end
     end
   end
-
 end
 
 module MenuLib
