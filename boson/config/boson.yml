@@ -158,12 +158,12 @@
           :directory: ~/code/world
   personal/alias:
     :object_methods: false
-  # personal/xmms2:
-  #   :commands:
-  #     search_songs:
-  #       :render_options:
-  #         :menu:
-  #           :default: {}
+  personal/xmms2:
+    :commands:
+      search_songs:
+        :render_options:
+          :menu:
+            :default: true
   exp/gem_brain:
     :namespace: g
     :command_aliases:
