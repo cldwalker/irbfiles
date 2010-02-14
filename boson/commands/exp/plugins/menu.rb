@@ -34,8 +34,13 @@ class ::TwoDMenu < ::Hirb::Menu
     nil
   end
 
+  # in case :ask=>false
+  def new_options
+    @new_options || {}
+  end
+
   def handle_template(items)
-    if @new_options[:template] || (@options[:template] && @new_args == [CHOSEN_ARG] && (command == @options[:command]))
+    if new_options[:template] || (@options[:template] && @new_args == [CHOSEN_ARG] && (command == @options[:command]))
       items = ::Hirb::Util.choose_from_array(@output, @args[-1])
       items.map! {|e| apply_template(e) }
     else
