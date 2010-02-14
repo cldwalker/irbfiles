@@ -29,6 +29,7 @@ class ::TwoDMenu < ::Hirb::Menu
     else
       @options = command_option_defaults(command).merge(@options)
       super(handle_template(items))
+      p @options if @options[:pretend]
     end
     nil
   end
@@ -51,9 +52,11 @@ class ::TwoDMenu < ::Hirb::Menu
 
   def command_option_defaults(cmd)
     options = {}
-    if ::Boson::Index.read && (cmd_obj = ::Boson::Index.find_command(cmd))
+    ::Boson::Runner.autoload_command(cmd) if !::Boson.can_invoke?(cmd)
+    if (cmd_obj = ::Boson::Command.find(cmd))
       options[:splat] = true if cmd_obj.has_splat_args?
-      options[:multi_action] = true if !cmd_obj.has_splat_args? && cmd_obj.arg_size <= 2
+      options[:multi_action] = true if !cmd_obj.has_splat_args? && cmd_obj.args && cmd_obj.arg_size <= 2
+      options.merge! cmd_obj.config[:menu_action] || {}
     end
     options
   end
