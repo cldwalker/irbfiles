@@ -1,11 +1,31 @@
+# This menu class builds on hirb's menus to bring 2D action menus to boson commands
+# at the flick of a switch. For example to invoke `boson commands` with a menu: `boson commands -m`.
+# This library should be configured as a default library in order for the menu option to show up.
+#
+# This class adds two important features to menus: options at the menu prompt and action templates.
+# Pull up option help at a menu prompt with `-h` or `--help` to see what each option does.
+# Templates are a convenient way of creating a string involving multiple cell values.
 class ::TwoDMenu < ::Hirb::Menu
-  OPTIONS = {:default_field=>:string, :pretend=>:boolean, :multi_action=>:boolean, :help=>:boolean,
-    :command=>:string, :splat=>:boolean, :object=>:boolean, :template=>:string}
+  OPTIONS = {:default_field=>{:type=>:string, :desc=>"Default field for 2d menu"},
+    :pretend=>{:type=>:boolean, :desc=>"Prints commands that would be executed"},
+    :multi_action=>{:type=>:boolean, :desc=>"Menu choices are executed one at a time by a command instead of all at once."},
+    :help=>{:type=>:boolean, :desc=>'Prints menu options help'},
+    :command=>{:type=>:string, :desc=>'Command to apply as menu action'},
+    :splat=>{:type=>:boolean, :desc=>'Flats all arguments'},
+    :object=>{:type=>:boolean, :desc=>'Menu choices pick out actual objects from rows instead of from individual cells'},
+    :template=>{:type=>:string, :desc=>'Template to apply to each choice'}
+  }
 
   def self.option_parser
     @option_parser ||= ::Boson::OptionParser.new OPTIONS
   end
 
+  # Takes the following options in addition to Hirb::Menu's options:
+  # * :pretend: Boolean to pretend to execute commands by printing them.
+  # * :splat: Boolean to flatten all arguments. Necessary for commands that have splat arguments.
+  # * :object: Boolean to make menu a 1d menu. This means menu choices return objects associated with rows instead of
+  #   individual cells
+  # * template: String to apply to menu choices instead of using command arguments
   def initialize(options={})
     options = (options[:config] || {}).merge(options[:global_options] || {})
     raise Error, "Can't handle commands with :change_fields option" if options[:change_fields]
@@ -45,7 +65,7 @@ class ::TwoDMenu < ::Hirb::Menu
 
   def handle_template(items)
     if new_options[:template] || (@options[:template] && @new_args == [CHOSEN_ARG] && (command == @options[:command]))
-      items = ::Hirb::Util.choose_from_array(@output, @args[-1])
+      items = ::Hirb::Util.choose_from_array(@output, @args[-1].to_s)
       items.map! {|e| apply_template(e) }
     else
       items
