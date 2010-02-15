@@ -28,6 +28,7 @@ module Github
   # @render_options :fields=>{:values=>["score", "name", "size", "language", "followers", "type",
   #   "username", "id", "description", "forks", "fork", "pushed", "created"], :default=>['name','username',
   #   'followers','language','pushed','score','description']}, :sort=>'score', :reverse_sort=>true
+  # @config :menu=>{:command=>:browser, :template=>'http://github.com/:username/:name'}
   #  Search repositories
   def repo_search(query)
     github_get("/repos/search/#{CGI.escape(query)}")['repositories']
@@ -66,6 +67,7 @@ module Github
 
   # @render_options :fields=>{:values=>[:owner, :homepage, :open_issues, :name, :url, :private,
   #  :fork, :watchers, :description, :forks], :default=>[:name, :owner, :watchers, :forks, :description]}
+  # @config :menu=>{:command=>:browser, :template=>'http://github.com/:owner/:name'}
   # Lists repos watched by user
   def repos_watched(user)
     github_get("/repos/watched/#{user}")['repositories'].select {|e| e[:owner] != user }
