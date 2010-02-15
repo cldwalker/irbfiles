@@ -8,6 +8,7 @@ module Github
   #  :max_fields=>{:default=>{:homepage=>0.2, :url=>0.1} }
   # @options :user=>{:default=>'cldwalker', :desc=>'Github user' },
   #  [:forks,:F]=>{:type=>:boolean, :desc=>'Display forked repositories'}
+  # @config :menu=>{:command=>:browser, :default_field=>:url}
   # Displays a user's repositories
   def user_repos(options={})
     repos = github_get("/repos/show/#{options[:user]}")['repositories']
@@ -17,6 +18,7 @@ module Github
 
   # @render_options :fields=>[:repo, :description, :created_at]
   # @options :user=>{:default=>'cldwalker', :desc=>'Github user'}
+  # @config :menu=>{:template=>'http://gist.github.com/:repo', :command=>:browser}
   # Displays a user's gists
   def user_gists(options={})
     gists = base_get("http://gist.github.com/api/v1/yaml/gists/#{options[:user]}")['gists']
@@ -34,6 +36,7 @@ module Github
   # @render_options :fields=>{:values=>[:homepage, :name, :watchers, :private, :forks, :fork, :url, :description, :owner, :open_issues],
   #  :default=>[:owner, :watchers, :forks, :homepage, :description, :url]}, :max_fields=>{:default=>{:url=>0.15}}
   # @options :user=>{:default=>'cldwalker', :desc=>'Github user'}
+  # @config :menu=>{:command=>:browser, :default_field=>:url}
   # Displays network of a given user-repo i.e. wycats-thor or defunkt/rip
   def repo_network(user_repo, options={})
     user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']
@@ -43,6 +46,7 @@ module Github
   # @render_options :fields=>{:values=>["score", "name", "language", "followers", "type", "fullname",
   #  "username", "id", "repos", "pushed", "created", "location"], :default=>['name', 'followers', 'repos',
   #  'pushed', 'language', 'location', 'score']}
+  # @config :menu=>{:command=>:browser, :template=>'http://github.com/:name'}
   # Search users
   def user_search(query)
     github_get("/user/search/#{CGI.escape(query)}")['users']
@@ -53,6 +57,7 @@ module Github
   #  :default=>%w{id authored_date message url}}, :max_fields=>{:default=>{'url'=>0.1}}
   # @options :branch=>{:default=>'master', :desc=>'Git repo branch'},
   #   :user=>{:default=>'cldwalker', :desc=>'Github user'}
+  # @config :menu=>{:command=>:browser, :default_field=>'url'}
   # List commits of a given user-repo
   def commit_list(user_repo, options={})
     user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']
@@ -67,6 +72,7 @@ module Github
   end
 
   # @render_options {}
+  # @config :menu=>{:command=>:browser, :template=>'http://github.com/:to_s'}
   # List users a user follows
   def user_follows(user)
     github_get("/user/show/#{user}/following")['users']

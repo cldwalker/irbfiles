@@ -47,18 +47,6 @@
     :force: true
   public/site/github:
     :commands:
-      user_gists:
-        :config:
-          :menu:
-            :command: gist_id
-      user_search:
-        :config:
-          :menu:
-            :command: github_user
-      user_follows:
-        :config:
-          :menu:
-            :command: github_user
       repo_search:
         :config:
           :menu:
@@ -69,21 +57,7 @@
           :menu:
             :command: repo
             :template: ':owner/:name'
-      repo_network:
-        :config:
-          :menu:
-            :command: browser
-            :default_field: :url
-      commit_list:
-        :config:
-          :menu:
-            :command: browser
-            :default_field: url
       user_repos:
-        :config:
-          :menu:
-            :command: browser
-            :default_field: :url
         :alias: ur
         :render_options:
           :pipes:

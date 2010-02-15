@@ -1,4 +1,3 @@
-require 'shellwords'
 class ::TwoDMenu < ::Hirb::Menu
   OPTIONS = {:default_field=>:string, :pretend=>:boolean, :multi_action=>:boolean, :help=>:boolean,
     :command=>:string, :splat=>:boolean, :object=>:boolean, :template=>:string}
@@ -57,7 +56,7 @@ class ::TwoDMenu < ::Hirb::Menu
 
   def command_option_defaults(cmd)
     options = {}
-    ::Boson::Runner.autoload_command(cmd) if !::Boson.can_invoke?(cmd)
+    ::Boson::Runner.autoload_command(cmd) unless ::Boson.can_invoke?(cmd) || ::Boson::Command.find(cmd)
     if (cmd_obj = ::Boson::Command.find(cmd))
       options[:splat] = true if cmd_obj.has_splat_args?
       options[:multi_action] = true if !cmd_obj.has_splat_args? && cmd_obj.args && cmd_obj.arg_size <= 2
@@ -70,6 +69,7 @@ class ::TwoDMenu < ::Hirb::Menu
     if @options[:pretend]
       puts "#{cmd} #{@options[:splat] ? '*' : ''}#{args.inspect}"
     else
+      cmd = cmd.to_s
       output = @options[:splat] ? (::Boson.full_invoke cmd, args.flatten) : ::Boson.full_invoke(cmd, args)
       unless ::Boson::View.silent_object?(output)
         opts = output.is_a?(String) ? {:method=>'puts'} : {:inspect=>!output.is_a?(Array) }
@@ -81,6 +81,8 @@ end
 
 module MenuLib
   def self.after_included
+    require 'shellwords'
+
     ::Boson::Pipe.add_pipes :menu=>{ :type=>:boolean, :alias=>'m',
       :no_render=>true, :env=>true, :solo=>true, :pipe=>:two_d_menu, :filter=>true
     }
