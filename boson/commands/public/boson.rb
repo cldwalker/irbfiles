@@ -15,7 +15,7 @@ module BosonLib
       (lib = Boson.library Boson::Runner.autoload_command(options[:command])) &&
       lib.lib_file
     elsif options[:config]
-      config_dir + '/boson.yml'
+      Boson.repo.config_file
     else
       options[:file] || begin
         require 'tempfile'
@@ -62,16 +62,9 @@ module BosonLib
 
   # Aliases a command
   def alias_command(command, command_alias)
-    config_file = config_dir + '/boson.yml'
-    config = YAML::load_file(config_file)
-    (config[:command_aliases] ||= {})[command] = command_alias
-    File.open(config_file, 'w') {|f| f.write config.to_yaml }
-    "Success"
-  end
-
-  private
-  # Config directory of main Boson repo
-  def config_dir
-    Boson.repo.config_dir
+    Boson.repo.update_config {|config|
+      (config[:command_aliases] ||= {})[command] = command_alias
+    }
+    "'#{command}' aliased to '#{command_alias}'"
   end
 end

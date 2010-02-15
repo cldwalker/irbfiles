@@ -336,3 +336,6 @@
     - inspect
     - size
     - comma_join
+  :return_rows:
+    :type: :boolean
+    :alias: Z
