@@ -8,6 +8,7 @@ class ::TwoDMenu < ::Hirb::Menu
 
   def initialize(options={})
     options = (options[:config] || {}).merge(options[:global_options] || {})
+    raise Error, "Can't handle commands with :change_fields option" if options[:change_fields]
     super options.merge(:two_d=>true, :readline=>true, :action=>true)
   end
 
@@ -36,6 +37,10 @@ class ::TwoDMenu < ::Hirb::Menu
   # in case :ask=>false
   def new_options
     @new_options || {}
+  end
+
+  def pre_prompt
+    @options[:template] ? super + "Default template: #{@options[:template]}\n" : super
   end
 
   def handle_template(items)
@@ -91,11 +96,6 @@ module MenuLib
   # Runs a 2D action menu
   def two_d_menu(output, menu_opts)
     ::TwoDMenu.render(output, menu_opts)
-  end
-
-  # @render_options :fields=>[:name, :homepage]
-  def gemspecs
-    ::Gem.source_index.gems.values[0,10]
   end
 end
 

@@ -84,6 +84,7 @@ module Github
   end
 
   def github_get(url)
+    # get "http://github.com/api/v2/yaml#{url}", :parse=>true
     base_get "http://github.com/api/v2/yaml#{url}"
   end
 end

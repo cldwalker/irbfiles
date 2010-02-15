@@ -43,6 +43,7 @@ module Gemcutter
   private
   # Gets a json url and converts it to a ruby object
   def json_get(url)
+    # get url, :parse=>true
     (body = get(url, :success_only=>true)) && JSON.parse(body)
   end
 end
