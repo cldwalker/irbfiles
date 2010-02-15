@@ -2,7 +2,7 @@ module GithubUrl
   # @config :alias=>'ghs'
   # Github repo search
   def github_search(*query)
-    "http://github.com/search?type=Repositories&q=#{query.join(' ')}"
+    build_url "http://github.com/search", :type=>"Repositories",:q=>query
   end
 
   # Gist page

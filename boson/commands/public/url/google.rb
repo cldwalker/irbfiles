@@ -10,8 +10,8 @@ module GoogleUrl
     start_date = start_date ? Date.parse("#{start_date}/2010") : Date.today
     start_date = start_date.strftime("%Y%m%d")
     end_date = options[:end_date] || start_date
-    params = "id=#{options[:id]}&pdr=#{start_date}-#{end_date}&trows=25"
-    "https://www.google.com/analytics/reporting/#{options[:subpage] || ''}?#{params}"
+    build_url "https://www.google.com/analytics/reporting/#{options[:subpage] || ''}",
+      :id=>options[:id], :pdr=>"#{start_date}-#{end_date}", :trows=>25
   end
 
   # Posts by label
@@ -34,7 +34,7 @@ module GoogleUrl
   # @config :alias=>'gs'
   # Basic google search
   def google_search(*query)
-    "http://google.com/search?q=#{CGI.escape(query.join(' '))}"
+    build_url "http://google.com/search", :q=>query
   end
 
   # @options :zip=>:numeric
@@ -46,7 +46,7 @@ module GoogleUrl
   # @config :alias=>'map'
   # Map search
   def google_maps(*query)
-    "http://maps.google.com/maps?q=#{CGI.escape(query.join(' '))}"
+    build_url "http://maps.google.com/maps", :q=>query
   end
 
   # @config :alias=>'gm'

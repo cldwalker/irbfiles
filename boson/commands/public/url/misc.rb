@@ -1,8 +1,8 @@
 module MiscUrl
   # @config :alias=>'ts'
   # Basic twitter search
-  def twitter_search(query)
-    "http://search.twitter.com/search?q=#{query}"
+  def twitter_search(*query)
+    build_url "http://search.twitter.com/search", :q=>query
   end
 
   # @config :alias=>'tu'
@@ -13,7 +13,7 @@ module MiscUrl
 
   # Search imdb
   def imdb_search(*query)
-    "http://www.imdb.com/find?q=#{query.join(' ')}"
+    build_url "http://www.imdb.com/find", :q=>query
   end
 
   def cutter_gem(rubygem)
