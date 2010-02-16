@@ -109,6 +109,7 @@ module MenuLib
     require 'shellwords'
 
     ::Boson::Pipe.add_pipes :menu=>{ :type=>:boolean, :alias=>'m',
+      :desc=>'Displays a menu that can execute commands on any cell',
       :no_render=>true, :env=>true, :solo=>true, :pipe=>:two_d_menu, :filter=>true
     }
   end

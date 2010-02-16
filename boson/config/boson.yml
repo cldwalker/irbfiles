@@ -5,7 +5,7 @@
 - public/plugins/option_command_filters
 - public/plugins/my_filters
 - exp/plugins/global_option_defaults
-- exp/plugins/menu
+- public/plugins/menu_pipe
 - exp/plugins/my_pipe_options
 - personal/hirb
 :bin_defaults:
