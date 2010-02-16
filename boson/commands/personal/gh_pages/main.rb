@@ -115,9 +115,8 @@ module MyPages
       if File.exists?(json_file) && !options[:update_feed]
         json = YAML::load_file(json_file)
       else
-        require 'httparty'
         puts "Fetching description ..."
-        json = HTTParty.get("http://github.com/api/v1/json/cldwalker")
+        json = Boson.invoke :get, "http://github.com/api/v1/json/cldwalker", :parse=>true
         File.open(json_file, 'w') {|f| f.write json.to_yaml}
       end
       if (json_repo = json['user']['repositories'].find {|e| e['name'] == repo })

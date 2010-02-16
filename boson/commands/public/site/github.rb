@@ -21,7 +21,7 @@ module Github
   # @config :menu=>{:template=>'http://gist.github.com/:repo', :command=>:browser}
   # Displays a user's gists
   def user_gists(options={})
-    gists = base_get("http://gist.github.com/api/v1/yaml/gists/#{options[:user]}")['gists']
+    gists = get("http://gist.github.com/api/v1/yaml/gists/#{options[:user]}", :parse=>true)['gists']
     gists || puts("Invalid user '#{options[:user]}'")
   end
 
@@ -81,12 +81,7 @@ module Github
   end
 
   private
-  def base_get(url)
-    (str = get(url, :success_only=>true)) ? YAML::load(str) : {}
-  end
-
   def github_get(url)
-    # get "http://github.com/api/v2/yaml#{url}", :parse=>true
-    base_get "http://github.com/api/v2/yaml#{url}"
+    get "http://github.com/api/v2/yaml#{url}", :parse=>true
   end
 end
