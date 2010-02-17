@@ -23,6 +23,7 @@ module MethMissing
         send(meths[0], *args)
       else
         meth = meths[0] if meths.size == 1 # for methods loaded by autoloader
+        Boson::BinRunner.command = meth if Boson::Runner.in_shell?
         original_method_missing.bind(self).call(meth,*args)
       end
     end

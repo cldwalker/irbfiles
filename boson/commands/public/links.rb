@@ -21,7 +21,14 @@ module Links
     end
     links
   end
-  
+
+  def get_xml_to_hash(url)
+    require 'activesupport'
+    include ActiveSupport::CoreExtensions::Hash
+    doc = Nokogiri::XML get(url)
+    (Hash.from_xml(doc.search('//rubygem').to_xml) || {})['rubygem']
+  end
+
   private
   def is_external_link?(url)
     url[0..3] == 'http' ? true : false
