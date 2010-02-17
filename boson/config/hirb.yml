@@ -33,3 +33,10 @@
   WWW::Delicious::Element:
     :ancestor: true
     :class: :object_table
+  Gem::Specification:
+    :class: :object_table
+    :options:
+      :fields:
+      - name
+      - description
+      - homepage
