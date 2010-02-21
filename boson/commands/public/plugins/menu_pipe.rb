@@ -80,8 +80,13 @@ class ::TwoDMenu < ::Hirb::Menu
   end
 
   def command_option_defaults(cmd)
-    options = {}
+    ::Boson::Index.read
+    # Unaliasing cmd so autoload_command can find it
+    cmd = ::Boson::Util.underscore_search cmd, Boson::Index.all_main_methods, true
+    # loading because Index doesn't have command's config
     ::Boson::Runner.autoload_command(cmd) unless ::Boson.can_invoke?(cmd) || ::Boson::Command.find(cmd)
+
+    options = {}
     if (cmd_obj = ::Boson::Command.find(cmd))
       options[:splat] = true if cmd_obj.has_splat_args?
       options[:multi_action] = true if !cmd_obj.has_splat_args? && cmd_obj.args && cmd_obj.arg_size <= 2
