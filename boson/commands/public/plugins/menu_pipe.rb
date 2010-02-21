@@ -82,7 +82,7 @@ class ::TwoDMenu < ::Hirb::Menu
   def command_option_defaults(cmd)
     ::Boson::Index.read
     # Unaliasing cmd so autoload_command can find it
-    cmd = ::Boson::Util.underscore_search cmd, Boson::Index.all_main_methods, true
+    cmd = ::Boson::Util.underscore_search(cmd, Boson::Index.all_main_methods, true) || cmd
     # loading because Index doesn't have command's config
     ::Boson::Runner.autoload_command(cmd) unless ::Boson.can_invoke?(cmd) || ::Boson::Command.find(cmd)
 
