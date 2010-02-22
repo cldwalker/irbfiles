@@ -20,11 +20,6 @@ module GemBrain
     end
   end
 
-  # Calls a gem subcommand
-  def subcommand(*args)
-    ::Gem::CommandManager.instance.find_command(args.shift).invoke(*args)
-  end
-
   # @options :query=>'', :sudo=>:boolean, :opts=>:string
   # Execute gem command for matching gems
   def execute(subcommand, options={})
@@ -71,12 +66,6 @@ module GemBrain
   # Gemspec for latest version of gem
   def latest_gemspec(rubygem)
     ::Gem.source_index.gems.values.select {|e| e.name == rubygem }.sort_by {|e| e.version }[-1]
-  end
-
-  # @config :option_command=>true
-  # Homepage of gem
-  def homepage(rubygem)
-    (spec = latest_gemspec(rubygem)) && spec.homepage
   end
 
   # Dependencies that depend on a gem
