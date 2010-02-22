@@ -3,9 +3,12 @@ module GemBrain
     require 'yaml'
   end
 
-  # @config :default_option=>'type'
+  def self.config
+    {:dependencies=>['exp/gem_actions']}
+  end
+
   # @render_options :sort=>{:enum=>false, :values=>%w{to_s}}
-  # @options :type=>{:type=>:string, :values=>[:github, :query, :approved, :unapproved, :tagged, :strip_users]}
+  # @options :type=>{:default=>:unapproved, :values=>[:github, :query, :approved, :unapproved, :tagged, :strip_users]}
   # List gems
   def list(options={})
     gems = case options[:type]
@@ -23,7 +26,7 @@ module GemBrain
   # @options :query=>'', :sudo=>:boolean, :opts=>:string
   # Execute gem command for matching gems
   def execute(subcommand, options={})
-    local_commands = %w{add recursive_uninstall remove reverse_dependencies}
+    local_commands = %w{add remove}
     local_command = local_commands.find {|e| e =~ /^#{subcommand}/}
     args = ['gem', subcommand]
     args.unshift 'sudo' if options[:sudo]
@@ -34,14 +37,6 @@ module GemBrain
     end
   end
 
-  # Uninstall gem and all its dependencies
-  def recursive_uninstall(rubygem)
-    deps = dependencies(rubygem)
-    gems = [rubygem] + menu(deps)
-    system(*(%w{sudo gem uninstall} + gems))
-    puts("Uninstalled gems: #{gems.join(', ')}")
-  end
-
   # Add gem to approved list
   def add(rubygem)
     GemBrain.add(rubygem)
@@ -50,28 +45,8 @@ module GemBrain
   # @options :uninstall=>:boolean
   # Recursively uninstall gem and remove it from approved list
   def remove(rubygem, options={})
-    recursive_uninstall(rubygem) if options[:uninstall]
+    gem_recursive_uninstall(rubygem) if options[:uninstall]
     GemBrain.remove(rubygem)
-  end
-
-  # Runtime dependencies for latest version of gem
-  def dependencies(rubygem)
-    if (latest = latest_gemspec(rubygem))
-      latest.dependencies.select {|e| e.type == :runtime }.map {|e| e.name}
-    else
-      []
-    end
-  end
-
-  # Gemspec for latest version of gem
-  def latest_gemspec(rubygem)
-    ::Gem.source_index.gems.values.select {|e| e.name == rubygem }.sort_by {|e| e.version }[-1]
-  end
-
-  # Dependencies that depend on a gem
-  def reverse_dependencies(rubygem)
-    ::Gem.source_index.gems.values.select {|e| e.dependencies.any? {|e| e.name == rubygem && e.type == :runtime}}.
-      map {|e| "#{e.name}-#{e.version}" }
   end
 
   # Version of currently loaded gem starting with name
@@ -111,7 +86,7 @@ module GemBrain
   end
 
   def recursive_dependencies(rubygem)
-    dependencies(rubygem).map {|e| [e] + recursive_dependencies(e) }.flatten.uniq
+    gem_dependencies(rubygem).map {|e| [e] + recursive_dependencies(e) }.flatten.uniq
   end
 
   def untagged_gems
