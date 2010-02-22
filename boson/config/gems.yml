@@ -1,4 +1,11 @@
 --- 
+:github: 
+- adamwiggins-rest-client
+- collectiveidea-awesome_nested_set
+- jeremymcanally-pending
+- mbleigh-acts-as-taggable-on
+- mynyml-every
+- n3bulous-amiruby19
 :approved: 
 - activerecord
 - activesupport
@@ -89,6 +96,7 @@
 - jekyll
 - aggregate
 - jeweler
+- -h
 :system: 
 - actionwebservice
 - acts_as_ferret
@@ -110,10 +118,3 @@
 :exception: 
 - tlsmail
 - rubygems-update
-:github: 
-- adamwiggins-rest-client
-- collectiveidea-awesome_nested_set
-- jeremymcanally-pending
-- mbleigh-acts-as-taggable-on
-- mynyml-every
-- n3bulous-amiruby19
