@@ -20,6 +20,20 @@ module MiscUrl
     "http://www.gemcutter.org/gems/#{rubygem}"
   end
 
+  # @options :group=>{:type=>:string, :values=>%w{console tree tag}, :enum=>false}
+  def whisper(*query)
+    options = query[-1].is_a?(Hash) ? query.pop : {}
+    if options[:group]
+      groups = {
+        'console'=>%w{console commandline shell irb},
+        'tag'=>%w{tag tagging taggable triple},
+        'tree'=>%w{tree hierarchy outline}
+      }
+      query = groups[options[:group]] || query
+    end
+    build_url "http://freezing-mist-54.heroku.com/", :query=>query
+  end
+
   # @config :alias=>'bts'
   # @options :remote=>:boolean
   # Machine tag search on my website or localhost version
