@@ -22,8 +22,13 @@ module MethMissing
         Boson::BinRunner.command = Boson::BinRunner.command.sub(meth.to_s, meths[0]) if Boson::Runner.in_shell?
         send(meths[0], *args)
       else
+        original_meth = meth.to_s
         meth = meths[0] if meths.size == 1 # for methods loaded by autoloader
-        Boson::BinRunner.command = meth.to_s if Boson::Runner.in_shell?
+        if Boson::Runner.in_shell?
+          Boson::BinRunner.command = meth.to_s
+          (index = Boson::BinRunner.commands.index(original_meth)) &&
+            Boson::BinRunner.commands[index] = meth.to_s
+        end
         original_method_missing.bind(self).call(meth,*args)
       end
     end

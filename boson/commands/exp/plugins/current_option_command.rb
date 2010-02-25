@@ -10,7 +10,7 @@ module CurrentOptionCommand
     ::Boson::Command.module_eval do
       def self.create(name, library)
         obj = new(new_attributes(name, library))
-        if [obj.name, obj.alias].include?(BinRunner.command)
+        if [obj.name, obj.alias].any? {|e| BinRunner.commands.include?(e) }
           obj.make_option_command(library)
         end
         obj

@@ -1,3 +1,4 @@
+# comparable to http://labs.twilio.com/bash/
 module TwilioLib
   def self.included(mod)
     require 'twilio'
