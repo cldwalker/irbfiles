@@ -18,19 +18,23 @@ module MethMissing
       if meths.size > 1
         puts "Multiple methods match: #{meths.join(', ')}"
       elsif (meths.size == 1) && respond_to?(meths[0])
-        puts "Found method #{meths[0]}" if Boson::Runner.verbose?
-        Boson::BinRunner.command = Boson::BinRunner.command.sub(meth.to_s, meths[0]) if Boson::Runner.in_shell?
-        send(meths[0], *args)
+        new_meth = meths[0]
+        puts "Found method #{new_meth}" if Boson::Runner.verbose?
+        MethMissing.update_bin_runner(meth.to_s, new_meth) if Boson::Runner.in_shell?
+        send(new_meth, *args)
       else
-        original_meth = meth.to_s
-        meth = meths[0] if meths.size == 1 # for methods loaded by autoloader
-        if Boson::Runner.in_shell?
-          Boson::BinRunner.command = meth.to_s
-          (index = Boson::BinRunner.commands.index(original_meth)) &&
-            Boson::BinRunner.commands[index] = meth.to_s
-        end
-        original_method_missing.bind(self).call(meth,*args)
+        # meths == 1 : for methods loaded by autoloader
+        new_meth = meths.size == 1 ? meths[0] : meth
+        puts "Found method #{new_meth}" if Boson::Runner.verbose?
+        MethMissing.update_bin_runner(meth.to_s, new_meth.to_s) if Boson::Runner.in_shell?
+        original_method_missing.bind(self).call(new_meth.to_sym,*args)
       end
     end
+  end
+
+  def self.update_bin_runner(original_meth, new_meth)
+    Boson::BinRunner.command = new_meth
+    (index = Boson::BinRunner.commands.index(original_meth)) &&
+      Boson::BinRunner.commands[index] = new_meth
   end
 end
