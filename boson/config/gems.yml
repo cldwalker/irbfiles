@@ -6,6 +6,24 @@
 - mbleigh-acts-as-taggable-on
 - mynyml-every
 - n3bulous-amiruby19
+:system: 
+- actionwebservice
+- acts_as_ferret
+- cgi_multipart_eof_fix
+- daemons
+- dnssd
+- fastthread
+- fcgi
+- ferret
+- gem_plugin
+- libxml-ruby
+- needle
+- net-sftp
+- net-ssh
+- rubynode
+- ruby-openid
+- ruby-yadis
+- termios
 :approved: 
 - activerecord
 - activesupport
@@ -97,24 +115,17 @@
 - aggregate
 - jeweler
 - -h
-:system: 
-- actionwebservice
-- acts_as_ferret
-- cgi_multipart_eof_fix
-- daemons
-- dnssd
-- fastthread
-- fcgi
-- ferret
-- gem_plugin
-- libxml-ruby
-- needle
-- net-sftp
-- net-ssh
-- rubynode
-- ruby-openid
-- ruby-yadis
-- termios
+- arel
+- bundler
+- mongoid
+- mongo_mapper
+- rubygems-sing
+- sinatra-activerecord
+- heroku
+- mongo_ext
+- shotgun
+- rack
+- twilio
 :exception: 
 - tlsmail
 - rubygems-update
