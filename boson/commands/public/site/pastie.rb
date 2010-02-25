@@ -11,6 +11,6 @@ module Pastie
   def pastie_string(string)
     post("http://pastie.org/pastes/create",
       {"paste_parser" => "ruby", "paste[authorization]" => "burger","paste[body]" => string}).
-      body.match(/href="([^\"]+)"/)[1]
+      match(/href="([^\"]+)"/)[1]
   end
 end

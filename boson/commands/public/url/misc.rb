@@ -26,8 +26,9 @@ module MiscUrl
     if options[:group]
       groups = {
         'console'=>%w{console commandline shell irb},
-        'tag'=>%w{tag tagging taggable triple},
-        'tree'=>%w{tree hierarchy outline}
+        'tag'=>%w{tag tagging taggable triple semantic},
+        'tree'=>%w{tree hierarchy outline},
+        'sites'=>%w{delicious freebase}
       }
       query = groups[options[:group]] || query
     end

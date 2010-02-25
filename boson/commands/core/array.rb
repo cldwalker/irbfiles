@@ -111,4 +111,12 @@ module ArrayLib
     other.each { |elem| new_arr.delete_at( new_arr.index(elem) ) }
     new_arr
   end
+
+  # Splits array into subarrays by divider element
+  def split_by(arr, divider)
+    arr.inject([[]]) {|results, element|
+      (divider == element) ? (results << []) : (results.last << element)
+      results
+    }
+  end
 end
