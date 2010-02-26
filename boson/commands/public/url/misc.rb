@@ -20,19 +20,15 @@ module MiscUrl
     "http://www.gemcutter.org/gems/#{rubygem}"
   end
 
-  # @options :group=>{:type=>:string, :values=>%w{console tree tag}, :enum=>false}
+  # @options :group=>{:type=>:string, :values=>%w{console tree tag sites}, :enum=>false}, :local=>:boolean, :limit=>25
+  # Call whisper app to search recent gems
   def whisper(*query)
     options = query[-1].is_a?(Hash) ? query.pop : {}
     if options[:group]
-      groups = {
-        'console'=>%w{console commandline shell irb},
-        'tag'=>%w{tag tagging taggable triple semantic},
-        'tree'=>%w{tree hierarchy outline},
-        'sites'=>%w{delicious freebase}
-      }
-      query = groups[options[:group]] || query
+      query = whisper_groups[options[:group]] || query
     end
-    build_url "http://freezing-mist-54.heroku.com/", :query=>query
+    url = options[:local] ? 'http://localhost:9393/' : 'http://young-snow-95.heroku.com/'
+    build_url url, :query=>query, :limit=>options[:limit]
   end
 
   # @config :alias=>'bts'
@@ -42,5 +38,18 @@ module MiscUrl
     base_url = options[:remote] ? "http://tagaholic.me" : "http://localhost:4000"
     mtag = "*:*=#{mtag}" unless mtag[/:|=/]
     "#{base_url}/blog.html##{mtag}"
+  end
+
+  private
+  # Can't be exposed due to command pipe on all url methods
+  # Groups of keywords to search whisper
+  def whisper_groups
+    {
+      'console'=>%w{console commandline shell irb},
+      'tag'=>%w{tag tagging taggable triple semantic},
+      'tree'=>%w{tree hierarchy outline},
+      'sites'=>%w{delicious freebase}
+      # thor, table, cli
+    }
   end
 end
