@@ -26,7 +26,7 @@ module MethMissing
         # meths == 1 : for methods loaded by autoloader
         new_meth = meths.size == 1 ? meths[0] : meth
         puts "Found method #{new_meth}" if Boson::Runner.verbose?
-        MethMissing.update_bin_runner(meth.to_s, new_meth.to_s) if Boson::Runner.in_shell?
+        MethMissing.update_bin_runner(meth.to_s, new_meth.to_s) if Boson::Runner.in_shell? && meth != new_meth
         original_method_missing.bind(self).call(new_meth.to_sym,*args)
       end
     end
