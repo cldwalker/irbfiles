@@ -12,6 +12,7 @@
 - exp/plugins/current_option_command
 - exp/plugins/url_libraries
 - exp/plugins/auto_pipe
+- exp/plugins/translate_bin_args
 :console_defaults:
 - personal/completion
 - personal/alias
