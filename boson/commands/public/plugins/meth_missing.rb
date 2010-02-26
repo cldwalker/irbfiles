@@ -33,9 +33,10 @@ module MethMissing
   end
 
   def self.update_bin_runner(original_meth, new_meth)
-    if Boson::BinRunner.command.include?('.')
-      namespace = Boson::BinRunner.command.split('.')[0]
-      original_meth, new_meth = "#{namespace}.#{original_meth}", "#{namespace}.#{new_meth}"
+    nsp = Boson::NAMESPACE
+    if Boson::BinRunner.command.include?(nsp)
+      namespace = Boson::BinRunner.command.split(nsp)[0]
+      original_meth, new_meth = "#{namespace}#{nsp}#{original_meth}", "#{namespace}#{nsp}#{new_meth}"
     end
     Boson::BinRunner.command = new_meth
     (index = Boson::BinRunner.commands.index(original_meth)) &&

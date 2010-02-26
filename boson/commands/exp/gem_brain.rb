@@ -8,7 +8,7 @@ module GemBrain
   end
 
   # @render_options :sort=>{:enum=>false, :values=>%w{to_s}}
-  # @options :type=>{:default=>:unapproved, :values=>[:github, :query, :approved, :unapproved, :tagged, :strip_users]}
+  # @options :type=>{:type=>:string, :default=>:unapproved, :values=>[:github, :query, :approved, :unapproved, :tagged, :strip_users]}
   # List gems
   def list(options={})
     gems = case options[:type]
