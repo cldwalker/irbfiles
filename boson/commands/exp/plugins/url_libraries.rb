@@ -5,7 +5,7 @@ class ::Boson::Command
     alias_method :_newer_attributes, :new_attributes
     def new_attributes(name, library)
       opt = _newer_attributes(name, library)
-      opt.merge!(:render_options=>{:command=>{:default=>'browser'}, :render=>true}) if library.name.include?('url/')
+      opt.merge!(:render_options=>{:pipes=>{:default=>['browser']}, :render=>true}) if library.name.include?('url/')
       opt
     end
   end

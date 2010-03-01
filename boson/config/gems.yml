@@ -126,6 +126,10 @@
 - shotgun
 - rack
 - twilio
+- sequel
+- dm-core
+- taps
+- do_sqlite3
 :exception: 
 - tlsmail
 - rubygems-update

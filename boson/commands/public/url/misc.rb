@@ -45,7 +45,7 @@ module MiscUrl
   # Groups of keywords to search whisper
   def whisper_groups
     {
-      'console'=>%w{console commandline shell irb},
+      'console'=>%w{console commandline shell irb terminal ascii},
       'tag'=>%w{tag tagging taggable triple semantic},
       'tree'=>%w{tree hierarchy outline},
       'sites'=>%w{delicious freebase}
