@@ -3,10 +3,10 @@ require 'sequel'
 
 ::DB = ::Sequel.sqlite
 
-::DB.create_table :dogs do
+::DB.create_table :urls do
   primary_key :id
   String :name
 end
 
-class ::Dog < ::Sequel::Model
+class ::Url < ::Sequel::Model
 end
