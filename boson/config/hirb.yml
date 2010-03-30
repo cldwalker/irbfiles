@@ -18,9 +18,6 @@
       :fields:
       - :name
       - :count
-  ActiveRecord::Base:
-    :class: Hirb::Views::ActiveRecord_Base
-    :ancestor: true
   WWW::Delicious::Bundle:
     :options:
       :fields:

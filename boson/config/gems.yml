@@ -1,11 +1,4 @@
 --- 
-:github: 
-- adamwiggins-rest-client
-- collectiveidea-awesome_nested_set
-- jeremymcanally-pending
-- mbleigh-acts-as-taggable-on
-- mynyml-every
-- n3bulous-amiruby19
 :system: 
 - actionwebservice
 - acts_as_ferret
@@ -24,6 +17,16 @@
 - ruby-openid
 - ruby-yadis
 - termios
+:exception: 
+- tlsmail
+- rubygems-update
+:github: 
+- adamwiggins-rest-client
+- collectiveidea-awesome_nested_set
+- jeremymcanally-pending
+- mbleigh-acts-as-taggable-on
+- mynyml-every
+- n3bulous-amiruby19
 :approved: 
 - activerecord
 - activesupport
@@ -130,6 +133,4 @@
 - dm-core
 - taps
 - do_sqlite3
-:exception: 
-- tlsmail
-- rubygems-update
+- bacon
