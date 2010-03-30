@@ -86,4 +86,9 @@ module SystemMisc
       FileUtils.rm_r paths.map {|e| "#{dir}/#{e}"}, options
     end
   end
+
+  # rip install for local git repository
+  def rip_install(file='.')
+    system 'rip','install', "file://"+File.expand_path(file)
+  end
 end

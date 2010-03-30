@@ -10,25 +10,13 @@ module Dev
   # @config :alias=>'lb'
   # Build's local version using bin/lightning-build
   def dev_build(file=nil)
-    system("bin/lightning-build #{file}")
+    system("bin/lightning build #{file}")
     if file
       file_string = File.read(file)
       file_string.sub!(/[^#]LBIN_PATH/, "\n#LBIN_PATH")
       file_string.sub!('#LBIN_PATH', 'LBIN_PATH')
       File.open(file, 'w') {|f| f.write file_string }
     end
-  end
-
-  # @config :alias=>'lc'
-  # Shortcut to bin/lightning-complete
-  def complete(*args)
-    system("bin/lightning-complete", *args)
-  end
-
-  # @config :alias=>'lt'
-  # Shortcut to bin/lightning-translate
-  def translate(*args)
-    system("bin/lightning-translate", *args)
   end
 
   # @render_options :fields=>[:name, :alias_or_name, :paths]
@@ -46,5 +34,12 @@ module Dev
   def bolt_commands
     Lightning.setup
     Lightning.commands.values
+  end
+
+  # @render_options {}
+  # List generators
+  def generators
+    Lightning::Generator.setup
+    Lightning::Generator.generators
   end
 end

@@ -49,7 +49,7 @@ module MiscUrl
       'tag'=>%w{tag tagging taggable triple semantic},
       'tree'=>%w{tree hierarchy outline},
       'sites'=>%w{delicious freebase}
-      # thor, table, cli
+      # thor, table, cli, repl, menu
     }
   end
 end
