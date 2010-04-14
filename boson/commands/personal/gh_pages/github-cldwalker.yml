@@ -3,284 +3,381 @@ user:
   name: Gabriel Horner
   company: self-employed
   repositories: 
-  - name: 19it
-    watchers: 4
-    private: false
-    url: http://github.com/cldwalker/19it
-    fork: false
-    forks: 0
-    description: Helps make 1.8.x code work under 1.9.x
-    owner: cldwalker
-    open_issues: 0
   - name: acts-as-taggable-on
     watchers: 1
     private: false
     url: http://github.com/cldwalker/acts-as-taggable-on
-    fork: true
     forks: 0
+    fork: true
+    has_downloads: true
     description: A tagging plugin for Rails applications that allows for custom tagging along dynamic contexts.
     homepage: http://mbleigh.lighthouseapp.com/projects/10116-acts-as-taggable-on
     owner: cldwalker
     open_issues: 0
-  - name: alias
-    watchers: 28
-    private: false
-    url: http://github.com/cldwalker/alias
-    fork: false
-    forks: 0
-    description: Creates, manages and saves aliases for class methods, instance methods, constants, delegated methods and more.
-    homepage: http://tagaholic.me/alias/
-    owner: cldwalker
-    open_issues: 0
-  - name: bin
-    watchers: 1
-    private: false
-    url: http://github.com/cldwalker/bin
-    fork: false
-    forks: 0
-    description: My current home brewed bin scripts, both new and old.
-    homepage: ""
-    owner: cldwalker
-    open_issues: 0
-  - name: bond
-    watchers: 31
-    private: false
-    url: http://github.com/cldwalker/bond
-    fork: false
-    forks: 1
-    description: "Mission: Easy custom autocompletion for arguments, methods and beyond. Accomplished for irb and any other readline-like console environments."
-    homepage: http://tagaholic.me/bond/
-    owner: cldwalker
-    open_issues: 0
-  - name: boson
-    watchers: 110
-    private: false
-    url: http://github.com/cldwalker/boson
-    fork: false
-    forks: 3
-    description: A command/task framework similar to rake and thor that opens your ruby universe to the commandline and irb.
-    homepage: http://tagaholic.me/boson/
-    owner: cldwalker
-    open_issues: 1
-  - name: churn
-    watchers: 1
-    private: false
-    url: http://github.com/cldwalker/churn
-    fork: true
-    forks: 0
-    description: Providing additional churn metrics over the original metric_fu churn
-    homepage: http://getcaliper.com/caliper/project?repo=git://github.com/danmayer/churn.git
-    owner: cldwalker
-    open_issues: 0
-  - name: cldwalker.github.com
-    watchers: 5
-    private: false
-    url: http://github.com/cldwalker/cldwalker.github.com
-    fork: true
-    forks: 1
-    description: My blog and website.
-    homepage: http://tagaholic.me
-    owner: cldwalker
-    open_issues: 0
-  - name: console_update
-    watchers: 20
-    private: false
-    url: http://github.com/cldwalker/console_update
-    fork: false
-    forks: 1
-    description: A rails plugin which allows you to edit your database records via the console and your favorite editor.
-    homepage: http://tagaholic.me/console_update/
-    owner: cldwalker
-    open_issues: 0
-  - name: core
-    watchers: 2
-    private: false
-    url: http://github.com/cldwalker/core
-    fork: false
-    forks: 0
-    description: "*Unfinished* Easily use and share your ruby extensions and other extension libraries ie ActiveSupport, facets"
-    homepage: ""
-    owner: cldwalker
-    open_issues: 0
-  - name: dotfiles
-    watchers: 8
-    private: false
-    url: http://github.com/cldwalker/dotfiles
-    fork: false
-    forks: 0
-    description: config files for my most used apps
-    homepage: ""
-    owner: cldwalker
-    open_issues: 0
-  - name: gem_grep
-    watchers: 17
-    private: false
-    url: http://github.com/cldwalker/gem_grep
-    fork: false
-    forks: 0
-    description: A gem command plugin which enhances the search command by providing extra search options and displaying results as a table.
-    owner: cldwalker
-    open_issues: 0
-  - name: github_user_page.js
-    watchers: 1
-    private: false
-    url: http://github.com/cldwalker/github_user_page.js
-    fork: false
-    forks: 0
-    description: "*broken with new layout* jquery plugin/ github bookmarklet to enhance github's user pages"
-    homepage: http://tagaholic.me/2009/04/06/github-bookmarklet-for-user-pages.html
-    owner: cldwalker
-    open_issues: 0
-  - name: has_machine_tags
-    watchers: 27
-    private: false
-    url: http://github.com/cldwalker/has_machine_tags
-    fork: false
-    forks: 4
-    description: A rails tagging plugin implementing flickr's machine tags + maybe more (semantic tags)
-    homepage: http://tagaholic.me/has_machine_tags/
-    owner: cldwalker
-    open_issues: 0
-  - name: hirb
-    watchers: 380
-    private: false
-    url: http://github.com/cldwalker/hirb
-    fork: false
-    forks: 9
-    description: A mini view framework for console/irb that's easy to use, even while under its influence. Console goodies include a no-wrap table, auto-pager, tree and menu.
-    homepage: http://tagaholic.me/hirb/
-    owner: cldwalker
-    open_issues: 1
-  - name: irb2
-    watchers: 1
-    private: false
-    url: http://github.com/cldwalker/irb2
-    fork: true
-    forks: 0
-    description: ""
-    homepage: ""
-    owner: cldwalker
-    open_issues: 0
-  - name: irbfiles
-    watchers: 26
-    private: false
-    url: http://github.com/cldwalker/irbfiles
-    fork: false
-    forks: 2
-    description: irb the way I like it (enhanced with boson)
-    homepage: ""
-    owner: cldwalker
-    open_issues: 1
-  - name: jeweler
-    watchers: 1
-    private: false
-    url: http://github.com/cldwalker/jeweler
-    fork: true
-    forks: 0
-    description: Simple and opinionated helper for creating and managing Rubygem projects on GitHub
-    homepage: http://technicalpickles.github.com/jeweler
-    owner: cldwalker
-    open_issues: 0
-  - name: lightning
-    watchers: 9
-    private: false
-    url: http://github.com/cldwalker/lightning
-    fork: false
-    forks: 0
-    description: Path completions for your shell that will let you navigate like lightning.
-    homepage: ""
-    owner: cldwalker
-    open_issues: 0
-  - name: local_gem
-    watchers: 3
-    private: false
-    url: http://github.com/cldwalker/local_gem
-    fork: false
-    forks: 0
-    description: Load/require any gem/library simply given its path. Great for nascent gems or for trying the latest code on a gem.
-    homepage: http://tagaholic.me/local_gem/
-    owner: cldwalker
-    open_issues: 0
-  - name: machinetag.js
-    watchers: 6
-    private: false
-    url: http://github.com/cldwalker/machinetag.js
-    fork: false
-    forks: 0
-    description: jQuery plugins to search/parse machine tags and display machine tag trees.
-    homepage: http://tagaholic.me/machinetag.js/
-    owner: cldwalker
-    open_issues: 0
-  - name: my_core
-    watchers: 2
-    private: false
-    url: http://github.com/cldwalker/my_core
-    fork: false
-    forks: 0
-    description: "*Moved to irbfiles* My collection of ruby extensions ie activesupport, facets"
-    homepage: http://tagaholic.me/my_core/
-    owner: cldwalker
-    open_issues: 0
-  - name: queriac
-    watchers: 1
-    private: false
-    url: http://github.com/cldwalker/queriac
-    fork: true
-    forks: 0
-    description: Picking up where Yubnub left off..
-    homepage: http://queri.ac
-    owner: cldwalker
-    open_issues: 0
-  - name: rip
-    watchers: 1
-    private: false
-    url: http://github.com/cldwalker/rip
-    fork: true
-    forks: 0
-    description: Ruby's Intelligent Packaging
-    homepage: http://hellorip.com/
-    owner: cldwalker
-    open_issues: 0
-  - name: rubish
-    watchers: 3
-    private: false
-    url: http://github.com/cldwalker/rubish
-    fork: true
-    forks: 0
-    description: Ruby Interacive Shell
-    homepage: ""
-    owner: cldwalker
-    open_issues: 0
+    has_issues: true
+    has_wiki: true
   - name: tag-tree
     watchers: 11
     private: false
     url: http://github.com/cldwalker/tag-tree
-    fork: false
     forks: 0
+    fork: false
+    has_downloads: true
     description: Explores the wicked combo of machine tag queries + their results as trees.
     homepage: ""
     owner: cldwalker
     open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: dotfiles
+    watchers: 9
+    private: false
+    url: http://github.com/cldwalker/dotfiles
+    forks: 1
+    fork: false
+    has_downloads: true
+    description: config files for my most used apps
+    homepage: ""
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: bin
+    watchers: 1
+    private: false
+    url: http://github.com/cldwalker/bin
+    forks: 0
+    fork: false
+    has_downloads: true
+    description: My current home brewed bin scripts, both new and old.
+    homepage: ""
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: core
+    watchers: 2
+    private: false
+    url: http://github.com/cldwalker/core
+    forks: 0
+    fork: false
+    has_downloads: true
+    description: "*Unfinished* Easily use and share your ruby extensions and other extension libraries ie ActiveSupport, facets"
+    homepage: ""
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: lightning
+    watchers: 47
+    private: false
+    url: http://github.com/cldwalker/lightning
+    forks: 1
+    fork: false
+    has_downloads: true
+    description: Speed for your shell and the commandline
+    homepage: http://tagaholic.me/lightning/
+    owner: cldwalker
+    open_issues: 1
+    has_issues: true
+    has_wiki: true
+  - name: queriac
+    watchers: 1
+    private: false
+    url: http://github.com/cldwalker/queriac
+    forks: 0
+    fork: true
+    has_downloads: true
+    description: Picking up where Yubnub left off..
+    homepage: http://queri.ac
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
   - name: thor-tasks
     watchers: 5
     private: false
     url: http://github.com/cldwalker/thor-tasks
-    fork: false
     forks: 0
+    fork: false
+    has_downloads: true
     description: My personal thor tasks
     homepage: ""
     owner: cldwalker
     open_issues: 0
-  - name: utility-belt
-    watchers: 1
+    has_issues: true
+    has_wiki: true
+  - name: irbfiles
+    watchers: 28
     private: false
-    url: http://github.com/cldwalker/utility-belt
-    fork: true
-    forks: 0
-    description: IRB Power User Utility Belt
-    homepage: http://utilitybelt.rubyforge.org
+    url: http://github.com/cldwalker/irbfiles
+    forks: 1
+    fork: false
+    has_downloads: true
+    description: irb the way I like it (enhanced with boson)
+    homepage: ""
     owner: cldwalker
     open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: alias
+    watchers: 28
+    private: false
+    url: http://github.com/cldwalker/alias
+    forks: 0
+    fork: false
+    has_downloads: true
+    description: Creates, manages and saves aliases for class methods, instance methods, constants, delegated methods and more.
+    homepage: http://tagaholic.me/alias/
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: local_gem
+    watchers: 3
+    private: false
+    url: http://github.com/cldwalker/local_gem
+    forks: 0
+    fork: false
+    has_downloads: true
+    description: Load/require any gem/library simply given its path. Great for nascent gems or for trying the latest code on a gem.
+    homepage: http://tagaholic.me/local_gem/
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: my_core
+    watchers: 2
+    private: false
+    url: http://github.com/cldwalker/my_core
+    forks: 0
+    fork: false
+    has_downloads: true
+    description: "*Moved to irbfiles* My collection of ruby extensions ie activesupport, facets"
+    homepage: http://tagaholic.me/my_core/
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: has_machine_tags
+    watchers: 29
+    private: false
+    url: http://github.com/cldwalker/has_machine_tags
+    forks: 5
+    fork: false
+    has_downloads: true
+    description: A rails tagging plugin implementing flickr's machine tags + maybe more (semantic tags)
+    homepage: http://tagaholic.me/has_machine_tags/
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: cldwalker.github.com
+    watchers: 6
+    private: false
+    url: http://github.com/cldwalker/cldwalker.github.com
+    forks: 1
+    fork: true
+    has_downloads: true
+    description: My blog and website.
+    homepage: http://tagaholic.me
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: console_update
+    watchers: 19
+    private: false
+    url: http://github.com/cldwalker/console_update
+    forks: 1
+    fork: false
+    has_downloads: true
+    description: A rails plugin which allows you to edit your database records via the console and your favorite editor.
+    homepage: http://tagaholic.me/console_update/
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: hirb
+    watchers: 419
+    private: false
+    url: http://github.com/cldwalker/hirb
+    forks: 10
+    fork: false
+    has_downloads: true
+    description: A mini view framework for console/irb that's easy to use, even while under its influence. Console goodies include a no-wrap table, auto-pager, tree and menu.
+    homepage: http://tagaholic.me/hirb/
+    owner: cldwalker
+    open_issues: 2
+    has_issues: true
+    has_wiki: true
+  - name: rubish
+    watchers: 2
+    private: false
+    url: http://github.com/cldwalker/rubish
+    forks: 0
+    fork: true
+    has_downloads: true
+    description: Ruby Interacive Shell
+    homepage: ""
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: machinetag.js
+    watchers: 6
+    private: false
+    url: http://github.com/cldwalker/machinetag.js
+    forks: 0
+    fork: false
+    has_downloads: true
+    description: jQuery plugins to search/parse machine tags and display machine tag trees.
+    homepage: http://tagaholic.me/machinetag.js/
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: github_user_page.js
+    watchers: 1
+    private: false
+    url: http://github.com/cldwalker/github_user_page.js
+    forks: 0
+    fork: false
+    has_downloads: true
+    description: "*broken with new layout* jquery plugin/ github bookmarklet to enhance github's user pages"
+    homepage: http://tagaholic.me/2009/04/06/github-bookmarklet-for-user-pages.html
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: gem_grep
+    watchers: 16
+    private: false
+    url: http://github.com/cldwalker/gem_grep
+    forks: 0
+    fork: false
+    has_downloads: true
+    description: A gem command plugin which enhances the search command by providing extra search options and displaying results as a table.
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: boson
+    watchers: 118
+    private: false
+    url: http://github.com/cldwalker/boson
+    forks: 2
+    fork: false
+    has_downloads: true
+    description: A command/task framework similar to rake and thor that opens your ruby universe to the commandline and irb.
+    homepage: http://tagaholic.me/boson/
+    owner: cldwalker
+    open_issues: 2
+    has_issues: true
+    has_wiki: true
+  - name: rip
+    watchers: 1
+    private: false
+    url: http://github.com/cldwalker/rip
+    forks: 0
+    fork: true
+    has_downloads: true
+    description: Ruby's Intelligent Packaging
+    homepage: http://hellorip.com/
+    owner: cldwalker
+    open_issues: 0
+    has_issues: false
+    has_wiki: false
+  - name: bond
+    watchers: 33
+    private: false
+    url: http://github.com/cldwalker/bond
+    forks: 1
+    fork: false
+    has_downloads: true
+    description: "Mission: Easy custom autocompletion for arguments, methods and beyond. Accomplished for irb and any other readline-like console environments."
+    homepage: http://tagaholic.me/bond/
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: 19it
+    watchers: 4
+    private: false
+    url: http://github.com/cldwalker/19it
+    forks: 0
+    fork: false
+    has_downloads: true
+    description: Helps make 1.8.x code work under 1.9.x
+    owner: cldwalker
+    open_issues: 0
+    has_issues: true
+    has_wiki: true
+  - name: irb2
+    watchers: 1
+    private: false
+    url: http://github.com/cldwalker/irb2
+    forks: 0
+    fork: true
+    has_downloads: true
+    description: ""
+    homepage: ""
+    owner: cldwalker
+    open_issues: 0
+    has_issues: false
+    has_wiki: true
+  - name: churn
+    watchers: 1
+    private: false
+    url: http://github.com/cldwalker/churn
+    forks: 0
+    fork: true
+    has_downloads: true
+    description: Providing additional churn metrics over the original metric_fu churn
+    homepage: http://getcaliper.com/caliper/project?repo=git://github.com/danmayer/churn.git
+    owner: cldwalker
+    open_issues: 0
+    has_issues: false
+    has_wiki: true
+  - name: heroku_twilio_app
+    watchers: 1
+    private: false
+    url: http://github.com/cldwalker/heroku_twilio_app
+    forks: 0
+    fork: true
+    has_downloads: true
+    description: A simple "Hello World" Twilio app with Sinatra + Heroku
+    homepage: ""
+    owner: cldwalker
+    open_issues: 0
+    has_issues: false
+    has_wiki: true
+  - name: gemwhisperer
+    watchers: 1
+    private: false
+    url: http://github.com/cldwalker/gemwhisperer
+    forks: 0
+    fork: true
+    has_downloads: true
+    description: "THE GEM WHISPERER: HE SPEAKS TO GEMS"
+    homepage: http://young-snow-95.heroku.com/
+    owner: cldwalker
+    open_issues: 0
+    has_issues: false
+    has_wiki: true
+  - name: bacon
+    watchers: 1
+    private: false
+    url: http://github.com/cldwalker/bacon
+    forks: 0
+    fork: true
+    has_downloads: true
+    description: a small RSpec clone
+    homepage: http://rubyforge.org/projects/test-spec/
+    owner: cldwalker
+    open_issues: 0
+    has_issues: false
+    has_wiki: true
   blog: http://tagaholic.me
   login: cldwalker
   location: Gainesville, FL

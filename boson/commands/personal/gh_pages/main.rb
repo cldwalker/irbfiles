@@ -22,12 +22,16 @@ module Main
     require 'erb'
   end
 
-  # @options {}
+  # @options :yardoc=>:boolean
   # Create rdoc with hanna
-  def rdoc(options={})
+  def rdoc(*doc_opts)
+   options = doc_opts[-1].is_a?(Hash) ? doc_opts.pop : {}
    directory = File.exists?("website") ? 'website/doc' : 'doc'
    FileUtils.rm_r(directory) if File.exists?(directory)
-   args = ['rdoc', '-o', directory] + %w{--inline-source --format=html -T hanna} + Dir['lib/**/*.rb']
+   args = options[:yardoc] ? %w{yardoc --no-private} : %w{rdoc --inline-source --format=html -T hanna}
+   args += ['-o', directory]
+   args += doc_opts
+   args += Dir['lib/**/*.rb']
    ["README.rdoc", "LICENSE.TXT"].each {|e| args << e if File.exists?(e) }
    system(*args)
    directory + '/index.html'
