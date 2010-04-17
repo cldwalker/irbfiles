@@ -19,18 +19,14 @@ module ::Bond
     end
 
     def my_constants(input)
-      receiver = input.matched[1]
+      receiver = input.matched[2]
       candidates = current_eval("#{receiver}.constants")
-      candidates.grep(/^#{Regexp.escape(input.matched[4])}/).map {|e| receiver + "::" + e}
+      candidates.grep(/^#{Regexp.escape(input.matched[5])}/).map {|e| receiver + "::" + e}
     end
   end
 end
 
 module Completion
-  def self.append_features(mod)
-    super if RUBY_VERSION < '1.9'
-  end
-
   def self.included(mod)
     begin LocalGem.local_require 'bond'; rescue; require 'bond' end
   end
@@ -39,9 +35,9 @@ module Completion
     Bond.reset
     Bond.debrief :debug=>true, :default_search=>:underscore
     require 'bond/completion'
-    Bond.complete(:on=>/(((::)?[A-Z][^:.\(]*)+)::?([^:.]*)$/, :action=>:my_constants, :search=>false, :place=>3)
+    Bond.recomplete(:anywhere=>/((((::)?[A-Z][^:.\(]*)+)::?([^:.]*))$/, :action=>:my_constants, :search=>false)
     # place it before symbols
-    Bond.complete(:on=>/^((([a-z][^:.\(]*)+):)+/, :search=>false, :action=>:alias_constants, :place=>6)
+    #Bond.complete(:on=>/((([a-z][^:.\(]*)+):)+$/, :search=>false, :action=>:alias_constants, :place=>5)
     Bond.complete(:method=>"reload") {|e| $" }
     Bond.complete(:method=>/ll|bl|rl/) {|e|
       (Boson::Runner.all_libraries + Boson::Runner.all_libraries.map {|e| File.basename e }).uniq
