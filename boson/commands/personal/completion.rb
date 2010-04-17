@@ -1,31 +1,3 @@
-module ::Bond
-  module Actions
-    def alias_constants(input)
-      fetch_constants = proc {|klass, klass_alias| klass.constants.grep(/^#{klass_alias}/i).map {|f| klass.const_get(f)} }
-      fetch_string_constants = proc {|klass, klass_alias|
-        klass.constants.grep(/^#{klass_alias}/i).map {|f|
-          (val = klass.const_get(f)) && val.is_a?(Module) ? val.to_s : "#{klass}::#{f}"
-        }
-      }
-
-      index = 1
-      aliases = input.split(":")
-      aliases.inject([Object]) do |completions,a|
-        completions = completions.select {|e| e.is_a?(Module) }.map {|klass|
-          aliases.size != index ? fetch_constants.call(klass, a) : fetch_string_constants.call(klass, a)
-        }.flatten
-        index += 1; completions
-      end
-    end
-
-    def my_constants(input)
-      receiver = input.matched[2]
-      candidates = current_eval("#{receiver}.constants")
-      candidates.grep(/^#{Regexp.escape(input.matched[5])}/).map {|e| receiver + "::" + e}
-    end
-  end
-end
-
 module Completion
   def self.included(mod)
     begin LocalGem.local_require 'bond'; rescue; require 'bond' end
@@ -33,18 +5,14 @@ module Completion
 
   def self.after_included
     Bond.reset
-    Bond.debrief :debug=>true, :default_search=>:underscore
-    require 'bond/completion'
-    Bond.recomplete(:anywhere=>/((((::)?[A-Z][^:.\(]*)+)::?([^:.]*))$/, :action=>:my_constants, :search=>false)
-    # place it before symbols
-    #Bond.complete(:on=>/((([a-z][^:.\(]*)+):)+$/, :search=>false, :action=>:alias_constants, :place=>5)
-    Bond.complete(:method=>"reload") {|e| $" }
-    Bond.complete(:method=>/ll|bl|rl/) {|e|
-      (Boson::Runner.all_libraries + Boson::Runner.all_libraries.map {|e| File.basename e }).uniq
-    }
-    Bond.complete(:method=>'r', :action=>:method_require, :search=>false)
-    Bond.complete(:method=>'bc') {|e| Boson.commands.map {|e| e.name} }
-    Bond.complete(:on=>/ENV\[["'](\S*)$/, :search=>false) {|e| ENV.keys.grep(/^#{Regexp.escape(e.matched[1])}/i) }
+    Bond.load do
+      complete(:method=>"reload") {|e| $" }
+      complete(:method=>/ll|bl|rl/) {|e|
+        (Boson::Runner.all_libraries + Boson::Runner.all_libraries.map {|e| File.basename e }).uniq
+      }
+      complete(:method=>'r', :action=>:method_require, :search=>false)
+      complete(:method=>'bc') {|e| Boson.commands.map {|e| e.name} }
+    end
   end
 
   # Toggles object completion between all methods and just the object's class methods
