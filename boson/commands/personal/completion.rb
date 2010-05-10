@@ -4,8 +4,8 @@ module Completion
   end
 
   def self.after_included
-    Bond.reset
-    Bond.load
+    Bond::M.reset
+    Bond.start :debug=>true
   end
 
   # Toggles object completion between all methods and just the object's class methods
