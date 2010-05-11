@@ -29,9 +29,10 @@ module Github
   #   "username", "id", "description", "forks", "fork", "pushed", "created"], :default=>['name','username',
   #   'followers','language','pushed','score','description']}, :sort=>'score', :reverse_sort=>true
   # @config :menu=>{:command=>:browser, :template=>'http://github.com/:username/:name'}
+  # @options :page=>1, :language=>:string
   #  Search repositories
-  def repo_search(query)
-    github_get("/repos/search/#{CGI.escape(query)}")['repositories']
+  def repo_search(query, options={})
+    github_get("/repos/search/#{CGI.escape(query)}?start_page=#{options[:page]}&language=#{options[:language]}")['repositories']
   end
 
   # @render_options :fields=>{:values=>[:homepage, :name, :watchers, :private, :forks, :fork, :url, :description, :owner, :open_issues],
