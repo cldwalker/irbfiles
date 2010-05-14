@@ -40,6 +40,7 @@
   public/url/github:
     :command_aliases:
       repo: rp
+      repo_compare: rpc
   public/ruby_ref:
     :commands:
       loaded_paths:
