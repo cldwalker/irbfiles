@@ -1,22 +1,4 @@
 module SystemMisc
-  # @options :file=>:string, :bump_type=>{:default=>'patch', :values=>['major','minor','patch']}
-  # Bumps version in a version file
-  def bump(options={})
-    version_file = options[:file] || Dir['**/version.rb'][0] || raise("No version file found")
-    version_string = File.read(version_file)
-    new_version = nil
-    version_string.sub!(/(\d+)\.(\d+)\.(\d+)/) {|e|
-      major, minor, patch = $1.to_i, $2.to_i, $3.to_i
-      new_version = case options[:bump_type]
-      when 'major' then "#{major+1}.#{minor}.#{patch}"
-      when 'minor' then "#{major}.#{minor+1}.#{patch}"
-      else              "#{major}.#{minor}.#{patch+1}"
-      end
-    }
-    File.open(version_file, 'w') {|f| f.write version_string }
-    "Updated '#{version_file}' to '#{new_version}'"
-  end
-
   # Install latest tabtab + copy files + git repo
   def tabtab
     cmd = "install_tabtab && cp -f ~/.tabtab.bash ~/code/repo/dotfiles/.bash/completion/.tabtab.bash"
