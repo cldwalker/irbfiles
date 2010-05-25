@@ -1,10 +1,4 @@
 module AliasLib
-  def self.config
-    create_options = {:pretend=>false, :force=>false}
-    commands = {'create_aliases'=>{:options=>create_options, :args=>3}}
-    {:commands=>commands}
-  end
-
   def self.included(mod)
     require 'alias'
   end

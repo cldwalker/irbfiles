@@ -3,7 +3,7 @@ module CoreGem
   # use core to load extensions: http://github.com/cldwalker/core
   def self.included(mod)
     require 'local_gem'
-    %w{my_core core}.each do |e|
+    %w{core}.each do |e|
       begin
         LocalGem.local_require e
       rescue Exception
@@ -13,7 +13,7 @@ module CoreGem
   end
 
   def self.disabled
-    ::Core.default_library = MyCore
+    #::Core.default_library = MyCore
     libraries = {
       :activesupport=>{:base_class=>"ActiveSupport::CoreExtensions", :base_path=>"active_support/core_ext"},
       :facets=>{:base_path=>"facets", :monkeypatch=>true},
@@ -26,7 +26,6 @@ module CoreGem
     # eval %[module ::Util; end]
     #Core.verbose = true
     conf = {
-      # Util =>{:with=>"MyCore::Object", :only=>:class},
       Object=>{:only=>:instance},
       Dir=>{:only=>:class},
       File=>{:only=>:class},
