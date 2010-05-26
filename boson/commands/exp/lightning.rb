@@ -19,27 +19,25 @@ module Dev
     end
   end
 
-  # @render_options :fields=>[:name, :alias_or_name, :paths]
+  # @render_options :fields=>[:name, :alias_or_name, :globs]
   # @config :alias=>'b'
   # Lists bolts
   def bolts
-    Lightning.setup
+    Lightning.functions
     Lightning.bolts.values
   end
 
-  # @render_options :fields=>{:default=>%w{name shell_command bolt paths}, :values=>%w{name shell_command bolt paths aliases}},
+  # @render_options :fields=>{:default=>%w{name shell_command bolt globs}, :values=>%w{name shell_command bolt globs aliases}},
   #  :filters=>{:default=>{'aliases'=>:inspect, 'bolt'=>:alias_or_name}}
   # @config :alias=>'bcom'
   # Lists commands
-  def bolt_commands
-    Lightning.setup
-    Lightning.commands.values
+  def lightning_functions
+    Lightning.functions.values
   end
 
   # @render_options {}
   # List generators
   def generators
-    Lightning::Generator.setup
     Lightning::Generator.generators
   end
 end
