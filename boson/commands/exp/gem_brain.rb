@@ -50,7 +50,7 @@ module GemBrain
   end
 
   # Version of currently loaded gem starting with name
-  def version(rubygem)
+  def _version(rubygem)
     (spec = Gem.loaded_specs.values.find {|e| e.name =~ /(-|^)#{rubygem}/ }) &&
       spec.version.to_s
   end
