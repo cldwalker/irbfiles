@@ -28,7 +28,7 @@ module GemRelease
   end
 
   # Releases gem
-  def release(rubygem, version)
+  def release(version, rubygem=current_gem)
     system "git push origin master"
     tag_release(version)
     rake('gem')
@@ -77,5 +77,18 @@ module GemRelease
     end
     rake 'rcov'
     nil
+  end
+
+  # @options :user=>'CLDWALKER'
+  # Build manpage
+  def build_man(rubygem=current_gem, options={})
+    str = "ronn -br --organization=#{options[:user]} --manual='#{rubygem.capitalize} Manual' man/*.ronn"
+    system str
+  end
+
+  # @config :alias=>'cg'
+  # Detect current gem's name
+  def current_gem
+    File.basename Dir.pwd
   end
 end
