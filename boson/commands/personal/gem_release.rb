@@ -1,6 +1,6 @@
 module GemRelease
   def self.config
-    {:dependencies=>['public/rake'], :force=>true}
+    {:dependencies=>['public/rake']}
   end
 
   # @options :file=>:string, :bump_type=>{:default=>'patch', :values=>['major','minor','patch']}
@@ -59,7 +59,7 @@ module GemRelease
   end
 
   # Run tests on multiple versions of ruby
-  def test
+  def test_all
     rvm_ruby = File.expand_path "~/.rvm/bin/ruby-"
     rubies = { "system"=>'/usr/bin/ruby', '1.9.2'=>"#{rvm_ruby}1.9.2-preview1", '1.8.7'=>"#{rvm_ruby}1.8.7-p249" }
     bacon = File.expand_path '~/.rip/active/bin/bacon'
