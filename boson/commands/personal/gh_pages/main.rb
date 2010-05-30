@@ -9,7 +9,7 @@
 # * Customize the MyPages module below to fit your needs.
 #
 # From a new repo directory:
-# * `boson edit` and add an entry for your repo with your appropriate repo-specific config hash.
+# * `boson config_website` and add an entry for your repo with your appropriate repo-specific config hash.
 # * `boson website` to create the repo in website/.
 #
 # Managing templates: TODO

@@ -9,9 +9,6 @@ console_update:
   :related_posts: *:*=console_update
 has_machine_tags:
   :keywords: tags, tagging, semantic tags, machine tags, semantic tags, flickr tags, rails tagging plugin, ruby tagging
-my_core:
-  :no_doc: true
-  :keywords: ruby extensions, core extensions, activesupport, facets, ruby core libraries, ruby standard libraries
 machinetag.js:
   :no_doc: true
   :not_gem: true
@@ -28,3 +25,6 @@ boson:
   :description: Works with Ruby 1.8.6 and 1.9.1. See documentation for overview of features.
   :keywords: ruby tasks, ruby commands, ruby task manager, ruby command manager, irb command manager, command framework, rake tasks, thor tasks, ruby shell, ruby boson
   :related_posts: *:*=boson
+lightning:
+  :keywords: lightning ruby, lightning shell, lightning autocompletion, lightning functions, commandline speed, fast autocompletion, autocompletion functions, tag filesystem
+  :related_posts: *:*=lightning
