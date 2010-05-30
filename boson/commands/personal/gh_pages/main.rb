@@ -37,22 +37,6 @@ module Main
    directory + '/index.html'
   end
 
-  #@options :push=>true
-  # Publish with grancher
-  def publish(options={})
-    require 'grancher'
-    grancher = Grancher.new do |g|
-      g.branch = 'gh-pages'
-      g.push_to = 'origin'
-      g.directory 'website'
-    end
-    grancher.commit
-    if grancher.push_to && options[:push]
-      grancher.push 
-      puts "Published website."
-    end
-  end
-
   #@options :repo=>:string, :update_feed=>:boolean
   # Create project website
   def website(options={})

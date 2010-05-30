@@ -91,4 +91,15 @@ module GemRelease
   def current_gem
     File.basename Dir.pwd
   end
+
+  # Publish pages in website directory to gh-pages branch
+  def publish
+    `git checkout gh-pages`
+    FileUtils.cp_r 'website/.', '.'
+    `git add doc index.html`
+    system "git commit -am 'Updated files.'"
+    system "git push origin gh-pages"
+    `git checkout master`
+    "Published website."
+  end
 end
