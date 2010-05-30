@@ -1,40 +1,21 @@
-# These tasks create, publish and manage project pages across projects/repositories based on a common project template.
+# These tasks create and manage project pages across projects/repositories based on a common project template.
 # Since the project template is given a project-specific config, each project page can be customized as needed.
 #
 # First time setup:
 # * git clone git://github.com/cldwalker/irbfiles.git
 # * boson install gh_pages/main.rb
-# * gem install grancher
 # * Customize your ~/.boson/commands/gh_pages/index.rhtml to match your boilerplate. Remember instance variables in the template
 #   map directly to keys for your repo config entry.
 # * Customize the MyPages module below to fit your needs.
-# * If using the rdoc task, install the hanna rdoc template: http://github.com/mislav/hanna/
 #
 # From a new repo directory:
 # * `boson edit` and add an entry for your repo with your appropriate repo-specific config hash.
 # * `boson website` to create the repo in website/.
-# * Optionally gh_pages:rdoc` to create a hanna-based rdoc under website/.
-# * `boson publish` pushes everthing in website/ to your gh-pages branch.
 #
 # Managing templates: TODO
 module Main
   def self.included(mod)
     require 'erb'
-  end
-
-  # @options :yardoc=>:boolean
-  # Create rdoc with hanna
-  def rdoc(*doc_opts)
-   options = doc_opts[-1].is_a?(Hash) ? doc_opts.pop : {}
-   directory = File.exists?("website") ? 'website/doc' : 'doc'
-   FileUtils.rm_r(directory) if File.exists?(directory)
-   args = options[:yardoc] ? %w{yardoc --no-private} : %w{rdoc --inline-source --format=html -T hanna}
-   args += ['-o', directory]
-   args += doc_opts
-   args += Dir['lib/**/*.rb']
-   ["README.rdoc", "LICENSE.TXT"].each {|e| args << e if File.exists?(e) }
-   system(*args)
-   directory + '/index.html'
   end
 
   #@options :repo=>:string, :update_feed=>:boolean

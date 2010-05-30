@@ -1,6 +1,6 @@
 module GemRelease
   def self.config
-    {:dependencies=>['public/rake', 'personal/gh_pages/main'], :force=>true}
+    {:dependencies=>['public/rake'], :force=>true}
   end
 
   # @options :file=>:string, :bump_type=>{:default=>'patch', :values=>['major','minor','patch']}
@@ -101,5 +101,20 @@ module GemRelease
     system "git push origin gh-pages"
     `git checkout master`
     "Published website."
+  end
+
+  # @options :yardoc=>:boolean
+  # Create rdoc with hanna
+  def rdoc(*doc_opts)
+   options = doc_opts[-1].is_a?(Hash) ? doc_opts.pop : {}
+   directory = File.exists?("website") ? 'website/doc' : 'doc'
+   FileUtils.rm_r(directory) if File.exists?(directory)
+   args = options[:yardoc] ? %w{yardoc --no-private} : %w{rdoc --inline-source --format=html -T hanna}
+   args += ['-o', directory]
+   args += doc_opts
+   args += Dir['lib/**/*.rb']
+   ["README.rdoc", "LICENSE.TXT"].each {|e| args << e if File.exists?(e) }
+   system(*args)
+   directory + '/index.html'
   end
 end
