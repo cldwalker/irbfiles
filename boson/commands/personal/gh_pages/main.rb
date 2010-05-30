@@ -27,6 +27,7 @@ module Main
     config = @website.fetch_config
     File.open(page,'w') {|f| f.write @website.create_web_page(config) }
     @website.post_create_hook
+    page
   end
 
   # Edit repos/website config file
@@ -61,7 +62,7 @@ module MyPages
   end
 
   def latest_template_version
-    `cd ~/code/repo/thor-tasks; git log -1 gh_pages.thor` =~ /^commit (\S+)\n/
+    `cd ~/code/repo/irbfiles; git log -1 boson/commands/personal/gh_pages/main.rb` =~ /^commit (\S+)\n/
     $1
   end
 
