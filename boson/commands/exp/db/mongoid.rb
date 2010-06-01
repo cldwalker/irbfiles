@@ -6,12 +6,12 @@ class ::Url
   include Mongoid::Document
   field :name
   field :desc
-  has_many :tags
+  has_many_related :tags
 end
 
 class ::Tag
   include Mongoid::Document
   field :name
   field :desc
-  belongs_to :url, :inverse_of=>:tags
+  belongs_to_related :url
 end

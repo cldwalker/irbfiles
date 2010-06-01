@@ -7,9 +7,17 @@ MongoMapper.database = 'mm-sample'
 class ::Url
   include MongoMapper::Document
   # include Taggable
-  many :tags
+  many :tags, :as=>:taggable
   key :name, String, :required => true
   timestamps!
+end
+
+class ::Tag 
+  include MongoMapper::Document
+  belongs_to :taggable, :polymorphic => true
+  key :taggable_type, String
+  key :taggable_id, ObjectId 
+  key :name, String, :required => true 
 end
 
 class ::Tag
