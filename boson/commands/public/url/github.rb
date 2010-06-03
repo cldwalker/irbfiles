@@ -25,8 +25,12 @@ module GithubUrl
   #  :subpage=>{:type=>:string, :values=>%w{readme wiki issues network commits traffic punch_card timeline edit branches},
   #    :enum=>false, :desc=>'Subpage belonging to repo', :bool_default=>'readme' }
   # Opens a repo page or a subpage i.e. commit, tree, file in a browser
-  def repo(user_repo, options={})
-    user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']
+  def repo(user_repo=nil, options={})
+    if user_repo.nil?
+      user_repo = `git config remote.origin.url`.chomp.gsub(%r{.git$|^git@github.com:|^git://github.com/}, '')
+    elsif !user_repo['/']
+      user_repo = "#{options[:user]}/#{user_repo}"
+    end
     repo_url = "http://github.com/#{user_repo}"
     if options[:file]
       repo_url << "/blob/master/" + options[:file]

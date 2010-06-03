@@ -16,8 +16,8 @@ module MiscUrl
     build_url "http://www.imdb.com/find", :q=>query
   end
 
-  def cutter_gem(rubygem)
-    "http://www.gemcutter.org/gems/#{rubygem}"
+  def gem_page(rubygem)
+    "http://rubygems.org/gems/#{rubygem}"
   end
 
   # @options :group=>{:type=>:string, :values=>%w{console tree tag sites}, :enum=>false}, :local=>:boolean, :limit=>25
