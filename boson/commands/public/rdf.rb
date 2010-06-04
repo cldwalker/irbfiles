@@ -26,10 +26,10 @@ module RdfLib
     ENDPOINTS
   end
 
-  # @options :type=>{:default=>'classes', :values=>%w{classes objects resource properties} },
+  # @options :type=>{:default=>'classes', :values=>%w{classes objects resource properties subjects all} },
   #   :endpoint=>{:values=> ENDPOINTS.keys, :enum=>false, :default=>'http://api.talis.com/stores/space/services/sparql'},
-  #   :limit=>:numeric, :offset=>:numeric, :abbreviate=>:boolean, :sparql=>{:bool_default=>true, :type=>:string},
-  #   :filters=>:hash
+  #   :limit=>:numeric, :offset=>:numeric, :abbreviate=>:boolean, :return_sparql=>:boolean,
+  #   :sparql=>{:bool_default=>true, :type=>:string, :values=>%w{graphs select}}, :filters=>:hash
   # @render_options {}
   # Query and explore a sparql endpoint
   def sparql(*args)
@@ -37,15 +37,10 @@ module RdfLib
     options[:endpoint] = ENDPOINTS[options[:endpoint]] || options[:endpoint]
     require 'sparql/client'
     client = SPARQL::Client.new(options[:endpoint])
+
     if options[:sparql]
-      # %[SELECT DISTINCT ?x { [] a ?x }]
-      if options[:sparql] == 'graphs'
-        spl = %[select distinct ?Concept ?g where {
-          GRAPH ?g { [] a ?Concept }
-        }]
-      else
-        spl = args.join(' ')
-      end
+      spl = select_sparql(options[:sparql], args)
+      return spl if options[:return_sparql]
       solutions = client.query(spl)
     else
       query = select_query(client, options[:type], args)
@@ -56,27 +51,46 @@ module RdfLib
           query.filter("regex(str(?#{k}), '#{v}', 'i')")
         }
       end
+      return query.to_s if options[:return_sparql]
       solutions = query.solutions
     end
+
     results = solutions && solutions.map {|e| e.to_hash }
     abbreviate_uris(results) if options[:abbreviate]
     results
+  end
+
+  def select_sparql(sparql_type, args)
+    # %[SELECT DISTINCT ?x { [] a ?x }]
+    if sparql_type == 'graphs'
+      %[SELECT DISTINCT ?g WHERE {
+        GRAPH ?g { [] a ?Concept }
+      }]
+    elsif sparql_type == 'select'
+      args = args.join(' ').split(/\s+/).map {|e| e[/^http/] ? "<#{e}>" : e }
+      "SELECT * WHERE { #{args.join(' ')} }"
+    else
+      args.join(' ')
+    end
   end
 
   def select_query(client, query_type, args)
     case query_type
     when 'classes'
       client.select(:o).where([:s,RDF.type,:o]).distinct
-    when 'objects'
-      # http://purl.org/net/schemas/space/LaunchSite
+    when 'subjects'
       args[0] ?  client.select(:s).where([:s, RDF.type, RDF::URI.new(args[0])]).distinct :
         client.select(:s).where([:s, :p, :o]).distinct
+    when 'objects'
+      args[0] ?  client.select(:o).where([RDF::URI.new(args[0]), :p, :o]).where([:o, RDF.type, :x]).distinct :
+        client.select(:o).where([:s, :p, :o]).distinct
     when 'properties'
       args[0] ?  client.select(:p).where([:s, :p, RDF::URI.new(args[0])]).distinct :
         client.select(:p).where([:s, :p, :o]).distinct
     when 'resource'
-      # http://nasa.dataincubator.org/launchsite/capecanaveral
       client.select(:p, :o).where([RDF::URI.new(args[0]), :p, :o])
+    else
+      client.select(:s, :p, :o).where([:s, :p, :o])
     end
   end
 
