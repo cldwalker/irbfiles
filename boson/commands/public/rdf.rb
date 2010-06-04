@@ -28,12 +28,12 @@ module RdfLib
 
   # @options :type=>{:default=>'classes', :values=>%w{classes objects resource properties subjects all} },
   #   :endpoint=>{:values=> ENDPOINTS.keys, :enum=>false, :default=>'http://api.talis.com/stores/space/services/sparql'},
-  #   :limit=>:numeric, :offset=>:numeric, :abbreviate=>:boolean, :return_sparql=>:boolean,
+  #   :limit=>:numeric, :offset=>:numeric, :abbreviate=>:boolean, :return_sparql=>:boolean, :prefix=>:boolean,
   #   :sparql=>{:bool_default=>true, :type=>:string, :values=>%w{graphs select}}, :filters=>:hash
   # @render_options {}
   # Query and explore a sparql endpoint
   def sparql(*args)
-    options = args[-1].is_a?(Hash) ? args.pop : {}
+    @options = options = args[-1].is_a?(Hash) ? args.pop : {}
     options[:endpoint] = ENDPOINTS[options[:endpoint]] || options[:endpoint]
     require 'sparql/client'
     client = SPARQL::Client.new(options[:endpoint])
@@ -50,6 +50,9 @@ module RdfLib
         options[:filters].each {|k,v|
           query.filter("regex(str(?#{k}), '#{v}', 'i')")
         }
+      end
+      if options[:prefix]
+        NAMESPACES.each {|k,v| query.prefix("#{k}: <#{v}>") }
       end
       return query.to_s if options[:return_sparql]
       solutions = query.solutions
@@ -74,21 +77,25 @@ module RdfLib
     end
   end
 
+  def create_rdf_value(str)
+    @options[:prefix] ? str : RDF::URI.new(str)
+  end
+
   def select_query(client, query_type, args)
     case query_type
     when 'classes'
       client.select(:o).where([:s,RDF.type,:o]).distinct
     when 'subjects'
-      args[0] ?  client.select(:s).where([:s, RDF.type, RDF::URI.new(args[0])]).distinct :
+      args[0] ?  client.select(:s).where([:s, RDF.type, create_rdf_value(args[0])]).distinct :
         client.select(:s).where([:s, :p, :o]).distinct
     when 'objects'
-      args[0] ?  client.select(:o).where([RDF::URI.new(args[0]), :p, :o]).where([:o, RDF.type, :x]).distinct :
+      args[0] ?  client.select(:o).where([create_rdf_value(args[0]), :p, :o]).where([:o, RDF.type, :x]).distinct :
         client.select(:o).where([:s, :p, :o]).distinct
     when 'properties'
-      args[0] ?  client.select(:p).where([:s, :p, RDF::URI.new(args[0])]).distinct :
+      args[0] ?  client.select(:p).where([:s, :p, create_rdf_value(args[0])]).distinct :
         client.select(:p).where([:s, :p, :o]).distinct
     when 'resource'
-      client.select(:p, :o).where([RDF::URI.new(args[0]), :p, :o])
+      client.select(:p, :o).where([create_rdf_value(args[0]), :p, :o])
     else
       client.select(:s, :p, :o).where([:s, :p, :o])
     end
@@ -110,7 +117,7 @@ module RdfLib
 
   # @render_options :change_fields=>['name', 'url']
   # Display endpoints
-  def namespaces
+  def rdf_namespaces
     NAMESPACES
   end
 
