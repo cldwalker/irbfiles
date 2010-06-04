@@ -20,6 +20,10 @@ module MiscUrl
     "http://rubygems.org/gems/#{rubygem}"
   end
 
+  def prefix_cc(*query)
+    "http://prefix.cc/#{query.join(' ')}"
+  end
+
   # @options :group=>{:type=>:string, :values=>%w{console tree tag sites}, :enum=>false}, :local=>:boolean, :limit=>25
   # Call whisper app to search recent gems
   def whisper(*query)
