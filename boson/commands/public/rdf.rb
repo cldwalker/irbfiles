@@ -40,6 +40,9 @@ module RdfLib
 
     if options[:sparql]
       spl = select_sparql(options[:sparql], args)
+      if options[:prefix]
+        spl = NAMESPACES.map {|k,v| "PREFIX #{k}: <#{v}>" }.join("\n") + "\n" + spl
+      end
       return spl if options[:return_sparql]
       solutions = client.query(spl)
     else
@@ -113,6 +116,7 @@ module RdfLib
     'xsd'=>'http://www.w3.org/2001/XMLSchema#',
     'sioc'=>'http://rdfs.org/sioc/ns#',
     'po'=>'http://purl.org/ontology/po/',
+    'space'=>'http://purl.org/net/schemas/space/'
   }
 
   # @render_options :change_fields=>['name', 'url']
@@ -124,8 +128,10 @@ module RdfLib
   def abbreviate_uris(arr)
     arr.each {|e|
       e.each {|k,v|
-        if (match = NAMESPACES.find {|abbr,uri| v.to_s[/^#{uri}/] })
+        if v.is_a?(RDF::URI) && (match = NAMESPACES.find {|abbr,uri| v.to_s[/^#{uri}/] })
           e[k] = v.to_s.sub(/^#{match[1]}/,match[0]+":")
+        elsif v.is_a?(RDF::Literal)
+          e[k] = v.to_s.sub(/\^\^.*$/, '')
         end
       }
     }
