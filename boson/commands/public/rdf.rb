@@ -26,10 +26,10 @@ module RdfLib
     ENDPOINTS
   end
 
-  # @options :type=>{:default=>'classes', :values=>%w{classes objects resource properties subjects all} },
+  # @options :type=>{:default=>'classes', :values=>%w{classes objects resource predicates subjects all} },
   #   :endpoint=>{:values=> ENDPOINTS.keys, :enum=>false, :default=>'http://api.talis.com/stores/space/services/sparql'},
   #   :limit=>:numeric, :offset=>:numeric, :abbreviate=>:boolean, :return_sparql=>:boolean, :prefix=>:boolean,
-  #   :sparql=>{:bool_default=>true, :type=>:string, :values=>%w{graphs select}}, :filters=>:hash
+  #   :sparql=>{:bool_default=>true, :type=>:string, :values=>%w{graphs select}}, :filters=>:hash,
   # @render_options {}
   # Query and explore a sparql endpoint
   def sparql(*args)
@@ -50,6 +50,9 @@ module RdfLib
       query.limit(options[:limit]) if options[:limit]
       query.offset(options[:offset]) if options[:offset]
       if options[:filters]
+        if options[:type] == 'predicates'
+          options[:filters].each {|k,v| options[:filters][k] = NAMESPACES[v] || v }
+        end
         options[:filters].each {|k,v|
           query.filter("regex(str(?#{k}), '#{v}', 'i')")
         }
@@ -94,7 +97,7 @@ module RdfLib
     when 'objects'
       args[0] ?  client.select(:o).where([create_rdf_value(args[0]), :p, :o]).where([:o, RDF.type, :x]).distinct :
         client.select(:o).where([:s, :p, :o]).distinct
-    when 'properties'
+    when 'predicates'
       args[0] ?  client.select(:p).where([:s, :p, create_rdf_value(args[0])]).distinct :
         client.select(:p).where([:s, :p, :o]).distinct
     when 'resource'
@@ -123,6 +126,10 @@ module RdfLib
   # Display endpoints
   def rdf_namespaces
     NAMESPACES
+  end
+
+  def open_namespace(namespace)
+    browser NAMESPACES[namespace]
   end
 
   def abbreviate_uris(arr)
