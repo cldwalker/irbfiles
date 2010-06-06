@@ -4,12 +4,11 @@ module RdfLib
   end
 
   # @render_options :change_fields=>[:subject, :predicate, :object]
-  # @options :format=>''
   # Parse and display an rdf file in a variety of formats
-  def dump_rdf(uri, options={})
+  def dump_rdf(uri)
     require 'rdf/ntriples' if uri[/\.nt$/]
     require 'rdf/json' if uri[/\.json$/]
-    require 'rdf/raptor' if uri[/\.(rdf|ttl)$/] || options[:format][/rdf|ttl/]
+    require 'rdf/raptor' if uri[/\.(rdf|ttl)$/]
     RDF::Graph.load(uri).data.map {|e| e.to_a }
   end
 
@@ -17,7 +16,7 @@ module RdfLib
     'bio'=>'http://hcls.deri.org/sparql', 'space'=>'http://api.talis.com/stores/space/services/sparql',
     'gov'=>'http://semantic.data.gov/sparql', 'dbp'=>'http://dbpedia.org/sparql',
     'med'=>'http://www4.wiwiss.fu-berlin.de/dailymed/sparql', 'movie'=>'http://data.linkedmdb.org/sparql',
-    'music'=>'http://dbtune.org/musicbrainz/sparql'
+    'music'=>'http://dbtune.org/musicbrainz/sparql', 'sparql'=>'http://www.sparql.org/sparql'
   }
 
   # @render_options :change_fields=>['name', 'url']
