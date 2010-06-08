@@ -12,6 +12,7 @@ module HirbLib
 
   def self.after_included
     Hirb.enable(enable_options)
+    Hirb.add_dynamic_view("RDF::Query::Solution", :helper=>:auto_table) {|obj| {:fields=>obj.to_a.map {|e| e[0] } } }
     Hirb::Helpers::Table.filter_classes[Array] = [:join, ',']
   end
 

@@ -37,3 +37,10 @@
       - name
       - description
       - homepage
+  RDF::Statement:
+    :class: :object_table
+    :options:
+      :fields:
+      - subject
+      - predicate
+      - object

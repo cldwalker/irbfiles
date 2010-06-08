@@ -42,7 +42,7 @@ module RdfLib
       if options[:prefix]
         spl = NAMESPACES.map {|k,v| "PREFIX #{k}: <#{v}>" }.join("\n") + "\n" + spl
       end
-      return spl if options[:return_sparql]
+      return puts(spl) if options[:return_sparql]
       solutions = client.query(spl)
     else
       query = select_query(client, options[:type], args)
@@ -59,7 +59,7 @@ module RdfLib
       if options[:prefix]
         NAMESPACES.each {|k,v| query.prefix("#{k}: <#{v}>") }
       end
-      return query.to_s if options[:return_sparql]
+      return puts(query.to_s) if options[:return_sparql]
       solutions = query.solutions
     end
 
@@ -118,7 +118,8 @@ module RdfLib
     'xsd'=>'http://www.w3.org/2001/XMLSchema#',
     'sioc'=>'http://rdfs.org/sioc/ns#',
     'po'=>'http://purl.org/ontology/po/',
-    'space'=>'http://purl.org/net/schemas/space/'
+    'space'=>'http://purl.org/net/schemas/space/',
+    'fb'=>'http://rdf.freebase.com/ns/'
   }
 
   # @render_options :change_fields=>['name', 'url']
