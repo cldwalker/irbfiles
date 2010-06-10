@@ -68,23 +68,4 @@ module SystemMisc
       FileUtils.rm_r paths.map {|e| "#{dir}/#{e}"}, options
     end
   end
-
-  # rip install for local git repository
-  def rip_install(file='.')
-    system 'rip','install', "file://"+File.expand_path(file)
-  end
-
-  # @render_options :change_fields=>['env', 'packages']
-  # List rip packages
-  def rip_list
-    require 'rip'
-    require 'rip/helpers'
-    Rip::Helpers.extend Rip::Helpers
-
-    Rip.envs.inject({}) {|t,e|
-      ENV['RIPENV'] = e
-      t[e] = Rip::Helpers.rip("installed").map {|e| Rip::Helpers::metadata(e).name }
-      t
-    }
-  end
 end

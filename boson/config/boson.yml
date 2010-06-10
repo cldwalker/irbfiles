@@ -200,8 +200,6 @@
     - choose
     - say
     :object_namespace: true
-  what_methods:
-  andand:
   sketches:
   httparty:
     :force: true
