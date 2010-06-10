@@ -32,14 +32,19 @@ module GemRelease
     system "git push origin v#{version}"
   end
 
+  # @options :website=>true, :rubygem=>'', :version=>:numeric
   # Releases gem
-  def release(version, rubygem=current_gem)
+  def release(options={})
+    options[:rubygem] = current_gem if options[:rubygem].empty?
+    options[:version] ||= version
     system "git push origin master"
-    tag_release(version)
+    tag_release(options[:version])
     rake('gem')
-    system "gem push pkg/#{rubygem}-#{version}.gem"
-    rdoc
-    publish
+    system "gem push pkg/#{options[:rubygem]}-#{options[:version]}.gem"
+    if options[:website]
+      rdoc
+      publish
+    end
   end
 
   # Prints gem version
