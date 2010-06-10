@@ -4,7 +4,8 @@ module RipLib
     require 'rip'
   end
 
-  # @options :local=>:boolean, :env=>{:type=>:string, :values=>%w{test db rdf base irbfiles} }
+  # @options :local=>:boolean, :env=>{:type=>:string, :values=>%w{test db rdf base irbfiles misc web},
+  #  :enum=>false }
   # Enhance rip install
   def rip_install(*args)
     options = args[-1].is_a?(Hash) ? args.pop : {}
