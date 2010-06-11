@@ -5,13 +5,17 @@ module RipLib
   end
 
   # @options :local=>:boolean, :env=>{:type=>:string, :values=>%w{test db rdf base irbfiles misc web},
-  #  :enum=>false }
+  #  :enum=>false }, :version=>:string
   # Enhance rip install
   def rip_install(*args)
     options = args[-1].is_a?(Hash) ? args.pop : {}
     args = [ "file://"+File.expand_path('.') ] if options[:local]
     ENV['RIPENV'] = options[:env] if options[:env]
-    args.each {|e| system 'rip','install', e }
+    args.each {|e|
+      sargs = ['rip','install', e]
+      sargs << options[:version] if options[:version]
+      system *sargs
+    }
   end
 
   # @render_options :change_fields=>['env', 'packages']
@@ -31,9 +35,12 @@ module RipLib
     }
   end
 
+  # @options :local=>:boolean, :env=>{:type=>:string, :values=>%w{test db rdf base irbfiles misc web},
+  #  :enum=>false }
   # Wrapper around rip uninstall
   def rip_uninstall(*args)
     options = args[-1].is_a?(Hash) ? args.pop : {}
+    ENV['RIPENV'] = options[:env] if options[:env]
     args.each {|e| system 'rip','uninstall', e }
   end
 
