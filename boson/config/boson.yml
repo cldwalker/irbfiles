@@ -250,7 +250,6 @@
   nested_tree: ntree
   inheritance_tree: itree
   load_library: ll
-  reload_library: rl
   history: hi
   toggle_echo: te
   delicious: del
