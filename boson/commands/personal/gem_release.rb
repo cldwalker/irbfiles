@@ -52,11 +52,13 @@ module GemRelease
     current_gemspec.version.to_s
   end
 
-  # Array of files that aren't in git repo
-  def manifest
+  # @options :reverse=>:boolean
+  # Array of files that aren't in git repo or vice versa
+  def manifest(options={})
     current_files = current_gemspec.files
     git_files = `git ls-files -z`.split("\0")
-    current_files.select {|e| !git_files.include?(e) }
+    options[:reverse] ? git_files.select {|e| !current_files.include?(e) } :
+      current_files.select {|e| !git_files.include?(e) }
   end
 
   def current_gemspec

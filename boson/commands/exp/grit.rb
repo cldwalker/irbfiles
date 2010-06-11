@@ -5,11 +5,21 @@ module Git
 
   # @render_options :change_fields=>['repo', 'pending'], :sort=>'pending',
   #  :reverse_sort=>true
+  # @options :push=>:boolean
   # Lists # of commits that haven't been pushed to origin/master
-  def pending_commits
-    Git.repos.map{|e|
-      [File.basename(e.working_dir), e.log('origin/master..master').size]
+  def pending_commits(options={})
+    pending = Git.repos.map{|e|
+      [e.working_dir, e.log('origin/master..master').size]
     }
+    if options[:push] 
+      pending.select {|k,v| v > 0 }.each {|k,v|
+        Dir.chdir k
+        system "git push origin master"
+        puts "Pushed '#{File.basename(k)}'"
+      }
+    else
+      pending.map {|k,v| [File.basename(k), v] }
+    end
   end
 
   # List repo's latest commits
