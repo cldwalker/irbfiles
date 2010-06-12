@@ -4,8 +4,8 @@ module RipLib
     require 'rip'
   end
 
-  # @options :local=>:boolean, :env=>{:type=>:string, :values=>%w{test db rdf base irbfiles misc web},
-  #  :enum=>false }, :version=>:string
+  # @options :local=>:boolean, :env=>{:type=>:string, :values=>%w{test db rdf base irb misc web},
+  #  :enum=>false }, :version=>:string, :debug=>:boolean
   # @config :alias=>'rip'
   # Enhance rip install
   def rip_install(*args)
@@ -15,6 +15,7 @@ module RipLib
     args.each {|e|
       sargs = ['rip','install', e]
       sargs << options[:version] if options[:version]
+      sargs.insert(1, '-d') if options[:debug]
       system *sargs
     }
   end
@@ -36,7 +37,7 @@ module RipLib
     }
   end
 
-  # @options :local=>:boolean, :env=>{:type=>:string, :values=>%w{test db rdf base irbfiles misc web},
+  # @options :local=>:boolean, :env=>{:type=>:string, :values=>%w{test db rdf base irb misc web},
   #  :enum=>false }
   # Wrapper around rip uninstall
   def rip_uninstall(*args)
@@ -50,23 +51,30 @@ module RipLib
 
   # Runs `rake test in rip package directory across any env
   def rip_test(pkg)
-    find_package(pkg)
-    dir = `rip info #{pkg} path`.chomp
-    if !dir.empty?
+    if (dir = captured_rip_info(pkg, 'path'))
       Dir.chdir dir
       rake 'test'
+      true
     end
-    dir
   end
 
   # Get rip-info across any env
-  def rip_info(pkg)
-    find_package(pkg) && system('rip','info', pkg)
+  def rip_info(*args)
+    find_package(args[0]) && system('rip','info', *args)
   end
 
   # rip-readme across any env
   def rip_readme(pkg)
     find_package(pkg) && system('rip','readme', pkg)
+  end
+
+  # @options :file=>{:default=>'gemspec', :values=>%w{gemspec changelog rakefile}, :enum=>false}
+  # Displays top level file from a rip package
+  def rip_file(pkg, options={})
+    globs = {'gemspec'=>'{gemspec,*.gemspec}', 'changelog'=>'{CHANGELOG,HISTORY}', 'rakefile'=>'Rakefile' }
+    file_glob = globs[options[:file]] || options[:file]
+    (dir = captured_rip_info(pkg, 'path')) && (file = Dir.glob("#{dir}/*#{file_glob}*")[0]) &&
+      File.file?(file) ? File.read(file) : "No file '#{options[:file]}'"
   end
 
   # Moves env to a new name
@@ -87,9 +95,14 @@ module RipLib
         return env if Rip::Helpers::metadata(curr).name == pkg
       }
     }
+    nil
   end
 
   private
+  def captured_rip_info(*args)
+    find_package(args[0]) && `rip info #{args.join(' ')}`.chomp
+  end
+
   def rip_env_status(env, active_envs)
     env == Rip.env ? "* " :
       active_envs.any? {|e| e == "#{ENV['RIPDIR']}/#{env}/lib" } ?  "+ " : "  "
