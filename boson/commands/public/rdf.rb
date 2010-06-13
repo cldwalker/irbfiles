@@ -1,6 +1,7 @@
 module RdfLib
   def self.included(mod)
     require 'rdf'
+    ::RDF::Query.module_eval %[class StringVariable < Variable; def to_s; @name; end; end]
   end
 
   # @render_options :change_fields=>[:subject, :predicate, :object]
@@ -83,7 +84,7 @@ module RdfLib
   end
 
   def create_rdf_value(str)
-    @options[:prefix] ? str : RDF::URI.new(str)
+    @options[:prefix] ? RDF::Query::StringVariable.new(str) : RDF::URI.new(str)
   end
 
   def select_query(client, query_type, args)

@@ -68,12 +68,12 @@ module RipLib
     find_package(pkg) && system('rip','readme', pkg)
   end
 
-  # @options :file=>{:default=>'gemspec', :values=>%w{gemspec changelog rakefile}, :enum=>false}
+  # @options :file=>{:default=>'gemspec', :values=>%w{gemspec changelog rakefile version}, :enum=>false}
   # Displays top level file from a rip package
   def rip_file(pkg, options={})
-    globs = {'gemspec'=>'{gemspec,*.gemspec}', 'changelog'=>'{CHANGELOG,HISTORY}', 'rakefile'=>'Rakefile' }
+    globs = {'gemspec'=>'{gemspec,*.gemspec}', 'changelog'=>'{CHANGELOG,HISTORY}'}
     file_glob = globs[options[:file]] || options[:file]
-    (dir = captured_rip_info(pkg, 'path')) && (file = Dir.glob("#{dir}/*#{file_glob}*")[0]) &&
+    (dir = captured_rip_info(pkg, 'path')) && (file = Dir.glob("#{dir}/*#{file_glob}*", File::FNM_CASEFOLD)[0]) &&
       File.file?(file) ? File.read(file) : "No file '#{options[:file]}'"
   end
 
