@@ -46,11 +46,15 @@ module RipLib
   end
 
   # @options :local=>:boolean, :env=>{:type=>:string, :values=>%w{test db rdf base irb misc web},
-  #  :enum=>false }
+  #  :enum=>false }, :recursive=>:boolean
   # Wrapper around rip uninstall
   def rip_uninstall(*args)
     options = args[-1].is_a?(Hash) ? args.pop : {}
+    args += package_recursive_deps(args[0], :array=>true) if options[:recursive]
     ENV['RIPENV'] = options[:env] if options[:env]
+    if options[:recursive] && find_package(args[0])
+      options[:env] = ENV['RIPENV']
+    end
     args.each {|e|
       find_package(e) unless options[:env]
       system 'rip','uninstall', e
@@ -96,10 +100,8 @@ module RipLib
   # Prints dependencies for package in any env
   def rip_deps(pkg, options={})
     return package_deps(pkg) if !options[:recursive]
-    @nodes = []
-    @options = options
-    package_recursive_deps(pkg, 0)
-    render @nodes, :class=>:tree, :type=>:directory
+    nodes = package_recursive_deps(pkg, options)
+    render nodes, :class=>:tree, :type=>:directory
   end
 
   # Moves env to a new name
@@ -124,20 +126,27 @@ module RipLib
   end
 
   private
-  def package_recursive_deps(pkg, index)
+  def all_packages
+    @packages ||= rip_list(:dir=>true).map {|e| e[:dir] }
+  end
+
+  def package_recursive_deps(pkg, options={})
+    @nodes, @options = [], options
+    build_recursive_deps(pkg, 0)
+    options[:array] ? @nodes.map {|e| e[:value][/\w+/] } - [pkg] : @nodes
+  end
+
+  def build_recursive_deps(pkg, index)
     p [pkg, index] if @options[:verbose]
     @nodes << {:level=>index, :value=>pkg}
     package_deps(pkg[/\w+/]).each {|e|
-      package_recursive_deps(e, index + 1)
+      build_recursive_deps(e, index + 1)
     }
   end
 
   def package_deps(pkg)
     (pkg_dir = all_packages.find {|e| e[/\/#{pkg}-\w{32}/] }) ?
       (File.read("#{pkg_dir}/deps.rip").split("\n") rescue []) : []
-  end
-  def all_packages
-    @packages ||= rip_list(:dir=>true).map {|e| e[:dir] }
   end
 
   def captured_rip_info(*args)
