@@ -20,8 +20,7 @@ module RipLib
     }
   end
 
-  # @render_options  {}
-  # @options :status=>:boolean, :version=>:boolean
+  # @options :status=>:boolean, :version=>:boolean, :dir=>:boolean
   # @config :alias=>'rl'
   # List rip packages
   def rip_list(options={})
@@ -32,10 +31,11 @@ module RipLib
     Rip.envs.inject([]) {|t,e|
       ENV['RIPENV'] = e
       env = options[:status] ? rip_env_status(e, active)+e : e
-      if options[:version]
+      if options[:version] || options[:dir]
         Rip::Helpers.rip(:installed).each {|dir|
           pkg = Rip::Helpers.metadata(dir)
-          t << {:env=>env, :package=>pkg.name, :version=>pkg.version}
+          hash = {:env=>env, :package=>pkg.name, :version=>pkg.version}
+          t << (options[:dir] ? hash.merge(:dir=>dir.chomp) : hash)
         }
         t
       else
@@ -102,19 +102,6 @@ module RipLib
     render @nodes, :class=>:tree, :type=>:directory
   end
 
-  def package_recursive_deps(pkg, index)
-    p [pkg, index] if @options[:verbose]
-    @nodes << {:level=>index, :value=>pkg}
-    package_deps(pkg[/\w+/]).each {|e|
-      package_recursive_deps(e, index + 1)
-    }
-  end
-
-  def package_deps(pkg)
-    (pkg_dir = find_package(pkg)) ?
-      (File.read("#{pkg_dir}/deps.rip").split("\n") rescue []) : []
-  end
-
   # Moves env to a new name
   def rip_mv(old, new)
     system 'rip', 'env', old
@@ -137,6 +124,22 @@ module RipLib
   end
 
   private
+  def package_recursive_deps(pkg, index)
+    p [pkg, index] if @options[:verbose]
+    @nodes << {:level=>index, :value=>pkg}
+    package_deps(pkg[/\w+/]).each {|e|
+      package_recursive_deps(e, index + 1)
+    }
+  end
+
+  def package_deps(pkg)
+    (pkg_dir = all_packages.find {|e| e[/\/#{pkg}-\w{32}/] }) ?
+      (File.read("#{pkg_dir}/deps.rip").split("\n") rescue []) : []
+  end
+  def all_packages
+    @packages ||= rip_list(:dir=>true).map {|e| e[:dir] }
+  end
+
   def captured_rip_info(*args)
     find_package(args[0]) && `rip info #{args.join(' ')}`.chomp
   end
