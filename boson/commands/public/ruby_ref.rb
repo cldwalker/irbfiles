@@ -60,4 +60,16 @@ module RubyRef
     argumentless_methods = obj.class.instance_methods(false).select {|e| obj.method(e).arity.zero? }
     argumentless_methods.map {|e| [e, obj.send(e)] }
   end
+
+  # From http://github.com/jimweirich/irb-setup
+  # @render_options {}
+  # @desc Finds all classes that have given instance method
+  def find_method(method_name)
+    result = []
+    method_name = Regexp.new(method_name) if method_name.kind_of?(String)
+    ObjectSpace.each_object(Class) do |klass|
+      klass.instance_methods.select { |name| name =~ method_name }.each {|name| result << "#{klass}##{name}" }
+    end
+    result
+  end
 end
