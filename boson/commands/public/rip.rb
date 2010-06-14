@@ -20,8 +20,8 @@ module RipLib
     }
   end
 
-  # @render_options :change_fields=>['env', 'packages']
-  # @options :status=>:boolean
+  # @render_options  {}
+  # @options :status=>:boolean, :version=>:boolean
   # @config :alias=>'rl'
   # List rip packages
   def rip_list(options={})
@@ -29,11 +29,19 @@ module RipLib
     Rip::Helpers.extend Rip::Helpers
 
     active = ENV['RUBYLIB'].to_s.split(":")
-    Rip.envs.inject({}) {|t,e|
+    Rip.envs.inject([]) {|t,e|
       ENV['RIPENV'] = e
-      key = options[:status] ? rip_env_status(e, active)+e : e
-      t[key] = Rip::Helpers.rip("installed").map {|e| Rip::Helpers::metadata(e).name }
-      t
+      env = options[:status] ? rip_env_status(e, active)+e : e
+      if options[:version]
+        Rip::Helpers.rip(:installed).each {|dir|
+          pkg = Rip::Helpers.metadata(dir)
+          t << {:env=>env, :package=>pkg.name, :version=>pkg.version}
+        }
+        t
+      else
+        pkg = Rip::Helpers.rip(:installed).map {|dir| dir[/\/([^\/]+)-\w{32}/, 1] }
+        t << {:env=>env, :packages=>pkg}
+      end
     }
   end
 
@@ -51,21 +59,28 @@ module RipLib
 
   # Runs `rake test in rip package directory across any env
   def rip_test(pkg)
-    if (dir = captured_rip_info(pkg, 'path'))
+    if (dir = find_package(pkg))
       Dir.chdir dir
-      rake 'test'
-      true
+      exec 'rake', 'test'
+    end
+  end
+
+  # A package's git history
+  def rip_git(pkg, *args)
+    if (dir = find_package(pkg))
+      Dir.chdir dir
+      exec 'git', *args
     end
   end
 
   # Get rip-info across any env
   def rip_info(*args)
-    find_package(args[0]) && system('rip','info', *args)
+    find_package(args[0]) && exec('rip','info', *args)
   end
 
   # rip-readme across any env
   def rip_readme(pkg)
-    find_package(pkg) && system('rip','readme', pkg)
+    find_package(pkg) && exec('rip','readme', pkg)
   end
 
   # @options :file=>{:default=>'gemspec', :values=>%w{gemspec changelog rakefile version}, :enum=>false}
@@ -73,8 +88,14 @@ module RipLib
   def rip_file(pkg, options={})
     globs = {'gemspec'=>'{gemspec,*.gemspec}', 'changelog'=>'{CHANGELOG,HISTORY}'}
     file_glob = globs[options[:file]] || options[:file]
-    (dir = captured_rip_info(pkg, 'path')) && (file = Dir.glob("#{dir}/*#{file_glob}*", File::FNM_CASEFOLD)[0]) &&
+    (dir = find_package(pkg)) && (file = Dir.glob("#{dir}/*#{file_glob}*", File::FNM_CASEFOLD)[0]) &&
       File.file?(file) ? File.read(file) : "No file '#{options[:file]}'"
+  end
+
+  # Prints dependencies for package in any env
+  def rip_deps(pkg)
+    (pkg_dir = find_package(pkg)) ?
+      (File.read("#{pkg_dir}/deps.rip").split("\n") rescue []) : []
   end
 
   # Moves env to a new name
@@ -91,8 +112,8 @@ module RipLib
 
     Rip.envs.each {|env|
       ENV['RIPENV'] = env
-      Rip::Helpers.rip("installed").each {|curr|
-        return env if Rip::Helpers::metadata(curr).name == pkg
+      Rip::Helpers.rip(:installed).each {|curr|
+        return curr.chomp if curr[/\/#{pkg}-\w{32}/]
       }
     }
     nil
