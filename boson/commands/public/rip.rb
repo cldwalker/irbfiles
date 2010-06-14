@@ -92,8 +92,25 @@ module RipLib
       File.file?(file) ? File.read(file) : "No file '#{options[:file]}'"
   end
 
+  # @options :verbose=>:boolean, :recursive=>true
   # Prints dependencies for package in any env
-  def rip_deps(pkg)
+  def rip_deps(pkg, options={})
+    return package_deps(pkg) if !options[:recursive]
+    @nodes = []
+    @options = options
+    package_recursive_deps(pkg, 0)
+    render @nodes, :class=>:tree, :type=>:directory
+  end
+
+  def package_recursive_deps(pkg, index)
+    p [pkg, index] if @options[:verbose]
+    @nodes << {:level=>index, :value=>pkg}
+    package_deps(pkg[/\w+/]).each {|e|
+      package_recursive_deps(e, index + 1)
+    }
+  end
+
+  def package_deps(pkg)
     (pkg_dir = find_package(pkg)) ?
       (File.read("#{pkg_dir}/deps.rip").split("\n") rescue []) : []
   end
