@@ -5,7 +5,7 @@ module GmailLib
     require 'gmail' #ruby-gmail gem
   end
 
-  #@render_options :fields=>[:uid, :body], :filters=>{:default=>{:body=>[:[], /Subject: (.*)\r\n/, 1]}}
+  #@render_options :fields=>[:uid, :subject]
   #@options :unread=>{:default=>true, :desc=>"Only unread emails"}
   # Lists emails in inbox folder
   def inbox(options={})
