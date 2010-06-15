@@ -61,6 +61,20 @@ module RipLib
     }
   end
 
+  # Backs up all rip envs into a directory
+  def rip_dump(dir='~/.rip_envs')
+    require 'fileutils'
+    dir = File.expand_path(dir)
+    FileUtils.mkdir_p dir
+
+    Rip.envs.each {|e|
+      ENV['RIPENV'] = e
+      File.open("#{dir}/#{e}.rip", 'w') {|f|
+        f.write `rip list -p`
+      }
+    }
+  end
+
   # Runs `rake test in rip package directory across any env
   def rip_test(pkg)
     if (dir = find_package(pkg))
