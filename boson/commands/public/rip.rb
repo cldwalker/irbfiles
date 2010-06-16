@@ -75,6 +75,36 @@ module RipLib
     }
   end
 
+  # @options :dir=>:boolean, :strict=>:boolean, :exceptions=>:boolean
+  # Prints dirty files in lib/ of rip envs i.e. ones that don't match any package namespace
+  def rip_dirty_lib(options={})
+    list = rip_list
+    list.map {|hash|
+      lib_dir = ENV['RIPDIR']+"/#{hash[:env]}/lib/"
+      env_files = Dir.glob(lib_dir+"*").map {|e| File.basename(e) }
+      filter = options[:strict] ? '^%s(\.\w+$|$)' : '^%s'
+      env_files = env_files.reject {|f|
+        hash[:packages].any? {|e|
+          namespace = e[/\w+/]
+          f[Regexp.new(filter % namespace)] ||
+            (options[:exceptions] ? dirty_lib_exception(f, namespace) : false)
+        }
+      }
+      if options[:dir]
+        env_files.map! {|e| File.directory?(lib_dir+e) ?
+          (e+"("+Dir.glob(lib_dir+e+"/**/*.*").size.to_s+")") : e
+        }
+      end
+      [hash[:env], env_files]
+    }
+  end
+
+  def dirty_lib_exception(path, namespace)
+    exceptions = %w{rubygems rubygems_plugin.rb autotest tasks}
+    namespace_exceptions = {'rdf'=>'^df', 'rspec'=>'^spec', 'json_pure'=>'^json'}
+    exceptions.include?(path) || ((exc = namespace_exceptions[namespace]) && path[/#{exc}/])
+  end
+
   # Runs `rake test in rip package directory across any env
   def rip_test(pkg)
     if (dir = find_package(pkg))
