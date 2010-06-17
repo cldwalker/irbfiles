@@ -61,18 +61,30 @@ module RipLib
     }
   end
 
+  # Restores all rip envs to state saved by rip_dump directory
+  def rip_restore(dir='~/.rip_envs')
+    Dir.glob(File.expand_path(dir)+"/*").each {|f|
+      ENV['RIPENV'] = File.basename(f).sub('.rip', '')
+      system 'rip','install', f
+    }
+  end
+
+  # @options :diff=>:boolean, :dir=>'~/.rip_envs'
   # Backs up all rip envs into a directory
-  def rip_dump(dir='~/.rip_envs')
+  def rip_dump(options={})
+    dir = File.expand_path(options[:dir])
+    original_dir = dir.dup
+    dir = '/tmp/rip_dump_diff' if options[:diff]
     require 'fileutils'
-    dir = File.expand_path(dir)
     FileUtils.mkdir_p dir
 
-    Rip.envs.each {|e|
+    envs = Rip.envs.each {|e|
       ENV['RIPENV'] = e
       File.open("#{dir}/#{e}.rip", 'w') {|f|
         f.write `rip list -p`
       }
     }
+    options[:diff] ? system("diff", "-r", original_dir, dir) : envs
   end
 
   # @options :dir=>:boolean, :strict=>:boolean, :exceptions=>:boolean
@@ -115,7 +127,7 @@ module RipLib
     end
   end
 
-  # A package's git history
+  # Execute a git command on a package
   def rip_git(pkg, *args)
     if (dir = find_package(pkg))
       Dir.chdir dir
