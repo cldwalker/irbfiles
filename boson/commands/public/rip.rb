@@ -87,7 +87,7 @@ module RipLib
         hash[:packages].any? {|e|
           namespace = e[/\w+/]
           f[Regexp.new(filter % namespace)] ||
-            (options[:exceptions] ? dirty_lib_exception(f, namespace) : false)
+            (options[:exceptions] ? dirty_lib_exception(f, e) : false)
         }
       }
       if options[:dir]
@@ -101,7 +101,9 @@ module RipLib
 
   def dirty_lib_exception(path, namespace)
     exceptions = %w{rubygems rubygems_plugin.rb autotest tasks}
-    namespace_exceptions = {'rdf'=>'^df', 'rspec'=>'^spec', 'json_pure'=>'^json'}
+    namespace_exceptions = {'rdf'=>'^df', 'rspec'=>'^spec', 'json_pure'=>'^json', 'ssoroka-ansi'=>'^ansi', 'googlebase'=>'google',
+      'activesupport'=>'active_support', 'mynyml-every'=>'every', 'ruby-gmail'=>'gmail', 'matthew-method_lister'=>'method_lister',
+      'git-hub'=>'hub'}
     exceptions.include?(path) || ((exc = namespace_exceptions[namespace]) && path[/#{exc}/])
   end
 
