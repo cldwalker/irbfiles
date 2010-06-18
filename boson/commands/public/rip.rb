@@ -76,6 +76,7 @@ module RipLib
     original_dir = dir.dup
     dir = '/tmp/rip_dump_diff' if options[:diff]
     require 'fileutils'
+    FileUtils.rm_f Dir.glob(dir+"/*")
     FileUtils.mkdir_p dir
 
     envs = Rip.envs.each {|e|
