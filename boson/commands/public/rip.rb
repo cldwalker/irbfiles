@@ -65,7 +65,7 @@ module RipLib
   def rip_restore(dir='~/.rip_envs')
     Dir.glob(File.expand_path(dir)+"/*").each {|f|
       ENV['RIPENV'] = File.basename(f).sub('.rip', '')
-      system 'rip','install', f
+      system 'rip','install', '-o', f
     }
   end
 
