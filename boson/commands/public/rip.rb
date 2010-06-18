@@ -24,8 +24,7 @@ module RipLib
   # @config :alias=>'rl'
   # List rip packages
   def rip_list(options={})
-    require 'rip/helpers'
-    Rip::Helpers.extend Rip::Helpers
+    setup_helpers
 
     active = ENV['RUBYLIB'].to_s.split(":")
     Rip.envs.inject([]) {|t,e|
@@ -39,8 +38,7 @@ module RipLib
         }
         t
       else
-        pkg = Rip::Helpers.rip(:installed).map {|dir| dir[/\/([^\/]+)-\w{32}/, 1] }
-        t << {:env=>env, :packages=>pkg}
+        t << {:env=>env, :packages=>current_packages}
       end
     }
   end
@@ -120,6 +118,28 @@ module RipLib
     exceptions.include?(path) || ((exc = namespace_exceptions[namespace]) && path[/#{exc}/])
   end
 
+  # Verifies that packages in envs load. Returns ones that fail with LoadError
+  def rip_verify(*envs)
+    envs = Rip.envs if envs.empty?
+    failed = {}
+    envs.each {|e|
+      ENV['RIPENV'] = e
+      ENV['RUBYLIB'] += ":#{ENV['RIPDIR']}/#{e}/lib"
+      puts "Verifying env #{e}"
+      current_packages.each {|f|
+        begin
+          require 'rdf' if f[/rdf/]
+          f2 = f[/rdf|sparql/] ? f.sub('-', '/') : f
+          require f2
+          #system('ruby', '-r', f, "-e ''")
+        rescue LoadError
+          (failed[e] ||= []) << f
+        end
+      }
+    }
+    failed
+  end
+
   # Runs `rake test in rip package directory across any env
   def rip_test(pkg)
     if (dir = find_package(pkg))
@@ -172,8 +192,7 @@ module RipLib
 
   # Finds rip package and returns its env name
   def find_package(pkg)
-    require 'rip/helpers'
-    Rip::Helpers.extend Rip::Helpers
+    setup_helpers
 
     Rip.envs.each {|env|
       ENV['RIPENV'] = env
@@ -185,6 +204,19 @@ module RipLib
   end
 
   private
+  def setup_helpers
+    @setup_helpers ||= begin
+      require 'rip/helpers'
+      Rip::Helpers.extend Rip::Helpers
+      true
+    end
+  end
+
+  def current_packages
+    setup_helpers
+    Rip::Helpers.rip(:installed).map {|dir| dir[/\/([^\/]+)-\w{32}/, 1] }
+  end
+
   def all_packages
     @packages ||= rip_list(:dir=>true).map {|e| e[:dir] }
   end
