@@ -118,10 +118,13 @@ module RipLib
     exceptions.include?(path) || ((exc = namespace_exceptions[namespace]) && path[/#{exc}/])
   end
 
+  # @options :verbose=>:boolean
   # Verifies that packages in envs load. Returns ones that fail with LoadError
   def rip_verify(*envs)
+    options = envs[-1].is_a?(Hash) ? envs.pop : {}
     envs = Rip.envs if envs.empty?
     failed = {}
+    exceptions = %w{mynyml ssoroka matthew ruby-}
     envs.each {|e|
       ENV['RIPENV'] = e
       ENV['RUBYLIB'] += ":#{ENV['RIPDIR']}/#{e}/lib"
@@ -129,9 +132,9 @@ module RipLib
       current_packages.each {|f|
         begin
           require 'rdf' if f[/rdf/]
-          f2 = f[/rdf|sparql/] ? f.sub('-', '/') : f
+          f2 = f[Regexp.union(*exceptions)] ? f.sub(/^\w+-/, '') : f.sub('-', '/')
+          puts "Requiring '#{f2}'" if options[:verbose]
           require f2
-          #system('ruby', '-r', f, "-e ''")
         rescue LoadError
           (failed[e] ||= []) << f
         end
