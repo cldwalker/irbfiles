@@ -41,8 +41,7 @@ module Github
   # @config :menu=>{:command=>:browser, :default_field=>:url}
   # Displays network of a given user-repo i.e. wycats-thor or defunkt/rip
   def repo_network(user_repo, options={})
-    user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']
-    github_get("/repos/show/#{user_repo}/network")['network']
+    github_get("/repos/show/#{filter_user_repo(user_repo, options)}/network")['network']
   end
 
   # @render_options :fields=>{:values=>["score", "name", "language", "followers", "type", "fullname",
@@ -62,8 +61,7 @@ module Github
   # @config :menu=>{:command=>:browser, :default_field=>'url'}
   # List commits of a given user-repo
   def commit_list(user_repo, options={})
-    user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']
-    github_get("/commits/list/#{user_repo}/#{options[:branch]}")['commits']
+    github_get("/commits/list/#{filter_user_repo(user_repo, options)}/#{options[:branch]}")['commits']
   end
 
   # @render_options :fields=>{:values=>[:owner, :homepage, :open_issues, :name, :url, :private,
@@ -75,6 +73,13 @@ module Github
   end
 
   # @render_options {}
+  # @options :user=>{:default=>'cldwalker', :desc=>'Github user'}
+  # Lists a repo's watchers
+  def repo_watchers(user_repo, options={})
+    github_get("/repos/show/#{filter_user_repo(user_repo, options)}/watchers")['watchers']
+  end
+
+  # @render_options {}
   # @config :menu=>{:command=>:browser, :template=>'http://github.com/:to_s'}
   # List users a user follows
   def user_follows(user)
@@ -82,6 +87,10 @@ module Github
   end
 
   private
+  def filter_user_repo(user_repo, options)
+    user_repo['/'] ? user_repo : "#{options[:user]}/#{user_repo}"
+  end
+
   def github_get(url)
     get("http://github.com/api/v2/yaml#{url}", :parse=>true) || {}
   end
