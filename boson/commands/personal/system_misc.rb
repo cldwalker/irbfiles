@@ -60,6 +60,10 @@ module SystemMisc
     end
   end
 
+  def rename_file(name, dir='.')
+    menu(Dir.entries(dir)) {|chosen| chosen.each {|e| File.rename(e, name) } }
+  end
+
   # @options :force=>:boolean, :verbose=>true, :noop=>:boolean, :dir=>'~/code/world'
   # Deletes paths with menu and FileUtils
   def delete_paths(options={})
