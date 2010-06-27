@@ -10,6 +10,7 @@ module RdfLib
     require 'rdf/ntriples' if uri[/\.nt$/]
     require 'rdf/json' if uri[/\.json$/]
     require 'rdf/raptor' if uri[/\.(rdf|ttl)$/]
+    require 'rdf/n3' if uri[/\.(n3)$/]
     RDF::Graph.load(uri).data.map {|e| e.to_a }
   end
 
@@ -120,7 +121,8 @@ module RdfLib
     'sioc'=>'http://rdfs.org/sioc/ns#',
     'po'=>'http://purl.org/ontology/po/',
     'space'=>'http://purl.org/net/schemas/space/',
-    'fb'=>'http://rdf.freebase.com/ns/'
+    'fb'=>'http://rdf.freebase.com/ns/',
+    'movie'=>'http://data.linkedmdb.org/resource/movie/'
   }
 
   # @render_options :change_fields=>['name', 'url']
