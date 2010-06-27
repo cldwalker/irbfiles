@@ -60,22 +60,19 @@ module RipLib
   end
 
   # @options :verbose=>:boolean, :rebuild=>:boolean
-  # Builds yard documentation as needed and returns doc path
+  # Builds yard doc as needed and returns doc path
   def rip_yard(pkg, options={})
     if (pkg_dir = find_package(pkg))
-      yard_dir = File.expand_path("~/.rip/.yard") + "/" + File.basename(pkg_dir)
-      require 'fileutils'
-      FileUtils.mkdir_p yard_dir
-      Dir.chdir yard_dir
-      if !File.exists?('doc') || options[:rebuild]
-        cmd = ['yardoc', '-b', '.yardoc']
-        cmd << '-q' unless options[:verbose]
-        cmd += ['-c', '.yardoc']  unless options[:rebuild]
-        cmd << pkg_dir + "/lib/**/*.rb"
-        puts "Building YARD documentation with: " +cmd.join(' ') if options[:verbose]
-        system *cmd
-      end
-      yard_dir + "/doc/index.html"
+      build_yard_doc(pkg, pkg_dir, options)
+    end
+  end
+
+  # @options :verbose=>:boolean, :rebuild=>:boolean
+  # Builds yard doc as needed and runs yri for current package
+  def rip_yri(pkg, query, options)
+    if (pkg_dir = find_package(pkg))
+      build_yard_doc(pkg, pkg_dir, options.merge(:yard_options=>['-n']))
+      exec 'yri', query
     end
   end
 
@@ -219,6 +216,24 @@ module RipLib
   end
 
   private
+  def build_yard_doc(pkg, pkg_dir, options)
+    yard_dir = File.expand_path("~/.rip/.yard") + "/" + File.basename(pkg_dir)
+    require 'fileutils'
+    FileUtils.mkdir_p yard_dir
+    Dir.chdir yard_dir
+    puts "First time building YARD doc for '#{pkg}'..." if !File.exists?('doc')
+    if !File.exists?('doc') || options[:rebuild]
+      cmd = ['yardoc']
+      cmd << '-q' unless options[:verbose]
+      cmd += ['-c', '.yardoc']  unless options[:rebuild]
+      cmd += options[:yard_options] if options[:yard_options]
+      cmd += [pkg_dir + "/lib/**/*.rb", '-', pkg_dir+'/README*']
+      puts "Building YARD documentation with: " +cmd.join(' ') if options[:verbose]
+      system *cmd
+    end
+    yard_dir + "/doc/index.html"
+  end
+
   def dirty_lib_exception(path, namespace)
     exceptions = %w{rubygems rubygems_plugin.rb autotest tasks}
     namespace_exceptions = {'rdf'=>'^df', 'rspec'=>'^spec', 'json_pure'=>'^json', 'ssoroka-ansi'=>'^ansi', 'googlebase'=>'google',
