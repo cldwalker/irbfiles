@@ -59,6 +59,26 @@ module RipLib
     }
   end
 
+  # @options :verbose=>:boolean, :rebuild=>:boolean
+  # Builds yard documentation as needed and returns doc path
+  def rip_yard(pkg, options={})
+    if (pkg_dir = find_package(pkg))
+      yard_dir = File.expand_path("~/.rip/.yard") + "/" + File.basename(pkg_dir)
+      require 'fileutils'
+      FileUtils.mkdir_p yard_dir
+      Dir.chdir yard_dir
+      if !File.exists?('doc') || options[:rebuild]
+        cmd = ['yardoc', '-b', '.yardoc']
+        cmd << '-q' unless options[:verbose]
+        cmd += ['-c', '.yardoc']  unless options[:rebuild]
+        cmd << pkg_dir + "/lib/**/*.rb"
+        puts "Building YARD documentation with: " +cmd.join(' ') if options[:verbose]
+        system *cmd
+      end
+      yard_dir + "/doc/index.html"
+    end
+  end
+
   # Restores all rip envs to state saved by rip_dump directory
   def rip_restore(dir='~/.rip_envs')
     Dir.glob(File.expand_path(dir)+"/*").each {|f|
@@ -108,14 +128,6 @@ module RipLib
       end
       [hash[:env], env_files]
     }
-  end
-
-  def dirty_lib_exception(path, namespace)
-    exceptions = %w{rubygems rubygems_plugin.rb autotest tasks}
-    namespace_exceptions = {'rdf'=>'^df', 'rspec'=>'^spec', 'json_pure'=>'^json', 'ssoroka-ansi'=>'^ansi', 'googlebase'=>'google',
-      'activesupport'=>'active_support', 'mynyml-every'=>'every', 'ruby-gmail'=>'gmail', 'matthew-method_lister'=>'method_lister',
-      'git-hub'=>'hub'}
-    exceptions.include?(path) || ((exc = namespace_exceptions[namespace]) && path[/#{exc}/])
   end
 
   # @options :verbose=>:boolean
@@ -193,7 +205,7 @@ module RipLib
     system 'rip', 'env', '-d', old
   end
 
-  # Finds rip package and returns its env name
+  # Finds rip package and returns package directory name
   def find_package(pkg)
     setup_helpers
 
@@ -207,6 +219,14 @@ module RipLib
   end
 
   private
+  def dirty_lib_exception(path, namespace)
+    exceptions = %w{rubygems rubygems_plugin.rb autotest tasks}
+    namespace_exceptions = {'rdf'=>'^df', 'rspec'=>'^spec', 'json_pure'=>'^json', 'ssoroka-ansi'=>'^ansi', 'googlebase'=>'google',
+      'activesupport'=>'active_support', 'mynyml-every'=>'every', 'ruby-gmail'=>'gmail', 'matthew-method_lister'=>'method_lister',
+      'git-hub'=>'hub'}
+    exceptions.include?(path) || ((exc = namespace_exceptions[namespace]) && path[/#{exc}/])
+  end
+
   def setup_helpers
     @setup_helpers ||= begin
       require 'rip/helpers'
@@ -241,10 +261,6 @@ module RipLib
   def package_deps(pkg)
     (pkg_dir = all_packages.find {|e| e[/\/#{pkg}-\w{32}/] }) ?
       (File.read("#{pkg_dir}/deps.rip").split("\n") rescue []) : []
-  end
-
-  def captured_rip_info(*args)
-    find_package(args[0]) && `rip info #{args.join(' ')}`.chomp
   end
 
   def rip_env_status(env, active_envs)
