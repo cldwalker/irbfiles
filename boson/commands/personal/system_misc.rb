@@ -40,6 +40,18 @@ module SystemMisc
     end
   end
 
+  # Wrapper around `hub fork`
+  def github_fork(user_repo, fork_dir='~/code/fork')
+    Dir.chdir File.expand_path(fork_dir)
+    system "hub clone #{user_repo}"
+    if $? == 0
+      Dir.chdir user_repo[/\w+$/]
+      exec 'hub fork'
+    else
+      "Clone failed"
+    end
+  end
+
   def clonable_url_and_name(repo_url)
     if repo_url[/^\d+$/]
       ["git://gist.github.com/#{repo_url}.git", "gist-#{repo_url}"]
