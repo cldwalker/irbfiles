@@ -67,31 +67,35 @@ module RipLib
     end
   end
 
-  # @options :verbose=>:boolean, :rebuild=>:boolean, :menu_query=>:boolean
+  # @options :verbose=>:boolean, :rebuild=>:boolean, :package=>:string, :verbose=>:boolean
   # Builds yard doc as needed and runs yri for current package
-  def rip_yri(pkg, query, options={})
-    if (pkg_dir = find_package(pkg))
-      build_yard_doc(pkg, pkg_dir, options.merge(:yard_options=>['-n']))
-      results = if options[:menu_query]
-        results = yri(query)
-        results = menu(results) if results.size > 1
-        results
-      else
-        [query]
-      end
-      Array(results).each {|e| system('yri', e) }
-      nil
+  def rip_yri(query, options={})
+    if options[:package] && (pkg_dir = find_package(options[:package]))
+      build_yard_doc(options[:package], pkg_dir, options.merge(:yard_options=>['-n']))
     end
+    dirs = Dir.glob(File.expand_path("~/.rip/.yard/*/.yardoc"))
+    dirs = dirs.select {|e| e[/#{options[:package]}/] } if options[:package]
+    results = yri query, dirs, options
+    results = menu(results) if results.size > 1
+    Array(results).each {|e| system('yri', '-b', @yardoc, e) }
+    nil
   end
 
-  # Queries the current .yardoc and returns matching paths
-  def yri(query)
+  # Queries a set of .yardocs and returns first matches
+  def yri(query, yardocs=['.yardoc'], options={})
     require 'yard'
-    YARD::Registry.load!
-    results = YARD::Registry.all
-    results -= YARD::Registry.all(:method) if query[/^[A-Z][^#\.]+$/]
-    results = results.select {|e| e.path[/#{query}/] }.map {|e| e.path }
-    results.include?(query) ? [query] : results
+    yardocs.each {|e|
+      @yardoc = e
+      puts "Searching #{e}..." if options[:verbose]
+      YARD::Registry.load(e)
+      YARD::Registry.load_all
+      results = YARD::Registry.all
+      results -= YARD::Registry.all(:method) if query[/^[A-Z][^#\.]+$/]
+      results = results.select {|e| e.path[/#{query}/] }.map {|e| e.path }
+      results = [query] if results.include?(query)
+      return results if results.size > 0
+    }
+    []
   end
 
   # Restores all rip envs to state saved by rip_dump directory
