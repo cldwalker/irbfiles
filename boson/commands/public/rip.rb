@@ -67,13 +67,31 @@ module RipLib
     end
   end
 
-  # @options :verbose=>:boolean, :rebuild=>:boolean
+  # @options :verbose=>:boolean, :rebuild=>:boolean, :menu_query=>:boolean
   # Builds yard doc as needed and runs yri for current package
-  def rip_yri(pkg, query, options)
+  def rip_yri(pkg, query, options={})
     if (pkg_dir = find_package(pkg))
       build_yard_doc(pkg, pkg_dir, options.merge(:yard_options=>['-n']))
-      exec 'yri', query
+      results = if options[:menu_query]
+        results = yri(query)
+        results = menu(results) if results.size > 1
+        results
+      else
+        [query]
+      end
+      Array(results).each {|e| system('yri', e) }
+      nil
     end
+  end
+
+  # Queries the current .yardoc and returns matching paths
+  def yri(query)
+    require 'yard'
+    YARD::Registry.load!
+    results = YARD::Registry.all
+    results -= YARD::Registry.all(:method) if query[/^[A-Z][^#\.]+$/]
+    results = results.select {|e| e.path[/#{query}/] }.map {|e| e.path }
+    results.include?(query) ? [query] : results
   end
 
   # Restores all rip envs to state saved by rip_dump directory
