@@ -5,7 +5,7 @@ module RipLib
   end
 
   # @options :local=>:boolean, :env=>{:type=>:string, :values=>%w{test db rdf base irb misc web},
-  #  :enum=>false }, :version=>:string, :debug=>:boolean
+  #  :enum=>false }, :version=>:string, :debug=>:boolean, :force=>:boolean
   # @config :alias=>'rip'
   # Enhance rip install
   def rip_install(*args)
@@ -15,7 +15,8 @@ module RipLib
     args.each {|e|
       sargs = ['rip','install', e]
       sargs << options[:version] if options[:version]
-      sargs.insert(1, '-d') if options[:debug]
+      sargs.insert(2, '-d') if options[:debug]
+      sargs.insert(2, '-f') if options[:force]
       system *sargs
     }
   end
@@ -59,15 +60,21 @@ module RipLib
     }
   end
 
-  # @options :verbose=>:boolean, :rebuild=>:boolean
+  # @options :verbose=>:boolean, :rebuild=>:boolean, :yard_options=>:hash
   # Builds yard doc as needed and returns doc path
   def rip_yard(pkg, options={})
     if (pkg_dir = find_package(pkg))
+      if options[:yard_options]
+        options[:yard_options] = options[:yard_options].map {|k,v|
+          dash = k.size > 1 ? "--" : "-"
+          [dash + k, v]
+        }.flatten
+      end
       build_yard_doc(pkg, pkg_dir, options)
     end
   end
 
-  # @options :verbose=>:boolean, :rebuild=>:boolean, :package=>:string, :verbose=>:boolean
+  # @options :verbose=>:boolean, :rebuild=>:boolean, :package=>:string
   # Builds yard doc as needed and runs yri for current package
   def rip_yri(query, options={})
     if options[:package] && (pkg_dir = find_package(options[:package]))
@@ -245,10 +252,13 @@ module RipLib
     Dir.chdir yard_dir
     puts "First time building YARD doc for '#{pkg}'..." if !File.exists?('doc')
     if !File.exists?('doc') || options[:rebuild]
-      cmd = ['yardoc']
+      cmd = ['yardoc', '--no-private']
       cmd << '-q' unless options[:verbose]
       cmd += ['-c', '.yardoc']  unless options[:rebuild]
       cmd += options[:yard_options] if options[:yard_options]
+      readme = Dir[pkg_dir + '/README*'][0].to_s
+      cmd += ['-m', 'markdown'] if readme[/README\.m/]
+      cmd += ['-m', 'textile'] if readme[/README\.t/]
       cmd += [pkg_dir + "/lib/**/*.rb", '-', pkg_dir+'/README*']
       puts "Building YARD documentation with: " +cmd.join(' ') if options[:verbose]
       system *cmd
