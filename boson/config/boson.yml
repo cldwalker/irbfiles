@@ -15,7 +15,7 @@
 - exp/plugins/auto_pipe
 - exp/plugins/translate_bin_args
 :console_defaults:
-- personal/completion
+- public/completion
 - personal/alias
 - public/ruby_core
 - method_lister

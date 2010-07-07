@@ -4,10 +4,10 @@ require 'rubygems'
 %w{hirb alias boson}.each do |e|
   # load a local gem first or default to normal gem
   begin
-    require 'local_gem' # gem install cldwalker-local_gem
+    require 'local_gem'
     LocalGem.local_require e
   rescue LoadError
-    require e # gem install cldwalker-#{e}
+    require e
   end
 end
 

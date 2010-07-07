@@ -9,7 +9,7 @@ module RailsLib
 
   def self.setup_personal(*args)
     Alias.create :file=>"~/.alias/rails.yml"
-    require 'console_update' #gem install cldwalker-console_update
+    require 'console_update'
     ConsoleUpdate.enable_named_scope
   end
 end
