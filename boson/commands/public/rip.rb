@@ -160,6 +160,19 @@ module RipLib
     }
   end
 
+  # @options :delete=>:boolean
+  # Checks for broken symlinks
+  def rip_symlinks(*files)
+    options = files[-1].is_a?(Hash) ? files.pop : {}
+    files = files.empty? ?  Dir.glob(File.expand_path("~/.rip/*/**/*.rb")) :
+      files.map {|e| File.directory?(e) ? Dir.glob(e+'/**/*') : e }.flatten
+    symlinks = files.select {|e| File.symlink?(e) }
+    puts "Checking #{symlinks.size} symlinks"
+    broken = symlinks.map {|e| [e, File.readlink(e)] }.select {|k,v| !File.exists?(v) }
+    broken.each {|k,v| File.unlink(k) } if options[:delete]
+    broken
+  end
+
   # @options :verbose=>:boolean
   # Verifies that packages in envs load. Returns ones that fail with LoadError
   def rip_verify(*envs)
