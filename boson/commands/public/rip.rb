@@ -74,7 +74,7 @@ module RipLib
     end
   end
 
-  # @options :verbose=>:boolean, :rebuild=>:boolean, :package=>:string
+  # @options :verbose=>:boolean, :rebuild=>:boolean, :package=>:string, :source=>:boolean
   # Builds yard doc as needed and runs yri for current package
   def rip_yri(query, options={})
     if options[:package] && (pkg_dir = find_package(options[:package]))
@@ -84,7 +84,11 @@ module RipLib
     dirs = dirs.select {|e| e[/#{options[:package]}/] } if options[:package]
     results = yri query, dirs, options
     results = menu(results) if results.size > 1
-    Array(results).each {|e| system('yri', '-b', @yardoc, e) }
+    if options[:source]
+      results.each {|e| puts "=== #{e} ===", YARD::Registry.at(e).source || "*No source*", "" }
+    else
+      Array(results).each {|e| system('yri', '-b', @yardoc, e) }
+    end
     nil
   end
 
