@@ -21,14 +21,16 @@ module RipLib
     }
   end
 
-  # @options :status=>:boolean, :version=>:boolean, :dir=>:boolean
+  # @options :status=>:boolean, :version=>:boolean, :dir=>:boolean, :env=>:string
   # @config :alias=>'rl'
   # List rip packages
   def rip_list(options={})
     setup_helpers
 
     active = ENV['RUBYLIB'].to_s.split(":")
-    Rip.envs.inject([]) {|t,e|
+    envs = Rip.envs
+    envs = envs.select {|e| e[options[:env]] } if options[:env]
+    envs.inject([]) {|t,e|
       ENV['RIPENV'] = e
       env = options[:status] ? rip_env_status(e, active)+e : e
       if options[:version] || options[:dir]
