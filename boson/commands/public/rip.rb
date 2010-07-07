@@ -76,13 +76,15 @@ module RipLib
     end
   end
 
-  # @options :verbose=>:boolean, :rebuild=>:boolean, :package=>:string, :source=>:boolean
+  # @options :verbose=>:boolean, :rebuild=>:boolean, :package=>:string, :source=>:boolean,
+  #   :doc_packages=>:boolean
   # Builds yard doc as needed and runs yri for current package
   def rip_yri(query, options={})
     if options[:package] && (pkg_dir = find_package(options[:package]))
       build_yard_doc(options[:package], pkg_dir, options.merge(:yard_options=>['-n']))
     end
     dirs = Dir.glob(File.expand_path("~/.rip/.yard/*/.yardoc"))
+    dirs = Dir.glob(File.expand_path("~/.rip/.packages/yard-doc-*/.yardoc")) + dirs if options[:doc_packages]
     dirs = dirs.select {|e| e[/#{options[:package]}/] } if options[:package]
     results = yri query, dirs, options
     results = menu(results) if results.size > 1
