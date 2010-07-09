@@ -168,7 +168,7 @@ module RipLib
   # Checks for broken or nonstandard symlinks
   def rip_symlinks(*files)
     options = files[-1].is_a?(Hash) ? files.pop : {}
-    files = files.empty? ?  Dir.glob(File.expand_path("~/.rip/*/**/*.rb")) :
+    files = files.empty? ?  Dir.glob(File.expand_path("~/.rip/*/**/*.{rb,?}")) :
       files.map {|e| File.directory?(e) ? Dir.glob(e+'/**/*') : e }.flatten
     symlinks = files.select {|e| File.symlink?(e) }.map {|e| [e, File.readlink(e)] }
     puts "Checking #{symlinks.size} symlinks"
