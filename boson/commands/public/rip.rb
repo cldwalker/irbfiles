@@ -164,6 +164,11 @@ module RipLib
     }
   end
 
+  # Prints top level files which should be symlinks
+  def dirty_links
+    Dir.glob(File.expand_path("~/.rip/*/{lib,bin}/*")).select {|e| !File.symlink?(e) }
+  end
+
   # @options :delete=>:boolean, :non_standard=>:boolean
   # Checks for broken or nonstandard symlinks
   def rip_symlinks(*files)
