@@ -1,8 +1,8 @@
 module YardLib
-  # @options :pretend=>:boolean
+  # @options :pretend=>:boolean, :files=>{:type=>:array, :default=>['bin/*', 'lib/**/*.rb'] }
   # Converts rdoc tags (:nodoc:, :startdoc:, :stopdoc:) to yard's @private
   def convert(options={})
-    files = Dir.glob(['bin/*', 'lib/**/*.rb'])
+    files = Dir.glob(options[:files])
     files.each do |f|
       edits = []
       (lines = IO.readlines(f)).each_with_index {|e,i|
@@ -18,7 +18,7 @@ module YardLib
       if region = body[/([ \t]*#[ \t]*:stopdoc:\s*\n).*?([ \t]*#[ \t]*:startdoc:\s*\n)/m]
         edits << [$1, '', 'nil']
         startdoc = $2
-        region.gsub(/\n\s*def.*/) {|e| edits << [e.strip, e.strip+' #@private', 'nil']; '' }
+        region.gsub(/\n\s*def.*?\n/) {|e| edits << [e.sub(/^\s*/,''), e.sub(/^\s*(def.*?)\n/, '\1'+" \#@private\n"), 'nil']; '' }
         edits << [startdoc, '', 'nil']
       end
       if options[:pretend]
