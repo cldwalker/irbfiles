@@ -39,4 +39,33 @@ module YardLib
     end
     options[:edits] ? total_edits : nil
   end
+
+  # @options :verbose=>:boolean, :source=>:boolean
+  # Queries a set of .yardocs and returns first matches
+  def yri(query, dirs, options={})
+    results = yri_select query, dirs, options
+    results = menu(results) if results.size > 1
+    if options[:source]
+      results.each {|e| puts "=== #{e} ===", YARD::Registry.at(e).source || "*No source*", "" }
+    else
+      Array(results).each {|e| system('yri', '-b', @yardoc, e) }
+    end
+    nil
+  end
+
+  def yri_select(query, yardocs=['.yardoc'], options={})
+    require 'yard'
+    yardocs.each {|e|
+      @yardoc = e
+      puts "Searching #{e}..." if options[:verbose]
+      YARD::Registry.load(e)
+      YARD::Registry.load_all
+      results = YARD::Registry.all
+      results -= YARD::Registry.all(:method) if query[/^[A-Z][^#\.]+$/]
+      results = results.select {|e| e.path[/#{query}/] }.map {|e| e.path }
+      results = [query] if results.include?(query)
+      return results if results.size > 0
+    }
+    []
+  end
 end
