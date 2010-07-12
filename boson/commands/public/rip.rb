@@ -122,18 +122,18 @@ module RipLib
   # Checks for broken or nonstandard symlinks
   def rip_symlinks(*files)
     options = files[-1].is_a?(Hash) ? files.pop : {}
-    files = files.empty? ?  Dir.glob(File.expand_path("~/.rip/*/**/*.{rb,?}")) :
+    files = files.empty? ?  Dir.glob([File.expand_path("~/.rip/*/**/*.{rb,?}"), File.expand_path("~/.rip/*/bin/*")]) :
       files.map {|e| File.directory?(e) ? Dir.glob(e+'/**/*') : e }.flatten
     symlinks = files.select {|e| File.symlink?(e) }.map {|e| [e, File.readlink(e)] }
     puts "Checking #{symlinks.size} symlinks"
-    if options[:non_standard]
+    symlinks = if options[:non_standard]
       package_dir = File.expand_path("~/.rip/.packages")
       symlinks.reject {|k,v| v[/^#{package_dir}/] }
     else
-      broken = symlinks.select {|k,v| !File.exists?(v) }
-      broken.each {|k,v| File.unlink(k) } if options[:delete]
-      broken
+      symlinks.select {|k,v| !File.exists?(v) }
     end
+    menu(symlinks).each {|k,v| File.unlink(k) } if options[:delete]
+    symlinks
   end
 
   # @options :verbose=>:boolean
