@@ -47,11 +47,12 @@ module RipLib
   end
 
   # @options :local=>:boolean, :env=>{:type=>:string, :values=>%w{test db rdf base irb misc web},
-  #  :enum=>false }, :recursive=>:boolean
+  #  :enum=>false }, :recursive=>:boolean, :pretend=>:boolean
   # Wrapper around rip uninstall
   def rip_uninstall(*args)
     options = args[-1].is_a?(Hash) ? args.pop : {}
     args += package_recursive_deps(args[0], :array=>true) if options[:recursive]
+    return args if options[:pretend]
     ENV['RIPENV'] = options[:env] if options[:env]
     if options[:recursive] && find_package(args[0])
       options[:env] = ENV['RIPENV']
@@ -116,6 +117,11 @@ module RipLib
   # Prints top level files which should be symlinks
   def dirty_links
     Dir.glob(File.expand_path("~/.rip/*/{lib,bin}/*")).select {|e| !File.symlink?(e) }
+  end
+
+  # Prints all extensions
+  def rip_ext
+    Dir[Rip.dir+'/**/*/**/*.bundle']
   end
 
   # @options :delete=>:boolean, :non_standard=>:boolean
@@ -253,7 +259,13 @@ module RipLib
   def package_recursive_deps(pkg, options={})
     @nodes, @options = [], options
     build_recursive_deps(pkg, 0)
-    options[:array] ? @nodes.map {|e| e[:value][/\w+/] } - [pkg] : @nodes
+    if options[:array]
+      @nodes.map {|e| e[:value] }.map {|e|
+        e[/^git:.*?([^\/]+)\.git/, 1] || e[/\/([^\/]+)$/, 1] || e[/\S+/]
+      } - [pkg]
+    else
+      @nodes
+    end
   end
 
   def build_recursive_deps(pkg, index)
