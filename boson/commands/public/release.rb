@@ -28,10 +28,6 @@ module Release
       current_files.select {|e| !git_files.include?(e) }
   end
 
-  def current_gemspec
-    @gemspec ||= eval(File.read('gemspec'), binding, 'gemspec')
-  end
-
   # @options :file=>:string, :bump_type=>{:default=>'patch', :values=>['major','minor','patch']}
   # Bumps version in a version file and checks in to git
   def bump(options={})
@@ -86,4 +82,16 @@ module Release
   def current_gem
     File.basename Dir.pwd
   end
+
+  # Creates deps.rip from gemspec
+  def deps_rip
+    deps = current_gemspec.dependencies.map {|e| [e.name, e.requirements_list.join(' ').gsub(/\s*/, '')] }
+    File.open('deps.rip', 'w') {|f| f.write deps.map {|e| e.join(' ') }.join("\n") }
+  end
+
+  private
+  def current_gemspec
+    @gemspec ||= eval(File.read('gemspec'), binding, 'gemspec')
+  end
+
 end
