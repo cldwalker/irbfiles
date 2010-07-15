@@ -98,7 +98,7 @@ module Release
 
   private
   def current_gemspec
-    @gemspec ||= eval(File.read('gemspec'), binding, 'gemspec')
+    @gemspec ||= eval(File.read('.gemspec'), binding, '.gemspec')
   end
 
 end
