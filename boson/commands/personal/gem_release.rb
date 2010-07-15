@@ -17,10 +17,13 @@ module GemRelease
     }
   end
 
+  # @options :except=>:string
   # Run tests on multiple versions of ruby
-  def test_all
+  def test_all(options={})
     bacon = File.expand_path '~/.rip/test/bin/bacon'
-    rubies.all? {|k,v|
+    test_rubies = rubies
+    test_rubies = test_rubies.select {|k,v| !k[/#{options[:except]}/] } if options[:except]
+    test_rubies.all? {|k,v|
       puts "Running tests with ruby #{k}"
       cmd = "#{v} #{bacon} -q -I~/.rip/test/lib -Ilib -I. test/*_test.rb"
       system cmd
