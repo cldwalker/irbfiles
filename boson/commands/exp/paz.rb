@@ -22,6 +22,29 @@ module Paz
     projects.each {|e| push(e, options) }
   end
 
+  # @options :all=>:boolean, :pretend=>:boolean
+  # Adds extra line to gemspecs
+  def add_to_gemspec(*args)
+    options = args[-1].is_a?(Hash) ? args.pop : {}
+    project_gemspecs(options).each {|e|
+      body = File.read(e)
+      new_body = body.sub /(\nend\n?)/, "\n  #{args.join(' ')}\\1"
+      options[:pretend] ? puts(new_body) : File.open(e, 'w') {|f| f.write new_body }
+    }
+    nil
+  end
+
+  # @options :all=>:boolean, :pretend=>:boolean
+  # Updates a particular gemspec attribute with sub
+  def sub_gemspec(sattr, find, replace, options={})
+    project_gemspecs(options).each {|e|
+      body = File.read(e)
+      new_body = body.sub /(s\.#{sattr}.*?)#{find}/, "\\1#{replace}"
+      options[:pretend] ? puts(new_body) : File.open(e, 'w') {|f| f.write new_body }
+    }
+    nil
+  end
+
   # @options :all=>:boolean
   # Diff templates against current project
   def diff(options={})
@@ -35,11 +58,10 @@ module Paz
   # @options :all=>:boolean, :reveal=>:boolean
   # Displays project(s) gemspec attribute names that differ from standard
   def attribute_diff(options={})
-    projects = options[:all] ? Paz.projects : ['.']
-    projects.inject([]) {|a,e|
-      local = Paz.gemspec_attributes e+'/gemspec'
+    project_gemspecs(options).inject([]) {|a,e|
+      local = Paz.gemspec_attributes e
       a << {:extras=>Paz.extra_attributes(local, options[:reveal]),
-        :missing=>Paz.standard_attributes - local, :name=>e}
+        :missing=>Paz.standard_attributes - local, :name=>File.dirname(e) }
     }
   end
 
@@ -47,14 +69,18 @@ module Paz
   # Display project(s) gemspec attribute values that differ from standard
   def gemspec_diff(options={})
     attribute_regex = options[:attributes].map {|e| "s\\.#{e}" }.join('\|')
-    projects = options[:all] ? Paz.projects : ['.']
-    projects.inject([]) {|a,e|
-      cmd = "diff #{e}/gemspec #{Paz.gemspec}"
+    project_gemspecs(options).inject([]) {|a,e|
+      cmd = "diff #{e} #{Paz.gemspec}"
       cmd << " |grep '#{attribute_regex}'" unless options[:reveal]
       if !(output = `#{cmd}`).empty?
         puts cmd, output, ""
       end
     }
+  end
+
+  private
+  def project_gemspecs(options)
+    (options[:all] ? Paz.projects : ['.']).map {|e| e+'/.gemspec' }
   end
 
   class <<self
