@@ -83,10 +83,17 @@ module Release
     File.basename Dir.pwd
   end
 
-  # Creates deps.rip from gemspec
-  def deps_rip
-    deps = current_gemspec.dependencies.map {|e| [e.name, e.requirements_list.join(' ').gsub(/\s*/, '')] }
-    File.open('deps.rip', 'w') {|f| f.write deps.map {|e| e.join(' ') }.join("\n") }
+  # @options :dev=>:boolean
+  # Creates deps.rip from gemspec for runtime or dev dependencies
+  def deps_rip(options={})
+    type = options[:dev] ? :development : :runtime
+    file = options[:dev] ? 'test/deps.rip' : 'deps.rip'
+    deps = current_gemspec.dependencies.select {|e| e.type == type }.map {|e|
+      [e.name, e.requirements_list.join(' ').gsub(/\s*/, '')] }
+    if deps.size > 0
+      File.open(file, 'w') {|f| f.write deps.map {|e| e.join(' ') }.join("\n") }
+      file
+    end
   end
 
   private
