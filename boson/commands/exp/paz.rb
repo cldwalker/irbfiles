@@ -12,7 +12,7 @@ module Paz
   # Update current project
   def push(dir='.', options={})
     FileUtils.cp_r Paz.template_dir+'/.', dir , options
-    FileUtils.cp Paz.gemspec, dir, options
+    FileUtils.cp(Paz.gemspec, dir, options) unless File.exists? dir+'/.gemspec'
   end
 
   # @options :verbose=>:boolean, :noop=>:boolean,
