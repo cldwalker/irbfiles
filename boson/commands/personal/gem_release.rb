@@ -1,4 +1,8 @@
 module GemRelease
+  def self.config
+    {:dependencies=>['public/release']}
+  end
+
   #List of ruby versions
   def rubies
     rvm_ruby = File.expand_path "~/.rvm/bin/ruby-"
@@ -48,11 +52,20 @@ module GemRelease
    options = doc_opts[-1].is_a?(Hash) ? doc_opts.pop : {}
    directory = File.exists?("website") ? 'website/doc' : 'doc'
    FileUtils.rm_r(directory) if File.exists?(directory)
-   args = options[:yardoc] ? %w{yardoc --no-private} : %w{rdoc --inline-source --format=html -T hanna}
+   args = if options[:yardoc]
+     args = %w{yardoc --no-private}
+     if !(files = Dir['{CHANGELOG.rdoc,LICENSE.txt}']).empty?
+       args += ['--files', files.join(',')]
+      end
+     args
+   else
+     %w{rdoc --inline-source --format=html -T hanna}
+   end
+   args += (current_gemspec.rdoc_options rescue [])
    args += ['-o', directory]
    args += doc_opts
    args += Dir['lib/**/*.rb']
-   ["README.rdoc", "LICENSE.TXT"].each {|e| args << e if File.exists?(e) }
+   ["README.rdoc", "LICENSE.TXT"].each {|e| args << e if File.exists?(e) } unless options[:yardoc]
    system(*args)
    directory + '/index.html'
   end
