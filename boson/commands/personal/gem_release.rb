@@ -37,6 +37,7 @@ module GemRelease
 
   # Publish pages in website directory to gh-pages branch
   def publish
+    raise "Can't publish if doc/ exists" if File.exists?('doc')
     `git checkout gh-pages`
     FileUtils.cp_r 'website/.', '.'
     `git add doc index.html`
