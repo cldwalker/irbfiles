@@ -5,10 +5,10 @@ module Git
 
   # @render_options :change_fields=>['repo', 'pending'], :sort=>'pending',
   #  :reverse_sort=>true
-  # @options :push=>:boolean
+  # @options :push=>:boolean, :repo=>{:type=>:string, :values=>%w{all gems menu}, :enum=>false}
   # Lists # of commits that haven't been pushed to origin/master
   def pending_commits(options={})
-    pending = Git.repos.map{|e|
+    pending = Git.repos(options).map{|e|
       [e.working_dir, e.log('origin/master..master').size]
     }
     if options[:push] 
@@ -29,9 +29,10 @@ module Git
 
   # @render_options :change_fields=>['repo', 'changed', 'added', 'deleted'], :sort=>'changed',
   #  :reverse_sort=>true
+  # @options :repo=>{:type=>:string, :values=>%w{all gems menu}, :enum=>false}
   # List status of repos
-  def repo_stati
-    Git.repos.map {|e|
+  def repo_stati(options={})
+    Git.repos(options).map {|e|
       status = e.status
       [File.basename(e.working_dir), status.changed.size, status.added.size, status.deleted.size]
     }
@@ -58,18 +59,22 @@ module Git
   end
 
   class<<self
-    def repo_hash
+    def repo_hash(options={})
       @repo_hash ||= begin
+        @options = {:repo=>'all'}.merge options
         dirs.inject({}) {|a,e| a[File.basename(e)] = Grit::Repo.new(e); a }
       end
     end
 
-    def repos
-      repo_hash.values
+    def repos(options={})
+      repo_hash(options).values
     end
 
     def dirs
-      Dir[File.expand_path('~/code/{gems,repo}/*/.git')].map {|e| e.gsub('/.git','') }
+      repo_dirs = %w{all menu}.include?(@options[:repo]) ? 'gems,repo' : @options[:repo]
+      repo_dirs = Dir[File.expand_path("~/code/{#{repo_dirs}}/*/.git")].map {|e| e.gsub('/.git','') }
+      repo_dirs = Boson.invoke(:menu, repo_dirs) if @options[:repo] == 'menu'
+      repo_dirs
     end
   end
 end
