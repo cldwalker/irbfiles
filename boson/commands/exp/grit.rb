@@ -30,11 +30,20 @@ module Git
   # @render_options :change_fields=>['repo', 'changed', 'added', 'deleted'], :sort=>'changed',
   #  :reverse_sort=>true
   # @options :repo=>{:type=>:string, :values=>%w{all gems menu}, :enum=>false}
-  # List status of repos
-  def repo_stati(options={})
+  # List status of repos. Buggy grit results
+  def repo_stati_old(options={})
     Git.repos(options).map {|e|
       status = e.status
       [File.basename(e.working_dir), status.changed.size, status.added.size, status.deleted.size]
+    }
+  end
+
+  # @options :repo=>{:type=>:string, :values=>%w{all gems menu}, :enum=>false}
+  # List status of repos
+  def repo_stati(options={})
+    Git.dirs(options).map {|e|
+      Dir.chdir e
+      [File.basename(e), `git status -s`.split("\n").size]
     }
   end
 
@@ -61,8 +70,7 @@ module Git
   class<<self
     def repo_hash(options={})
       @repo_hash ||= begin
-        @options = {:repo=>'all'}.merge options
-        dirs.inject({}) {|a,e| a[File.basename(e)] = Grit::Repo.new(e); a }
+        dirs(options).inject({}) {|a,e| a[File.basename(e)] = Grit::Repo.new(e); a }
       end
     end
 
@@ -70,7 +78,8 @@ module Git
       repo_hash(options).values
     end
 
-    def dirs
+    def dirs(options={})
+      @options = {:repo=>'all'}.merge options
       repo_dirs = %w{all menu}.include?(@options[:repo]) ? 'gems,repo' : @options[:repo]
       repo_dirs = Dir[File.expand_path("~/code/{#{repo_dirs}}/*/.git")].map {|e| e.gsub('/.git','') }
       repo_dirs = Boson.invoke(:menu, repo_dirs) if @options[:repo] == 'menu'
