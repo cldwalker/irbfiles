@@ -1,5 +1,7 @@
 module Gemcutter
-  FIELDS = %w{name authors version_downloads info project_uri gem_uri version downloads dependencies}
+  FIELDS = %w{name authors version_downloads info project_uri gem_uri version
+    downloads dependencies homepage_uri source_code_uri bug_tracker_uri wiki_uri
+    documentation_uri mailing_list_uri}
   def self.included(mod)
     require 'json'
     require 'cgi'
@@ -30,9 +32,11 @@ module Gemcutter
     }
   end
 
-  # @render_options :fields=>{:values=>FIELDS, :default=>%w{name downloads info authors}},
-  #  :filters=>{:default=>{'dependencies'=>:inspect}}, :max_fields=>{:default=>{'authors'=>0.15}}
+  # @render_options :fields=>{:values=>FIELDS, :default=>%w{name downloads info authors homepage_uri}},
+  #  :filters=>{:default=>{'dependencies'=>:inspect}}, :max_fields=>{:default=>{'authors'=>0.15,
+  #  'homepage_uri'=>0.10}}
   # @options :page=>{:default=>1, :desc=>'page number'}
+  # @config :menu=>{:command=>:browser, :default_field=>'homepage_uri'}
   # Search gemcutter
   def gem_search(*query)
     options = query[-1].is_a?(Hash) ? query.pop : {}
