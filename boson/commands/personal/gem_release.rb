@@ -3,6 +3,29 @@ module GemRelease
     {:dependencies=>['public/release']}
   end
 
+  # Checklist to run before releasing a gem
+  def pre_release
+    raise "Repo not clean" if !`git status -s`.empty?
+    puts "Update deps.rip..."
+    deps_rip
+    deps_rip :dev=>true
+    system "git commit -m 'Updated deps.rip' ." if !`git status -s`.empty?
+
+    puts "Checking gemspec files that haven't been committed..."
+    if !(files = manifest).empty?
+      raise files.inspect
+    end
+    puts "Checking committed files that aren't in gemspec..."
+    if !(files = manifest(:reverse=>true)).empty?
+      raise files.inspect
+    end
+
+    if File.directory?('test')
+      puts "Run tests..."
+      test_all
+    end
+  end
+
   #List of ruby versions
   def rubies
     rvm_ruby = File.expand_path "~/.rvm/bin/ruby-"

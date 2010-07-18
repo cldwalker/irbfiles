@@ -1,8 +1,4 @@
 module Release
-  def self.config
-    {:dependencies=>['public/rake']}
-  end
-
   # @options :rubygem=>'', :version=>:numeric
   # Releases gem
   def release(options={})
@@ -10,7 +6,7 @@ module Release
     options[:version] ||= version
     system "git push origin master"
     tag_release(options[:version])
-    rake('gem')
+    system 'rake gem'
     system "gem push pkg/#{options[:rubygem]}-#{options[:version]}.gem"
   end
 
