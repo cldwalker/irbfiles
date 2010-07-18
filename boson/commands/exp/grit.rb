@@ -69,7 +69,7 @@ module Git
     end
 
     def dirs
-      Dir.glob('/home/bozo/code/{gems,repo}/*/.git').map {|e| e.gsub('/.git','') }
+      Dir[File.expand_path('~/code/{gems,repo}/*/.git')].map {|e| e.gsub('/.git','') }
     end
   end
 end
