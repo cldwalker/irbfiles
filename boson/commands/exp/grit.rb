@@ -49,6 +49,18 @@ module Git
     }
   end
 
+  # @render_options :render=>true
+  # @options :repo=>{:type=>:string, :values=>%w{all gems menu}, :enum=>false},
+  #   :message=>{:type=>:string, :required=>true}, :directories=>:array
+  # Commit repos in given directories with same message
+  def commit_repos(options={})
+    dirs = options[:directories] || (options[:repo] ? Git.dirs(options) : ['.'])
+    dirs.each {|e|
+      Dir.chdir e
+      system *%W[git commit -m #{options[:message]} .]
+    }
+  end
+
   # Push given repos to origin/master
   def push_repos(*repos)
     repos.each do |e|
