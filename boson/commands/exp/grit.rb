@@ -31,19 +31,21 @@ module Git
   #  :reverse_sort=>true
   # @options :repo=>{:type=>:string, :values=>%w{all gems menu}, :enum=>false}
   # List status of repos. Buggy grit results
-  def repo_stati_old(options={})
+  def buggy_repo_stati(options={})
     Git.repos(options).map {|e|
       status = e.status
       [File.basename(e.working_dir), status.changed.size, status.added.size, status.deleted.size]
     }
   end
 
-  # @options :repo=>{:type=>:string, :values=>%w{all gems menu}, :enum=>false}
+  # @options :repo=>{:type=>:string, :values=>%w{all gems menu}, :enum=>false}, :expand=>:boolean
   # List status of repos
   def repo_stati(options={})
     Git.dirs(options).map {|e|
       Dir.chdir e
-      [File.basename(e), `git status -s`.split("\n").size]
+      status = `git status -s`.split("\n")
+      status = status.size unless options[:expand]
+      [File.basename(e), status]
     }
   end
 
