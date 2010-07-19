@@ -35,12 +35,13 @@ module Paz
     nil
   end
 
-  # @options :all=>:boolean, :pretend=>:boolean
-  # Updates a particular gemspec attribute with sub
-  def sub_gemspec(sattr, find, replace, options={})
+  # @options :all=>:boolean, :pretend=>:boolean, :replace=>{:type=>:string, :bool_default=>true}
+  # Updates a particular gemspec attribute's value
+  def edit_gemspec(sattr, new_text, options={})
     project_gemspecs(options).each {|e|
       body = File.read(e)
-      new_body = body.sub /(s\.#{sattr}.*?)#{find}/, "\\1#{replace}"
+      new_body = options[:replace] == true ? body.sub(/(s\.#{sattr}\s*=?\s*).*?\n/, "\\1#{new_text}\n") :
+        body.sub(/(s\.#{sattr}.*?)#{options[:replace]}/, "\\1#{new_text}")
       options[:pretend] ? puts(new_body) : File.open(e, 'w') {|f| f.write new_body }
     }
     nil

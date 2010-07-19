@@ -1,12 +1,15 @@
 module GemRelease
   def self.config
-    {:dependencies=>['public/release']}
+    {:dependencies=>['public/release', 'exp/paz', 'exp/readme']}
   end
 
   # Checklist to run before releasing a gem
   def pre_release
     raise "Repo not clean" if !`git status -s`.empty?
-    puts "Update deps.rip..."
+    puts "Sync description from readme to gemspec..."
+    sync_description
+
+    puts "Check deps.rip..."
     deps_rip
     deps_rip :dev=>true
     system "git commit -m 'Updated deps.rip' ." if !`git status -s`.empty?
@@ -23,6 +26,20 @@ module GemRelease
     if File.directory?('test')
       puts "Run tests..."
       test_all
+    end
+  end
+
+  # @options :commit=>:boolean
+  # Syncs gemspec description to readme's desc
+  def sync_description(options={})
+    desc = readme_description
+    desc = desc.include?('"') ? "%[#{desc}]" : %["#{desc}"]
+    z.edit_gemspec('description', desc, :replace=>true)
+    system 'rake -s gemspec'
+    if $?.success?
+      system "git commit 'Updated gemspec description from readme' ." if options[:commit]
+    else
+      raise "Failed to create valid gemspec with new description"
     end
   end
 
