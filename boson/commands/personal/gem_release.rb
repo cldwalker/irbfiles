@@ -7,7 +7,7 @@ module GemRelease
   def pre_release
     raise "Repo not clean" if !`git status -s`.empty?
     puts "Sync description from readme to gemspec..."
-    sync_description
+    sync_description(:commit=>true)
 
     puts "Check deps.rip..."
     deps_rip
@@ -33,6 +33,7 @@ module GemRelease
   # Syncs gemspec description to readme's desc
   def sync_description(options={})
     desc = readme_description
+    return if current_gemspec.description == desc
     desc = desc.include?('"') ? "%[#{desc}]" : %["#{desc}"]
     z.edit_gemspec('description', desc, :replace=>true)
     system 'rake -s gemspec'
