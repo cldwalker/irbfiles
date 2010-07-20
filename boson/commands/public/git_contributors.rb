@@ -4,8 +4,10 @@ module GitContributors
     def htmlize; gsub("&", "&amp;").gsub("<", "&lt;").gsub(">", "&gt;") end
   end
     
-  def git_contributors(argv=[])
-    Object.const_set :ARGV, argv
+  # @render_options :change_fields=>[:authors, :diffs]
+  # @options :obfuscate=>:boolean, :htmlize=>:boolean
+  # List git contributors by diff size using log
+  def git_contributors(options={})
     ::String.send :include, String
     
     # Originally from http://git-wt-commit.rubyforge.org/git-rank-contributors
@@ -34,9 +36,8 @@ module GitContributors
     ##   http://www.gnu.org/licenses/
     
     lines = {}
-    verbose = ARGV.delete("-v")
-    obfuscate = ARGV.delete("-o")
-    htmlize = ARGV.delete("-h")
+    obfuscate = options[:obfuscate]
+    htmlize = options[:htmlize]
     
     author = nil
     state = :pre_author
@@ -55,14 +56,10 @@ module GitContributors
       end
     end
     
-    lines.sort_by { |a, c| -c }.each do |a, c|
+    lines.sort_by { |a, c| -c }.map do |a, c|
       a = a.obfuscate if obfuscate
       a = a.htmlize if htmlize
-      if verbose
-        puts "#{a}: #{c} lines of diff"
-      else
-        puts a
-      end
+      [a,c]
     end
   
   end
