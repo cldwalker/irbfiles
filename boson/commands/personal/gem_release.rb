@@ -29,6 +29,27 @@ module GemRelease
     end
   end
 
+  # @options :yardoc=>:boolean
+  # Tasks to perform after a release
+  def post_release(options={})
+    if File.exists?('website')
+      if File.exists?('website/doc')
+        if options[:yardoc] || File.exists?('website/doc/method_list.html')
+          puts "Generating yardoc documentation..."
+          doc :yardoc=>true
+        else
+          puts "Generating rdoc documentation..."
+          doc
+        end
+      end
+
+      puts "Creating website..."
+      website
+      puts "Publishing website..."
+      publish
+    end
+  end
+
   # @options :commit=>:boolean
   # Syncs gemspec description to readme's desc
   def sync_description(options={})
@@ -89,8 +110,8 @@ module GemRelease
   end
 
   # @options :yardoc=>:boolean
-  # Create rdoc with hanna
-  def rdoc(*doc_opts)
+  # Create documentation with rdoc or yard
+  def doc(*doc_opts)
    options = doc_opts[-1].is_a?(Hash) ? doc_opts.pop : {}
    directory = File.exists?("website") ? 'website/doc' : 'doc'
    FileUtils.rm_r(directory) if File.exists?(directory)
@@ -101,7 +122,7 @@ module GemRelease
       end
      args
    else
-     %w{rdoc --inline-source --format=html -T hanna}
+     %w{rdoc} # -T hanna}
    end
    args += (current_gemspec.rdoc_options rescue [])
    args += ['-o', directory]

@@ -1,9 +1,10 @@
 --- 
 has_machine_tags: 43fe7d7ddfd2bd17595c7665c635fb9dd3a0301a
-bond: 9b38a08a0d155b5d4b3defc3e16ad93128686f78
+bond: 5fac9b1d5bbd258ea6a2f8ced1848dd84b4712c6
 local_gem: 43fe7d7ddfd2bd17595c7665c635fb9dd3a0301a
-hirb: 9b38a08a0d155b5d4b3defc3e16ad93128686f78
+hirb: 5fac9b1d5bbd258ea6a2f8ced1848dd84b4712c6
+bacon-bits: 5fac9b1d5bbd258ea6a2f8ced1848dd84b4712c6
 boson: 9b38a08a0d155b5d4b3defc3e16ad93128686f78
 console_update: 43fe7d7ddfd2bd17595c7665c635fb9dd3a0301a
-machinetag.js: cb1c52d6227bf3c8f368ccf4f47d6e381841c9bd
 lightning: 9b38a08a0d155b5d4b3defc3e16ad93128686f78
+machinetag.js: cb1c52d6227bf3c8f368ccf4f47d6e381841c9bd
