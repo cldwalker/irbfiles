@@ -103,16 +103,22 @@ module MyPages
   def extract_description
     File.read(Dir.pwd + "/README.rdoc") =~ /==\s*Description(.*?)==/m if File.exists?("README.rdoc")
     if ($1)
-      require 'rdoc/markup/to_html'
-      rdoc_string = $1.gsub(/\n+/, ' ')
-      RDoc::Markup::ToHtml.new.convert(rdoc_string)
+      $1.gsub(/\n+/, ' ')
     else
       ''
     end
   end
 
+  def rdoc_to_html(string)
+    string.gsub(/_(\w+)_/, '<i>\1</i>').gsub(/\{([^}]+)\}\[([^\]]+)\]/, '<a href="\2">\1</a>')
+  end
+
+  def rdoc_to_text(string)
+    string.gsub(/_(\w+)_/, '\1').gsub(/\{([^}]+)\}\[([^\]]+)\]/, '\1')
+  end
+
   def create_web_page(config)
-    body = super
+    body = super(config.merge(:description=>rdoc_to_html(config[:description])))
     layout_file = File.read('/Users/bozo/code/repo/cldwalker.github.com/_layouts/master.html')
     page_string = layout_file.gsub('{{ content }}', body).gsub('{{ page.title }}',
       config[:repo]).gsub("{% include meta_seo.html %}", seo_string(config))
@@ -122,7 +128,7 @@ module MyPages
   def seo_string(config)
     %[
       <meta name="keywords" content="#{config[:keywords]}" />
-      <meta name="description" content="#{config[:description][0,160]}" />
+      <meta name="description" content="#{rdoc_to_text(config[:description][0,197])}..." />
     ]
   end
 end
