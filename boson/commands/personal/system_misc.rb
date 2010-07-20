@@ -40,6 +40,23 @@ module SystemMisc
     end
   end
 
+  # @options :private=>:boolean
+  # Creates remote github repo from local git repo. Copied from github gem
+  def github_local_create(options={})
+    repo = File.basename(Dir.pwd)
+    is_repo = !`git status`[/fatal/]
+    raise "Not a git repository. Use gh create instead" unless is_repo
+    github_user = `git config --get github.user`.chomp
+    github_token = `git config --get github.token`.chomp
+    created = `curl -F 'repository[name]=#{repo}' -F 'repository[public]=#{!options[:private].inspect}' -F 'login=#{github_user}' -F 'token=#{github_token}' http://github.com/repositories`
+    if created =~ %r{You are being <a href="http://github.com/#{github_user}/([^"]+)"}
+      system "git remote add origin git@github.com:#{github_user}/#{$1}.git"
+      exec "git push origin master"
+    else
+      abort "Error creating repository"
+    end
+  end
+
   # Wrapper around `hub fork`
   def github_fork(user_repo, fork_dir='~/code/fork')
     Dir.chdir File.expand_path(fork_dir)
