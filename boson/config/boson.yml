@@ -8,7 +8,6 @@
 - public/plugins/menu_pipe
 - exp/plugins/my_pipe_options
 - personal/hirb
-- personal/rubygems
 :bin_defaults:
 - exp/plugins/current_option_command
 - exp/plugins/url_libraries
