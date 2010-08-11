@@ -27,10 +27,18 @@ module RdfLib
     ENDPOINTS
   end
 
-  # @options :type=>{:default=>'classes', :values=>%w{classes objects resource predicates subjects all} },
-  #   :endpoint=>{:values=> ENDPOINTS.keys, :enum=>false, :default=>'http://api.talis.com/stores/space/services/sparql'},
-  #   :limit=>:numeric, :offset=>:numeric, :abbreviate=>:boolean, :return_sparql=>:boolean, :prefix=>:boolean,
-  #   :sparql=>{:bool_default=>true, :type=>:string, :values=>%w{graphs select}}, :filters=>:hash,
+  # @option :type, :default=>'classes', :desc=>'Executes a predefined query type',
+  #   :values=>%w{classes objects resource predicates subjects all}
+  # @option :limit, :type=>:numeric, :desc=>'Adds limit to query'
+  # @option :offset, :type=>:numeric, :desc=>'Adds offset to query'
+  # @option :filters, :type=>:hash, :desc=>'Takes variable names and adds regex filters on them'
+  # @option :sparql, :type=>:string, :desc=>'Specify a predefined query or allow raw sparql',
+  #   :values=>%w{graphs select}, :bool_default=>true
+  # @option :abbreviate, :type=>:boolean, :desc=>'Abbreviates uris'
+  # @option :endpoint, :desc=>'Endpoint to query', :values=> ENDPOINTS.keys, :enum=>false,
+  #   :default=>'http://api.talis.com/stores/space/services/sparql'
+  # @option :return_sparql, :type=>:boolean, :desc=>'Prints sparql that would be executed'
+  # @option :prefix, :type=>:boolean, :desc=>'Adds prefixes to query'
   # @render_options {}
   # Query and explore a sparql endpoint
   def sparql(*args)
