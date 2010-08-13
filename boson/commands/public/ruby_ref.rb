@@ -3,7 +3,7 @@ module RubyRef
   # @render_options :change_fields=>['variable', 'value']
   # Prints global variables and their values
   def global_var
-    global_variables.sort.map {|e| [e, (eval e).inspect] }
+    global_variables.sort.map {|e| [e, ((eval e.to_s).inspect rescue "*eval error*")] }
   end
 
   # @config :default_option=>'query'
@@ -13,8 +13,9 @@ module RubyRef
     hash = {}
     $".each {|file|
       $:.each {|dir|
-        if test(?e, File.join(dir, file))
-          hash[file] = File.join(dir, file)
+        full_file = file[/^\//] ? file : File.join(dir, file)
+        if test(?e, full_file)
+          hash[file] = full_file
           break
         end
       }
