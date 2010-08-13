@@ -1,6 +1,7 @@
 module GemBrain
   def self.included(mod)
     require 'yaml'
+    require 'rubygems'
   end
 
   def self.config
@@ -50,7 +51,7 @@ module GemBrain
   end
 
   # Version of currently loaded gem starting with name
-  def _version(rubygem)
+  def version(rubygem)
     (spec = Gem.loaded_specs.values.find {|e| e.name =~ /(-|^)#{rubygem}/ }) &&
       spec.version.to_s
   end
