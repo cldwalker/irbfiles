@@ -17,13 +17,13 @@ module GithubUrl
     options[:gist] ? "http://gist.github.com/#{user}" : "http://github.com/#{user}"
   end
 
-  # @options :user=>{:default=>'cldwalker', :desc=>'Github user'},
-  #  :file=>{:type=>:string, :desc=>'Relative file path within repository'},
-  #  :commit=>{:type=>:string, :desc=>'Commit page'},
-  #  :issue=>{:type=>:string, :desc=>'Issue page'},
-  #  :tree=>{:type=>:string, :desc=>'Tree page'},
-  #  :subpage=>{:type=>:string, :values=>%w{readme wiki issues network commits traffic punch_card timeline edit branches},
-  #    :enum=>false, :desc=>'Subpage belonging to repo', :bool_default=>'readme' }
+  # @option :user, :default=>'cldwalker', :desc=>'Github user'
+  # @option :file, :type=>:string, :desc=>'Relative file path within repository'
+  # @option :commit, :type=>:string, :desc=>'Commit page'
+  # @option :issue, :type=>:string, :desc=>'Issue page'
+  # @option :tree, :type=>:string, :desc=>'Tree page'
+  # @option :subpage, :type=>:string, :values=>%w{readme wiki issues network commits traffic punch_card timeline edit branches},
+  #    :enum=>false, :desc=>'Subpage belonging to repo', :bool_default=>'readme'
   # Opens a repo page or a subpage i.e. commit, tree, file in a browser
   def repo(user_repo=nil, options={})
     if user_repo.nil?
@@ -54,8 +54,9 @@ module GithubUrl
     repo_url
   end
 
-  # @options :user=>{:default=>'cldwalker', :desc=>'Github user'},
-  #  :start=>'master', :end=>'master'
+  # @option :user, :default=>'cldwalker', :desc=>'Github user'
+  # @option :start, :default=>'master', :desc=>'Starting branch/commit/tag'
+  # @option :end, :default=>'master', :desc=>'Ending branch/commit/tag'
   # Compare repos by branch or commit
   def repo_compare(user_repo, options={})
     user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']

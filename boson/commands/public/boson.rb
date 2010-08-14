@@ -7,11 +7,12 @@ module BosonLib
   #  [:command, :L]=>{:type=>:string, :desc=>'Edit boson command' }
   # Edit a file or string, boson's main config file or a boson library file
   def edit(options={})
-    options[:editor] ||= ENV['EDITOR']
+    editor = options[:editor] ? options[:editor].dup : ENV['EDITOR']
     file = if options[:library]
       Boson::FileLibrary.library_file(options[:library], Boson.repo.dir)
     elsif options[:command]
       Boson::Index.read
+      editor << " -c '/def \\(#{options[:command]}\\)\\?'" if editor[/^vim/]
       (lib = Boson.library Boson::Runner.autoload_command(options[:command])) &&
       lib.lib_file
     elsif options[:config]
@@ -23,7 +24,7 @@ module BosonLib
       end
     end
     File.open(file,'w') {|f| f.write(options[:string]) } if options[:string]
-    system(options[:editor], file || '')
+    system("#{editor} #{file}")
     File.open(file) {|f| f.read } if File.exists?(file) && options[:string]
   end
 

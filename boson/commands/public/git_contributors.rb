@@ -5,7 +5,8 @@ module GitContributors
   end
     
   # @render_options :change_fields=>[:authors, :diffs]
-  # @options :obfuscate=>:boolean, :htmlize=>:boolean
+  # @option :obfuscate, :type=>:boolean, :desc=>"Obfuscates emails"
+  # @option :htmlize, :type=>:boolean, :desc=>"Render as html"
   # List git contributors by diff size using log
   def git_contributors(options={})
     ::String.send :include, String

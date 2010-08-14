@@ -216,10 +216,6 @@
       - post
       - put
       - delete
-  unroller:
-    :object_methods: false
-    :class_commands:
-      trace: Unroller.trace
   local_gem:
     :class_commands:
       LocalGem:
