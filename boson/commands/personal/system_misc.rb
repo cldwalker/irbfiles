@@ -69,18 +69,6 @@ module SystemMisc
     end
   end
 
-  def clonable_url_and_name(repo_url)
-    if repo_url[/^\d+$/]
-      ["git://gist.github.com/#{repo_url}.git", "gist-#{repo_url}"]
-    elsif (id = repo_url[/gist.github.com\/(\d+)$/, 1])
-      ["git://gist.github.com/#{id}.git", "gist-#{id}"]
-    else
-      user, repo = /github.com\/([^\/]+)\/([^\/]+)/.match(repo_url)[1,2]
-      return  puts("Couldn't match user or repo from repo_url") if user.nil? || repo.nil?
-      ["git://github.com/#{user}/#{repo}.git", repo]
-    end
-  end
-
   # Delete backup files left by text editors
   def delete_backups
     backups = Dir.glob('**/*~')
@@ -89,6 +77,7 @@ module SystemMisc
     end
   end
 
+  # Renames chosen file to given name
   def rename_file(name, dir='.')
     menu(Dir.entries(dir)) {|chosen| chosen.each {|e| File.rename(e, name) } }
   end
@@ -113,6 +102,19 @@ module SystemMisc
       menu(dirs).each {|e| FileUtils.rm_r e }
     else
       dirs
+    end
+  end
+
+  private
+  def clonable_url_and_name(repo_url)
+    if repo_url[/^\d+$/]
+      ["git://gist.github.com/#{repo_url}.git", "gist-#{repo_url}"]
+    elsif (id = repo_url[/gist.github.com\/(\d+)$/, 1])
+      ["git://gist.github.com/#{id}.git", "gist-#{id}"]
+    else
+      user, repo = /github.com\/([^\/]+)\/([^\/]+)/.match(repo_url)[1,2]
+      return  puts("Couldn't match user or repo from repo_url") if user.nil? || repo.nil?
+      ["git://github.com/#{user}/#{repo}.git", repo]
     end
   end
 end

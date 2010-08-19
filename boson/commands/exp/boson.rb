@@ -77,6 +77,13 @@ module BosonLib
     filename
   end
 
+  # @config :alias=>'gc'
+  # Grep in commands
+  def grep_commands(*args)
+    args = ['grep', '-r'] + args + [Boson.repo.commands_dir]
+    system *args
+  end
+
   # Tells you what methods in current binding aren't boson commands.
   def undetected_methods(priv=false)
     public_undetected = metaclass.instance_methods - (Kernel.instance_methods + Object.instance_methods(false) + MyCore::Object::InstanceMethods.instance_methods +
