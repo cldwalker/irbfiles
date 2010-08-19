@@ -1,6 +1,6 @@
 module RailsLib
   def self.append_features(mod)
-    super if ENV['RAILS_ENV']
+    super if defined? Rails
   end
 
   def self.after_included
@@ -10,6 +10,6 @@ module RailsLib
   def self.setup_personal(*args)
     Alias.create :file=>"~/.alias/rails.yml"
     require 'console_update'
-    ConsoleUpdate.enable_named_scope
+    ConsoleUpdate.enable_named_scope unless Rails.version >= '3.0'
   end
 end

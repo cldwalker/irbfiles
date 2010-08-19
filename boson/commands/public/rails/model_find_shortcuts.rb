@@ -1,6 +1,6 @@
 module ModelFindShortcuts
   def self.append_features(mod)
-    super if ENV['RAILS_ENV']
+    super if defined? Rails
   end
 
   #from http://www.clarkware.com/cgi/blosxom/2007/09/03#ConsoleFindShortcut

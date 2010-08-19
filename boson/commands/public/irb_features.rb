@@ -43,10 +43,10 @@ module IrbFeatures
 
     def load_railsrc
       #global railsrc
-      load "#{ENV['HOME']}/.railsrc" if ENV['RAILS_ENV'] && File.exists?("#{ENV['HOME']}/.railsrc")
+      load "#{ENV['HOME']}/.railsrc" if defined?(Rails) && File.exists?("#{ENV['HOME']}/.railsrc")
 
       #local railsrc
-      load File.join(ENV['PWD'], '.railsrc') if ENV['RAILS_ENV'] && File.exists?(File.join(ENV['PWD'], '.railsrc'))
+      load File.join(ENV['PWD'], '.railsrc') if defined?(Rails) && File.exists?(File.join(ENV['PWD'], '.railsrc'))
     end
   end
 

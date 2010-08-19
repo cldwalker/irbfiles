@@ -1,6 +1,6 @@
 module RailsCore
   def self.append_features(mod)
-    super if ENV['RAILS_ENV']
+    super if defined? Rails
   end
 
   def self.config
@@ -13,10 +13,13 @@ module RailsCore
     {:commands=>commands}
   end
 
-  # Add route methods *_url and *_path as commands
-  def add_routes
-    extend ActionController::UrlWriter
-    default_url_options[:host] = 'example.com'
+
+  if (Rails.version < '3.0' rescue nil)
+    # Add route methods *_url and *_path as commands
+    def add_routes
+      extend ActionController::UrlWriter
+      default_url_options[:host] = 'example.com'
+    end
   end
 
   # Execute sql query
