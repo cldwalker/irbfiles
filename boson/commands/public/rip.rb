@@ -132,6 +132,11 @@ module RipLib
     Dir[Rip.dir+'/**/*/**/*.bundle']
   end
 
+  # Prints current ruby md5
+  def ruby_md5
+    Rip.md5 Rip.ruby
+  end
+
   # @options :delete=>:boolean, :non_standard=>:boolean
   # Checks for broken or nonstandard symlinks
   def rip_symlinks(*files)
