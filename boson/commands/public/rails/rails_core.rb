@@ -36,4 +36,22 @@ module RailsCore
   def schema_dump
     ActiveRecord::SchemaDumper.dump ActiveRecord::Base.connection
   end
+
+  # List model constants
+  def models
+    tables.map {|e| e.classify.constantize rescue nil }.compact
+  end
+
+  # @render_options :fields=>[:model, :count]
+  # List models and their database counts
+  def model_counts
+    models.map {|e| [e, e.count] }
+  end
+
+  # @render_options :fields=>[:name, :type, :null, :default]
+  # List a model's column details
+  def table_columns(model)
+    model = model.classify.constantize if model.is_a?(String)
+    model.columns
+  end
 end

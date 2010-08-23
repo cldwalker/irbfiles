@@ -11,5 +11,10 @@ module RailsLib
     Alias.create :file=>"~/.alias/rails.yml"
     require 'console_update'
     ConsoleUpdate.enable_named_scope unless Rails.version >= '3.0'
+    minimal_active_record_inspect if defined? ActiveRecord::Base
+  end
+
+  def self.minimal_active_record_inspect
+    ActiveRecord::Base.class_eval %[def self.inspect; to_s; end ]
   end
 end
