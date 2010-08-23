@@ -1,6 +1,6 @@
 module RailsLib
   def self.append_features(mod)
-    super if defined? Rails
+    super if ENV['RAILS_ENV'] || defined? Rails
   end
 
   def self.after_included

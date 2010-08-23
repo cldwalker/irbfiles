@@ -5,7 +5,7 @@ module RipExt
   end
 
   def self.config
-    {:namespace=>'e'}
+    {:namespace=>'ex'}
   end
 
   # Prints all extensions
