@@ -50,8 +50,29 @@ module RailsCore
 
   # @render_options :fields=>[:name, :type, :null, :default]
   # List a model's column details
-  def table_columns(model)
-    model = model.classify.constantize if model.is_a?(String)
-    model.columns
+  def model_columns(model)
+    filter_model(model).columns
+  end
+
+  # @render_options :fields=>[:name, :macro, :options]
+  # List a model's relationships
+  def model_relationships(model)
+    filter_model(model).reflections.values
+  end
+
+  # List tables
+  def tables
+    ActiveRecord::Base.connection.tables
+  end
+
+  private
+  def filter_model(str)
+    return str unless str.is_a?(String)
+    str = tables.find {|e| e[/^#{str}/i] } || str unless tables.include?(str)
+    begin
+      str.classify.constantize
+    rescue NameError
+      raise "Unable to find model for '#{str}'"
+    end
   end
 end

@@ -168,7 +168,6 @@
       recognize_path: ActionController::Routing::Routes.recognize_path
       generate: ActionController::Routing::Routes.generate
       db_version: ActiveRecord::Migrator.current_version
-      tables: ActiveRecord::Base.connection.tables
   exp/delicious:
     :dependencies:
     - exp/plugins/object_namespace
