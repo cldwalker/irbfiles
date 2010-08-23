@@ -246,6 +246,11 @@ module RipLib
     nil
   end
 
+  # List active ripenvs
+  def rip_active_envs
+    ENV['RUBYLIB'].to_s.split(":").map {|e| e[/^#{Rip.dir}\/([^\/]+)\/lib/, 1] }.compact - ['active']
+  end
+
   private
   def dirty_lib_exception(path, namespace)
     exceptions = %w{rubygems rubygems_plugin.rb autotest tasks}
