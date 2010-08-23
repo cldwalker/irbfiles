@@ -77,10 +77,13 @@ module BosonLib
     filename
   end
 
-  # @config :alias=>'gc'
+  # @config :alias=>'gb'
+  # @options :config=>:boolean
   # Grep in commands
-  def grep_commands(*args)
-    args = ['grep', '-r'] + args + [Boson.repo.commands_dir]
+  def grep_boson_repo(*args)
+    options = args[-1].is_a?(Hash) ? args.pop : {}
+    dirs = [options[:config] ? Boson.repo.config_dir : Boson.repo.commands_dir]
+    args = ['grep', '-r'] + args + dirs
     system *args
   end
 
