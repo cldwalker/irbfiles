@@ -71,33 +71,6 @@ module RipLib
     }
   end
 
-  # Restores all rip envs to state saved by rip_dump directory
-  def rip_restore(dir='~/.rip_envs')
-    Dir.glob(File.expand_path(dir)+"/*").each {|f|
-      ENV['RIPENV'] = File.basename(f).sub('.rip', '')
-      system 'rip','install', '-o', f
-    }
-  end
-
-  # @options :diff=>:boolean, :dir=>'~/.rip_envs'
-  # Backs up all rip envs into a directory
-  def rip_dump(options={})
-    dir = File.expand_path(options[:dir])
-    original_dir = dir.dup
-    dir = '/tmp/rip_dump_diff' if options[:diff]
-    require 'fileutils'
-    FileUtils.rm_f Dir.glob(dir+"/*")
-    FileUtils.mkdir_p dir
-
-    envs = Rip.envs.each {|e|
-      ENV['RIPENV'] = e
-      File.open("#{dir}/#{e}.rip", 'w') {|f|
-        f.write `rip list -p`
-      }
-    }
-    options[:diff] ? system("diff", "-r", original_dir, dir) : envs
-  end
-
   # @options :dir=>:boolean, :strict=>:boolean, :exceptions=>:boolean
   # Prints dirty files in lib/ of rip envs i.e. ones that don't match any package namespace
   def rip_dirty_lib(options={})
@@ -226,13 +199,6 @@ module RipLib
     }
   end
 
-  # Moves env to a new name
-  def rip_mv(old, new)
-    system 'rip', 'env', old
-    system 'rip', 'env', '-b', new
-    system 'rip', 'env', '-d', old
-  end
-
   # Finds rip package and returns package directory name
   def find_package(pkg)
     setup_helpers
@@ -244,11 +210,6 @@ module RipLib
       }
     }
     nil
-  end
-
-  # List active ripenvs
-  def rip_active_envs
-    ENV['RUBYLIB'].to_s.split(":").map {|e| e[/^#{Rip.dir}\/([^\/]+)\/lib/, 1] }.compact - ['active']
   end
 
   private
