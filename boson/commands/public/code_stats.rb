@@ -2,7 +2,6 @@ module CodeStats
   # @render_options :change_fields=>%w{field value}
   # Displays code stats for a ruby directory: method count, loc, class count
   def code_stats(dir='lib')
-    gem 'rails'
     require 'code_statistics'
     CodeStatistics.new([dir]).instance_variable_get("@statistics")[dir]
   end
