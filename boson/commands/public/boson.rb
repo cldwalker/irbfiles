@@ -68,4 +68,8 @@ module BosonLib
     }
     "'#{command}' aliased to '#{command_alias}'"
   end
+
+  def men(*args)
+    menu args, :reopen=>true
+  end
 end

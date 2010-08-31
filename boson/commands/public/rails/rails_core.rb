@@ -42,7 +42,7 @@ module RailsCore
     tables.map {|e| e.classify.constantize rescue nil }.compact
   end
 
-  # @render_options :fields=>[:model, :count]
+  # @render_options :change_fields=>[:model, :count]
   # List models and their database counts
   def model_counts
     models.map {|e| [e, e.count] }

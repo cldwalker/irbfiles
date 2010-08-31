@@ -35,6 +35,11 @@ module MiscUrl
     build_url url, :query=>query, :limit=>options[:limit]
   end
 
+  # Open gem doc
+  def yardoc(rubygem)
+    "http://rdoc.info/gems/#{rubygem}"
+  end
+
   # @config :alias=>'bts'
   # @options :remote=>:boolean
   # Machine tag search on my website or localhost version
