@@ -48,10 +48,17 @@ module RailsCore
     models.map {|e| [e, e.count] }
   end
 
-  # @render_options :fields=>[:name, :type, :null, :default]
-  # List a model's column details
-  def model_columns(model)
-    filter_model(model).columns
+  # @render_options :fields=>[:model, :name, :type, :null, :default]
+  # @options :model=>:string
+  # List all or a model's column details
+  def model_columns(options={})
+    mds = options[:model] ? Array(filter_model(options[:model])) : models
+    mds.map {|e|
+      e.columns.map {|o|
+        o.instance_eval %[def model; #{e.to_s.inspect}; end]
+        o
+      }
+    }.flatten
   end
 
   # @render_options :fields=>[:name, :macro, :options]
