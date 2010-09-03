@@ -71,7 +71,7 @@ module SystemMisc
 
   # Delete backup files left by text editors
   def delete_backups
-    backups = Dir.glob('**/*~')
+    backups = Dir.glob('**/*~', File::FNM_DOTMATCH)
     menu(backups) do |paths|
       paths.each {|e| File.unlink(e) }
     end
