@@ -69,9 +69,11 @@ module SystemMisc
     end
   end
 
+  # @option :repeats, :desc=>'Only displays ones that are repeats of existing files', :type=>:boolean
   # Delete backup files left by text editors
-  def delete_backups
+  def delete_backups(options={})
     backups = Dir.glob('**/*~', File::FNM_DOTMATCH)
+    backups = backups.select {|e| File.exist? e.chomp("~") } if options[:repeats]
     menu(backups) do |paths|
       paths.each {|e| File.unlink(e) }
     end
