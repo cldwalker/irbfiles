@@ -264,6 +264,7 @@
   show_library: sl
   edit: e
   instance_var: inv
+  array_instance_var: ainv
   tagged_gems: tg
 :ignore_directories:
 - ~/code/gems/boson

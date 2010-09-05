@@ -31,9 +31,22 @@ module RubyRef
   end
 
   # @render_options :change_fields=>%w{instance value}, :filters=>{:default=>{'value'=>:inspect}}
-  # Table of an object's instance variables
+  # List an object's instance variables
   def instance_var(obj)
     obj.instance_variables.map {|e| [e, obj.instance_variable_get(e)] }
+  end
+
+  # @render_options :change_fields=>%w{id instance value}, :filters=>{:default=>{'value'=>:inspect}}
+  # @options :id=>'to_s'
+  # List objects and their instance variables
+  def array_instance_var(arr, options={})
+    arr.inject([]) {|acc,obj|
+      id = obj.send(options[:id])
+      obj.instance_variables.each {|e|
+        acc << [id, e, obj.instance_variable_get(e)]
+      }
+      acc
+    }
   end
 
   # @render_options :change_fields=>%w{name version}
