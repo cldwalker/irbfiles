@@ -30,3 +30,12 @@ module HirbLib
     }
   end
 end
+
+class ::Hirb::Helpers::ActiveRecordErrors < ::Hirb::Helpers::AutoTable
+  def self.render(obj, options={})
+    obj = obj.keys.inject({}) {|h,e|
+      h.merge! e=>obj[e]
+    }
+    super obj, :change_fields=>[:attribute, :value]
+  end
+end

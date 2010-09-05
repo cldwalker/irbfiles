@@ -44,3 +44,5 @@
       - subject
       - predicate
       - object
+  ActiveRecord::Errors:
+    :class: :active_record_errors
