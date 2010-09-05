@@ -1,6 +1,6 @@
 module Completion
   def self.included(mod)
-    begin LocalGem.local_require 'bond'; rescue; require 'bond' end
+    require 'bond'
   end
 
   def self.after_included

@@ -1,9 +1,6 @@
 # Commands mainly for use while developing Lightning
 module Dev
   def self.included(mod)
-    require 'local_gem'
-    LocalGem.local_require 'lightning'
-  rescue LoadError
     require 'lightning'
   end
 

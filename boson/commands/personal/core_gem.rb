@@ -3,13 +3,7 @@ module CoreGem
   # use core to load extensions: http://github.com/cldwalker/core
   def self.included(mod)
     require 'local_gem'
-    %w{core}.each do |e|
-      begin
-        LocalGem.local_require e
-      rescue Exception
-        require e
-      end
-    end
+    require 'core'
   end
 
   def self.disabled

@@ -1,11 +1,6 @@
 module Gemgrep
-  def self.included(mod)
-    begin
-      require 'local_gem'
-      LocalGem.local_require 'gem_grep'
-    rescue
-      require 'gem_grep'
-    end
+  def self.after_included
+    require 'gem_grep'
     require 'rubygems/specification_hack'
   end
 
