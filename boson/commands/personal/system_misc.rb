@@ -62,7 +62,7 @@ module SystemMisc
     Dir.chdir File.expand_path(fork_dir)
     system "hub clone #{user_repo}"
     if $? == 0
-      Dir.chdir user_repo[/\w+$/]
+      Dir.chdir user_repo[/[^\/]+$/]
       exec 'hub fork'
     else
       "Clone failed"
