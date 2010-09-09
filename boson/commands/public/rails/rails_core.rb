@@ -32,6 +32,24 @@ module RailsCore
     ActiveRecord::Base.connection.execute(query).all_hashes
   end
 
+  # List migrations in db
+  def db_migrations
+    sql('select * from schema_migrations').map {|e| e['version'] }
+  end
+
+  # Lists migrations in db/migrate
+  def file_migrations
+    Dir['db/migrate/*.rb'].inject({}) {|h,e|
+      e =~ /(\d+)_([^\/]+)$/
+      h[$1] = $2 if $1 && $2; h
+    }
+  end
+
+  # Lists file migrations that aren't in db
+  def td_migrations
+    file_migrations.keys - db_migrations
+  end
+
   # Dumps current schema
   def schema_dump
     ActiveRecord::SchemaDumper.dump ActiveRecord::Base.connection
