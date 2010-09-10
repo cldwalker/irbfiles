@@ -14,12 +14,10 @@ module RailsCore
   end
 
 
-  if (Rails.version < '3.0' rescue nil)
-    # Add route methods *_url and *_path as commands
-    def add_routes
-      extend ActionController::UrlWriter
-      default_url_options[:host] = 'example.com'
-    end
+  # Add route methods *_url and *_path as commands
+  def add_routes
+    extend Rails.version >= '3.0' ? ::Rails.application.routes.url_helpers : ::ActionController::UrlWriter
+    default_url_options[:host] = 'example.com'
   end
 
   # Execute sql query
