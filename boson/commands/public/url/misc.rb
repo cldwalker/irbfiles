@@ -20,6 +20,14 @@ module MiscUrl
     "http://rubygems.org/gems/#{rubygem}"
   end
 
+  def gem_family(rubygem)
+    "http://gemfamily.info/gems/#{rubygem}"
+  end
+
+  def jquery_api(*query)
+    build_url "http://api.jquery.com/", :s=>query
+  end
+
   def prefix_cc(*query)
     "http://prefix.cc/#{query.join(' ')}"
   end
