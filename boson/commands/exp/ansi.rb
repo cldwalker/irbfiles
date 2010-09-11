@@ -1,6 +1,6 @@
 module Ansi
   def self.included(mod)
-    require 'ansi' # gem install ssoroka-ansi
+    require 'ansi' # rip install http://github.com/ssoroka/ansi.git
   end
   COLORS = [:magenta, :green, :white, :blue, :cyan, :yellow, :black, :purple, :light_blue, :red]
 

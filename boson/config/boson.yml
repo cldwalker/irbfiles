@@ -176,7 +176,7 @@
     - bundles_all
     - posts_all
     - posts_recent
-  personal/completion:
+  public/completion:
     :class_commands:
       spy: Bond.spy
   # gem libraries

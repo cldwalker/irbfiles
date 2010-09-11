@@ -4,7 +4,7 @@ module GemFamily
   end
 
   # Prints gem dependents
-  def gem_family(rubygem)
+  def gem_reverse_deps(rubygem)
     doc = Nokogiri::HTML(get("http://gemfamily.info/gems/#{rubygem}"))
     doc.css('div.links')[2].children.css('a').map {|e| e.text }
   end
