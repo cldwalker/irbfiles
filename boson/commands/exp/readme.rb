@@ -24,6 +24,7 @@ module Readme
     def self.objects(options={})
       @objects ||= begin
         dirs = Dir[File.expand_path("~/code/gems/*")]
+        dirs = dirs.select {|e| File.exists? e+'/README.rdoc'  }
         dirs = Boson.invoke(:menu, dirs) if options[:menu]
         dirs.map {|e| new(e) }
       end

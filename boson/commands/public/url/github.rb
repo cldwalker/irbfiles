@@ -26,13 +26,7 @@ module GithubUrl
   #    :enum=>false, :desc=>'Subpage belonging to repo', :bool_default=>'readme'
   # Opens a repo page or a subpage i.e. commit, tree, file in a browser
   def repo(user_repo=nil, options={})
-    if user_repo.nil?
-      user_repo = `git config remote.origin.url`.chomp.gsub(%r{.git$|^git@github.com:|^git://github.com/}, '')
-      user_repo.sub!(/^\w+/, options[:user]) if options[:user]
-    elsif !user_repo['/']
-      user_repo = "#{options[:user]}/#{user_repo}"
-    end
-    repo_url = "http://github.com/#{user_repo}"
+    repo_url = "http://github.com/#{_user_repo(user_repo, options)}"
     if options[:file]
       repo_url << "/blob/master/" + options[:file]
     elsif options[:subpage]
@@ -58,8 +52,19 @@ module GithubUrl
   # @option :start, :default=>'master', :desc=>'Starting branch/commit/tag'
   # @option :end, :default=>'master', :desc=>'Ending branch/commit/tag'
   # Compare repos by branch or commit
-  def repo_compare(user_repo, options={})
-    user_repo = "#{options[:user]}/#{user_repo}" unless user_repo['/']
+  def repo_compare(user_repo=nil, options={})
+    user_repo = _user_repo(user_repo, options)
     "http://github.com/#{user_repo}/compare/#{options[:start]}...#{options[:end]}"
+  end
+
+  private
+  def _user_repo(user_repo, options)
+    if user_repo.nil?
+      user_repo = `git config remote.origin.url`.chomp.gsub(%r{.git$|^git@github.com:|^git://github.com/}, '')
+      user_repo.sub!(/^\w+/, options[:user]) if options[:user]
+    elsif !user_repo['/']
+      user_repo = "#{options[:user]}/#{user_repo}"
+    end
+    user_repo
   end
 end
