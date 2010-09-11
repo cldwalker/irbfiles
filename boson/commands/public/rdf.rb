@@ -1,6 +1,12 @@
 module RdfLib
-  def self.included(mod)
+  def self.append_features(mod)
     require 'rdf'
+    super
+  rescue LoadError
+    false
+  end
+
+  def self.included(mod)
     ::RDF::Query.module_eval %[class StringVariable < Variable; def to_s; @name; end; end]
   end
 

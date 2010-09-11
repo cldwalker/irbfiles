@@ -1,10 +1,13 @@
 module Do
-  def self.included(mod)
+  def self.append_features(mod)
     require 'rdf'
     require 'rdf/ntriples'
     require 'data_objects'
     require 'do_sqlite3'
     require 'rdf/do'
+    super
+  rescue LoadError
+    false
   end
 
   def do_repo
