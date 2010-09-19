@@ -20,6 +20,10 @@ module MiscUrl
     "http://rubygems.org/gems/#{rubygem}"
   end
 
+  def manpage(cmd)
+    "http://man.cx/#{cmd}"
+  end
+
   def gem_family(rubygem)
     "http://gemfamily.info/gems/#{rubygem}"
   end
