@@ -57,6 +57,8 @@ If you want to use irb (or boson) as a I do:
 * Save your ~/.irbrc to somewhere else temporarily. *Important* since the next step will symlink
   over this file.
 * Run symlink_files.rb to symlink to ~/.boson and ~/.irbrc
+* This irbrc uses a lot of gems. To instally them all, use [rip](http://github.com/defunkt/rip):
+  `rip install http://github.com/cldwalker/dotfiles/raw/9a2b64d02fa0719502c6ee59efdf7a0cfca03899/.rip_envs/irb.rip`
 
 To see all the command goodies available to you:
 
