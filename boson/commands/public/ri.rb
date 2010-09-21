@@ -1,5 +1,5 @@
 module Ri
-  def self.included(mod)
+  def self.after_included
     #using rdoc-2.3.0
     require 'rdoc/ri/driver'
   end
