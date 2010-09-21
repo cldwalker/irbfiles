@@ -4,8 +4,9 @@ module Completion
   end
 
   def self.after_included
-    Bond::M.reset
-    Bond.start :debug=>true, :gems=>%w{hirb}
+    if Bond.agent.missions.empty?
+      Bond.start :debug=>true, :gems=>%w{hirb}
+    end
   end
 
   # Toggles object completion between all methods and just the object's class methods

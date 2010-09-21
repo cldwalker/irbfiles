@@ -8,7 +8,7 @@ module IrbFeatures
       irb_options
       railsrc
       irb_history
-      irb_prompts
+      irb_prompts if IRB.conf[:PROMPT]
     end
 
     def irb_history
