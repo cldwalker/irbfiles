@@ -30,7 +30,7 @@ module SystemMisc
     end
   end
 
-  # @options :clone_directory=>'.', :editor=>'mate'
+  # @options :clone_directory=>'.', :editor=>'vim'
   # Clones a github repo or gist and opens in editor
   def checkout(repo_url, options={})
     clone_url,dest = clonable_url_and_name(repo_url)
