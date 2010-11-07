@@ -1,6 +1,6 @@
 module IrbFeatures
   def self.append_features(mod)
-    super if Object.const_defined?(:IRB)
+    super if defined?(IRB) && !defined?(Ripl)
   end
 
   class<<self
