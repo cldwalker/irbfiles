@@ -26,7 +26,7 @@ module Gist
   end
 
   class << self
-    GIST_URL = 'http://gist.github.com/%s.txt'
+    GIST_URL = 'https://gist.github.com/%s.txt'
     @proxy = ENV['http_proxy'] ? URI(ENV['http_proxy']) : nil
 
     def read(gist_id)
@@ -35,7 +35,7 @@ module Gist
     end
 
     def write(content, options)
-      url = URI.parse('http://gist.github.com/gists')
+      url = URI.parse('https://gist.github.com/gists')
       if @proxy
         req = Net::HTTP::Proxy(@proxy.host, @proxy.port).post_form(url, data(nil, nil, content, options[:private]))
       else
