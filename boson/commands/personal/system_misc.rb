@@ -48,8 +48,8 @@ module SystemMisc
     raise "Not a git repository. Use gh create instead" unless is_repo
     github_user = `git config --get github.user`.chomp
     github_token = `git config --get github.token`.chomp
-    created = `curl -F 'repository[name]=#{repo}' -F 'repository[public]=#{!options[:private].inspect}' -F 'login=#{github_user}' -F 'token=#{github_token}' http://github.com/repositories`
-    if created =~ %r{You are being <a href="http://github.com/#{github_user}/([^"]+)"}
+    created = `curl -F 'repository[name]=#{repo}' -F 'repository[public]=#{!options[:private].inspect}' -F 'login=#{github_user}' -F 'token=#{github_token}' https://github.com/repositories`
+    if created =~ %r{You are being <a href="https://github.com/#{github_user}/([^"]+)"}
       system "git remote add origin git@github.com:#{github_user}/#{$1}.git"
       exec "git push origin master"
     else
