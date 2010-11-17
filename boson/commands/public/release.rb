@@ -66,10 +66,11 @@ module Release
     nil
   end
 
-  # @options :user=>'CLDWALKER'
+  # @options :user=>'CLDWALKER', :html=>:boolean
   # Build manpage
   def build_man(rubygem=current_gem, options={})
-    str = "ronn -br --organization=#{options[:user]} --manual='#{rubygem.capitalize} Manual' man/*.ronn"
+    str = "ronn -br #{options[:html] ? '--html' : ''} --organization=#{options[:user]}"+
+      " --manual='#{rubygem.capitalize} Manual' man/*.ronn"
     system str
   end
 
