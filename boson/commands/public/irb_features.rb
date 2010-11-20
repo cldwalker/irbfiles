@@ -6,9 +6,7 @@ module IrbFeatures
   class<<self
     def after_included
       irb_options
-      railsrc
       irb_history
-      irb_prompts if IRB.conf[:PROMPT]
     end
 
     def irb_history
@@ -24,26 +22,6 @@ module IrbFeatures
       IRB.conf[:IRB_RC] = lambda do |e|
         IRB_PROCS.each {|key, proc| proc.call(e); IRB_PROCS.delete(key)}
       end
-    end
-
-    def irb_prompts
-      dirname = File.basename(Dir.pwd)
-      IRB.conf[:PROMPT][:DIR] = {
-        :PROMPT_I => "#{dirname}> ",
-        :PROMPT_N => "#{dirname}> ",
-        :PROMPT_S => "#{dirname}* ",
-        :PROMPT_C => "#{dirname}? ",
-        :RETURN => "=> %s\n"
-      }
-    end
-
-    def railsrc
-      IRB_PROCS[:railsrc] = lambda {|e| load_railsrc }
-    end
-
-    def load_railsrc
-      #local railsrc
-      load File.join(ENV['PWD'], '.railsrc') if (ENV['RAILS_ENV'] || defined?(Rails)) && File.exists?(File.join(ENV['PWD'], '.railsrc'))
     end
   end
 

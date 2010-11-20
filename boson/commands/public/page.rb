@@ -1,6 +1,6 @@
 # copied from somewhere
 module Page
-  class IRBLess
+  class Less
     def setup_pager
       for pager in [ ENV['PAGER'], "less", "more", 'pager' ].compact.uniq
         return IO.popen(pager, "w") rescue nil
@@ -21,7 +21,7 @@ module Page
   end
 
   def page(str, pager=nil)
-    pager ||= IRBLess.new
+    pager ||= Less.new
     pager.less(str)
   end
 end
