@@ -17,18 +17,19 @@ module GithubUrl
     options[:gist] ? "http://gist.github.com/#{user}" : "http://github.com/#{user}"
   end
 
-  # @option :user, :default=>'cldwalker', :desc=>'Github user'
+  # @option :user, :type=>:string, :desc=>'Github user'
   # @option :file, :type=>:string, :desc=>'Relative file path within repository'
   # @option :commit, :type=>:string, :desc=>'Commit page'
   # @option :issue, :type=>:string, :desc=>'Issue page'
-  # @option :tree, :type=>:string, :desc=>'Tree page'
+  # @option :tree, :type=>:string, :bool_default=> true, :desc=>'Tree page'
   # @option :subpage, :type=>:string, :values=>%w{readme wiki issues network commits traffic punch_card timeline edit branches},
   #    :enum=>false, :desc=>'Subpage belonging to repo', :bool_default=>'readme'
   # Opens a repo page or a subpage i.e. commit, tree, file in a browser
   def repo(user_repo=nil, options={})
     repo_url = "http://github.com/#{_user_repo(user_repo, options)}"
     if options[:file]
-      repo_url << "/blob/master/" + options[:file]
+      tree = options[:tree] ? _git_tree(options[:tree]) : 'master'
+      repo_url << "/blob/#{tree}/#{options[:file]}"
     elsif options[:subpage]
       case options[:subpage]
       when 'wiki'     then repo_url.sub!('github.com', 'wiki.github.com')
@@ -41,7 +42,7 @@ module GithubUrl
     elsif options[:commit]
       repo_url << "/commit/#{options[:commit]}"
     elsif options[:tree]
-      repo_url << "/tree/#{options[:tree]}"
+      repo_url << "/tree/#{_git_tree(options[:tree])}"
     elsif options[:issue]
       repo_url << "/issues#issue/#{options[:issue]}"
     end
@@ -58,6 +59,10 @@ module GithubUrl
   end
 
   private
+  def _git_tree(tree)
+    tree == true ? `git branch`.split("\n").map {|e| e[/^\*\s*(\w+)/, 1] }.compact[0] : tree
+  end
+
   def _user_repo(user_repo, options)
     if user_repo.nil?
       user_repo = `git config remote.origin.url`.chomp.gsub(%r{.git$|^git@github.com:|^git://github.com/}, '')
