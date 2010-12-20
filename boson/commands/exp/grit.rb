@@ -5,13 +5,22 @@ module Git
 
   # @render_options :change_fields=>['repo', 'pending'], :sort=>'pending',
   #  :reverse_sort=>true
-  # @options :push=>:boolean, :repo=>{:type=>:string, :values=>%w{all gems menu}, :enum=>false}
+  # @option :push, :type=>:boolean, :desc=>"Push repos with pending commits"
+  # @option :repo, :type=>:string, :values=>%w{all gems menu}, :enum=>false, :desc => 'Specify repo group'
+  # @option :ask, :type=>:boolean, :desc => "Ask before pushing repos"
   # Lists # of commits that haven't been pushed to origin/master
   def pending_commits(options={})
     pending = Git.repos(options).map{|e|
       [e.working_dir, e.log('origin/master..master').size]
     }
-    if options[:push] 
+
+    if options[:push] || options[:ask]
+      if options[:ask]
+        render pending.map {|k,v| [File.basename(k), v] }
+        print "Push? [y/(n)]"
+        return unless $stdin.gets[/^y/]
+      end
+
       pending.select {|k,v| v > 0 }.each {|k,v|
         Dir.chdir k
         system "git push origin master"

@@ -1,10 +1,11 @@
 module GemRelease
   def self.config
-    {:dependencies=>['public/release', 'exp/paz', 'exp/readme']}
+    {:dependencies=>['public/release', 'exp/paz', 'exp/readme', 'personal/system_misc']}
   end
 
+  # @options :test => true
   # Checklist to run before releasing a gem
-  def pre_release
+  def pre_release(options={})
     raise "Repo not clean" if !`git status -s`.empty?
     puts "Sync description from readme to gemspec..."
     sync_description(:commit=>true)
@@ -12,7 +13,10 @@ module GemRelease
     puts "Check deps.rip..."
     deps_rip
     deps_rip :dev=>true
-    system "git commit -m 'Updated deps.rip' ." if !`git status -s`.empty?
+    system "git commit -m 'Update deps.rip' ." if !`git status -s`.empty?
+
+    puts "Check backup files to delete..."
+    delete_backups unless Dir.glob('**/*~', File::FNM_DOTMATCH).empty?
 
     puts "Checking gemspec files that haven't been committed..."
     if !(files = manifest).empty?
@@ -23,7 +27,7 @@ module GemRelease
       raise files.inspect
     end
 
-    if File.directory?('test')
+    if options[:test] && File.directory?('test')
       puts "Run tests..."
       test_all
     end
