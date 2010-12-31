@@ -3,7 +3,7 @@ Description
 
 Contains libraries of ruby commands/snippets, some original and some copied.
 These libraries are managed and run by my command framework, [boson](http://github.com/cldwalker/boson).
-Despite what the project name implies, all these commands can be used within irb or from the
+Despite what the project name implies, all these commands can be used within ripl(irb) or from the
 commandline thanks to boson.
 
 Outline of this Repo
@@ -35,9 +35,9 @@ Using a Library
 
 If you want to just try one or two libraries/files under boson/ without boson, simply require and include them:
 
-    bash> irb -f
-    irb>> require "boson/commands/public/color"
-    irb>> class<<self; include Color; end
+    $ ripl -f
+    >> require "boson/commands/public/color"
+    >> class<<self; include Color; end
 
 Note: this only works for libraries that don't depend on other libraries, don't use boson commands
 and don't rely on boson for default options.
@@ -50,7 +50,7 @@ If you want to install a boson library using boson:
 Install
 =====
 
-If you want to use irb (or boson) as a I do:
+If you want to use boson in ripl(irb) as a I do:
 
 * Clone this project: git clone git://github.com/cldwalker/irbfiles.git
 * Install [boson](http://github.com/cldwalker/boson): gem install boson
@@ -62,7 +62,7 @@ If you want to use irb (or boson) as a I do:
 
 To see all the command goodies available to you:
 
-    # from irb
+    # from ripl
     >> libraries
 
     # from commandline
