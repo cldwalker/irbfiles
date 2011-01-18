@@ -25,9 +25,9 @@ module Github
     gists || puts("Invalid user '#{options[:user]}'")
   end
 
-  # @render_options :fields=>{:values=>["score", "name", "size", "language", "followers", "type",
-  #   "username", "id", "description", "forks", "fork", "pushed", "created"], :default=>['name','username',
-  #   'followers','language','pushed','score','description']}, :sort=>'score', :reverse_sort=>true
+  # @render_options :fields=>{:values=>[:score, :name, :size, :language, :followers, :type,
+  #   :username, :id, :description, :forks, :fork, :pushed, :created], :default=>[:name, :username,
+  #   :followers, :language, :pushed, :score, :description]}, :sort=>'score', :reverse_sort=>true
   # @config :menu=>{:command=>:browser, :template=>'http://github.com/:username/:name'}
   # @options :page=>1, :language=>:string
   #  Search repositories
