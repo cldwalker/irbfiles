@@ -8,11 +8,13 @@ module RailsLib
   end
 
   def self.setup_personal(*args)
-    Alias.create :file=>"~/.alias/rails.yml"
-    Alias.create :file=>'config/alias.yml' if File.exists? 'config/alias.yml'
     require 'console_update'
     ConsoleUpdate.enable_named_scope unless Rails.version >= '3.0'
+  rescue LoadError
+  ensure
     minimal_active_record_inspect if defined? ActiveRecord::Base
+    Alias.create :file=>"~/.alias/rails.yml"
+    Alias.create :file=>'config/alias.yml' if File.exists? 'config/alias.yml'
   end
 
   def self.minimal_active_record_inspect
