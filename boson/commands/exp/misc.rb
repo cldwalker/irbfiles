@@ -56,7 +56,7 @@ module Misc
   # Strip whitespace from files
   def whitespace(files, options={})
     string = options[:real] ? "ruby -pi" : "ruby -p"
-    string += ' -e "gsub(/\s+$/, $/)" ' + files
+    string += ' -e "gsub(/\s+$/, $/)" ' + Dir[files].join(' ')
     system(string)
   end
 end
