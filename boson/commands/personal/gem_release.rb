@@ -72,7 +72,8 @@ module GemRelease
   #List of ruby versions
   def rubies
     rvm_ruby = File.expand_path "~/.rvm/bin/ruby-"
-    { "system"=>'/usr/bin/ruby', '1.9.2'=>"#{rvm_ruby}1.9.2-preview1", '1.8.7'=>"#{rvm_ruby}1.8.7-p249" }
+    { "system"=>'/usr/bin/ruby', '1.9.2'=>"#{rvm_ruby}1.9.2-p136", '1.8.7'=>"#{rvm_ruby}1.8.7-p249",
+      "jruby" => 'jruby-1.5.6'}
   end
 
   # Only works in system ruby
