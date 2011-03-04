@@ -85,7 +85,13 @@ module Release
   # Creates deps.rip from gemspec for runtime or dev dependencies
   def deps_rip(options={})
     type = options[:dev] ? :development : :runtime
-    file = options[:dev] ? 'test/deps.rip' : 'deps.rip'
+    file = 'deps.rip'
+    if options[:dev]
+      dir = %w{test spec features}.find {|e| File.exists?(e) }
+      return warn('No test directory found for a development deps.rip') unless dir
+      file = "#{dir}/#{file}"
+    end
+
     deps = current_gemspec.dependencies.select {|e| e.type == type }.map {|e|
       [e.name, e.requirements_list.join(' ').gsub(/\s*/, '')] }
     if deps.size > 0
