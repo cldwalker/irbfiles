@@ -7,7 +7,7 @@ module GoogleUrl
   #  :subpage=>{:values=>%w{top_content referring_sources keywords},:type=>:string}
   # Opens google analytics for given date range
   def google_analytics(start_date=nil, options={})
-    start_date = start_date ? Date.parse("#{start_date}/2010") : Date.today
+    start_date = start_date ? Date.parse("#{start_date}/2011") : Date.today
     start_date = start_date.strftime("%Y%m%d")
     end_date = options[:end_date] || start_date
     build_url "https://www.google.com/analytics/reporting/#{options[:subpage] || ''}",
