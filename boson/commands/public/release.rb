@@ -59,7 +59,7 @@ module Release
     require 'rcov/rcovtask'
     Rcov::RcovTask.new do |t|
       t.libs << 'test'
-      t.test_files = FileList['test/**/*_test.rb']
+      t.test_files = FileList['test/**/{spec_*,*_test,*_spec}.rb']
       t.rcov_opts = ["-T -x '/Library/Ruby/*,#{File.expand_path('~/.rip/*')}'"]
       t.verbose = true
     end

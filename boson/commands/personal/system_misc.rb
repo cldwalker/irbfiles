@@ -70,9 +70,10 @@ module SystemMisc
   end
 
   # @option :repeats, :desc=>'Only displays ones that are repeats of existing files', :type=>:boolean
+  # @option :directory, :desc => 'Directory to look under', :default => '.'
   # Delete backup files left by text editors
   def delete_backups(options={})
-    backups = Dir.glob('**/*{~,.sw[a-z]}', File::FNM_DOTMATCH)
+    backups = Dir.glob(options[:directory]+'/**/*{~,.sw[a-z]}', File::FNM_DOTMATCH)
     backups = backups.select {|e| File.exist? e.chomp("~") } if options[:repeats]
     menu(backups) do |paths|
       paths.each {|e| File.unlink(e) }
