@@ -24,7 +24,8 @@ module RdfLib
     'bio'=>'http://hcls.deri.org/sparql', 'space'=>'http://api.talis.com/stores/space/services/sparql',
     'gov'=>'http://semantic.data.gov/sparql', 'dbp'=>'http://dbpedia.org/sparql',
     'med'=>'http://www4.wiwiss.fu-berlin.de/dailymed/sparql', 'movie'=>'http://data.linkedmdb.org/sparql',
-    'music'=>'http://dbtune.org/musicbrainz/sparql', 'sparql'=>'http://www.sparql.org/sparql'
+    'music'=>'http://dbtune.org/musicbrainz/sparql', 'sparql'=>'http://www.sparql.org/sparql',
+    'bmark' => 'http://dydra.com/cldwalker/bookmarks/sparql'
   }
 
   # @render_options :change_fields=>['name', 'url']
@@ -51,7 +52,8 @@ module RdfLib
     @options = options = args[-1].is_a?(Hash) ? args.pop : {}
     options[:endpoint] = ENDPOINTS[options[:endpoint]] || options[:endpoint]
     require 'sparql/client'
-    client = SPARQL::Client.new(options[:endpoint])
+    qoptions = options[:endpoint][/dydra/] ? {:headers => {"Authorization" => "Basic #{basic_authify}"}} : {}
+    client = SPARQL::Client.new(options[:endpoint], qoptions)
 
     if options[:sparql]
       spl = select_sparql(options[:sparql], args)
@@ -82,6 +84,10 @@ module RdfLib
     results = solutions && solutions.map {|e| e.to_hash }
     abbreviate_uris(results) if options[:abbreviate]
     results
+  end
+
+  def basic_authify
+    ["#{ENV['DYDRA_USER']}:#{ENV['DYDRA_PASSWORD']}"].pack('m').strip
   end
 
   def select_sparql(sparql_type, args)

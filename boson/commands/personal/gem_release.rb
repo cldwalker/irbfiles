@@ -3,12 +3,12 @@ module GemRelease
     {:dependencies=>['public/release', 'exp/paz', 'exp/readme', 'personal/system_misc']}
   end
 
-  # @options :test => true
+  # @options :test => true, :sync => true
   # Checklist to run before releasing a gem
   def pre_release(options={})
     raise "Repo not clean" if !`git status -s`.empty?
     puts "Sync description from readme to gemspec..."
-    sync_description(:commit=>true)
+    sync_description(:commit=>true) if options[:sync]
 
     puts "Check deps.rip..."
     deps_rip
