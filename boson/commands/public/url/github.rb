@@ -60,7 +60,7 @@ module GithubUrl
 
   private
   def _git_tree(tree)
-    tree == true ? `git branch`.split("\n").map {|e| e[/^\*\s*(\w+)/, 1] }.compact[0] : tree
+    tree == true ? `git branch`.split("\n").map {|e| e[/^\*\s*(\S+)/, 1] }.compact[0] : tree
   end
 
   def _user_repo(user_repo, options)
