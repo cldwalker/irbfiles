@@ -15,6 +15,15 @@ module System
     ::IO.popen('-') {|f| f ? f.read : exec(cmd,*args)}
   end
 
+  # Execute system command with shell aliasing on
+  def sh(*args)
+    system %[
+      if [ -f ~/.bashrc ]; then source ~/.bashrc; fi
+      shopt -s expand_aliases
+      #{args.join(' ')}
+    ]
+  end
+
   # @options :screen=>:boolean, :print=>:boolean, :return=>:string, :pretend=>false
   def new_system(*args)
     options = (args[-1].is_a?(Hash)) ? args.pop : {}

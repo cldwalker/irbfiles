@@ -30,13 +30,15 @@ module SystemMisc
     end
   end
 
-  # @options :clone_directory=>'.', :editor=>'vim'
+  # @options :directory=>'.', :editor=>'vim', :open => true
   # Clones a github repo or gist and opens in editor
   def checkout(repo_url, options={})
     clone_url,dest = clonable_url_and_name(repo_url)
     if clone_url && dest
-      cmd = "cd #{options[:directory]}; git clone #{clone_url} #{dest} && #{options[:editor]} #{dest}"
+      cmd = "cd #{options[:directory]}; git clone #{clone_url} #{dest}"
+      cmd << "; #{options[:editor]} #{dest}" if options[:open]
       system cmd
+      File.join options[:directory], dest
     end
   end
 
