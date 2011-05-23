@@ -25,7 +25,7 @@ module BosonLib
     end
     File.open(file,'w') {|f| f.write(options[:string]) } if options[:string]
     system("#{editor} #{file}")
-    File.open(file) {|f| f.read } if File.exists?(file) && options[:string]
+    File.open(file) {|f| f.read } if File.exists?(file.to_s) && options[:string]
   end
 
   # @render_options :method=>'puts'
