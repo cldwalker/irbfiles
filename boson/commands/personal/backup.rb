@@ -51,13 +51,19 @@ module Backup
     commit_git_repo("~/backup")
   end
 
-  # @options :file=>:string, :db=>'tag_tree_dev'
+  # @options :file=>:string, :db=>'tag_tree', :db_type => 'psql', :env => 'development'
   # @config :alias=>'dbd'
   # Dumps db to a file
   def db_dump(options={})
-    file = options[:file] || "#{options[:db]}-mysql.sql"
+    if File.exists?('config/database.yml')
+      hash = YAML.load_file('config/database.yml')[options[:env]]
+      options[:db_type] = hash['adapter'] == 'postgresql' ? 'psql' : hash['adapter']
+      options[:db] = hash['database']
+    end
+    file = options[:file] || "#{options[:db]}-#{options[:db_type]}.sql"
     output_file = File.join("~/backup", file)
-    cmd = "mysqldump --add-drop-table --add-locks #{options[:db]} > #{output_file}"
+    cmd = options[:db_type] == 'psql' ? 'pg_dump ' : "mysqldump --add-drop-table --add-locks "
+    cmd << "#{options[:db]} > #{output_file}"
     system(cmd)
   end
 
