@@ -13,8 +13,8 @@ module RailsLib
   rescue LoadError
   ensure
     minimal_active_record_inspect if defined? ActiveRecord::Base
+    Alias.create :file=>'config/alias.yml' if File.exists?('config/alias.yml') && Alias.manager.all_aliases.empty?
     Alias.create :file=>"~/.alias/rails.yml"
-    Alias.create :file=>'config/alias.yml' if File.exists? 'config/alias.yml'
   end
 
   def self.minimal_active_record_inspect
