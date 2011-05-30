@@ -1,10 +1,11 @@
 # logger cmds from http://weblog.jamisbuck.org/2007/1/31/more-on-watching-activerecord
 module LoggerLib
   def self.append_features(mod)
-    super if ENV['RAILS_ENV'] || defined? Rails
+    super if ENV['RAILS_ENV'] || defined? ActiveRecord::Base
   end
 
   def self.after_included
+    require 'logger'
     IRB_PROCS[:setup_logger] = method(:setup_logger) if Object.const_defined?(:IRB_PROCS)
   end
 
