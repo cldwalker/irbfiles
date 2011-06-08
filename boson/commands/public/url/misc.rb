@@ -52,6 +52,18 @@ module MiscUrl
     "http://rdoc.info/gems/#{rubygem}"
   end
 
+  # @config :alias => 'cdoc'
+  # Open core class doc
+  def coredoc(arg)
+    "http://ruby-doc.org/core/classes/#{arg}.html"
+  end
+
+  # @config :alias => 'sdoc'
+  # Open stdlib doc
+  def stddoc(lib)
+    "http://ruby-doc.org/stdlib/libdoc/#{lib}/rdoc/"
+  end
+
   # @config :alias=>'bts'
   # @options :remote=>:boolean
   # Machine tag search on my website or localhost version
