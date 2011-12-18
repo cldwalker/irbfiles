@@ -2,4 +2,5 @@
 
 require 'rubygems' unless ENV['NO_RUBYGEMS']
 require 'boson'
+require 'boson/console' if Boson::VERSION >= '0.5.0'
 Boson.start
