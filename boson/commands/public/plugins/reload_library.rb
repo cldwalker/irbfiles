@@ -28,11 +28,11 @@ class ::Boson::Manager
 end
 
 module ::Boson::Loader
-  # Reloads a library from its source and adds new commands. 
+  # Reloads a library from its source and adds new commands.
   def reload
     original_commands = @commands
     reload_source_and_set_module
-    detect_additions { load_module_commands } if @new_module
+    detect_additions { initialize_library_module } if @new_module
     @new_commands = @commands - original_commands
     true
   end
