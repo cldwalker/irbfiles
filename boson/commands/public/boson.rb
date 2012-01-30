@@ -13,7 +13,7 @@ module BosonLib
     elsif options[:command]
       Boson::Index.read
       editor << " -c '/def \\(#{options[:command]}\\)\\?'" if editor[/^vim/]
-      (lib = Boson.library Boson::Runner.autoload_command(options[:command])) &&
+      (lib = Boson.library Boson::BareRunner.autoload_command(options[:command])) &&
       lib.lib_file
     elsif options[:config]
       Boson.repo.config_file

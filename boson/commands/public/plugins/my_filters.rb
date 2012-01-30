@@ -39,7 +39,7 @@ module ::Boson::OptionCommand::Filters
 
   def command_obj_argument(val)
     command = command_argument(val)
-    !Boson.can_invoke?(command) && Boson::Runner.autoload_command(command)
+    !Boson.can_invoke?(command) && Boson::BareRunner.autoload_command(command)
     command
   end
 

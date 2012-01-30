@@ -2,7 +2,7 @@
 # the matches are printed. If only one method is found, it's executed.
 module MethMissing
   def self.after_included
-    Boson::Runner.define_autoloader
+    Boson::BareRunner.define_autoloader
     [class <<Boson.main_object; self end, Boson::Namespace].each do |klass|
       define_method_missing klass
       klass.send :private, :method_missing
