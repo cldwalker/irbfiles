@@ -6,7 +6,7 @@ class ::Boson::Manager
       if lib.loaded
         command_size = Boson.commands.size
         @options = options
-        if (result = rescue_load_action(lib.name, :reload) { lib.reload })
+        if (result = call_load_action(lib.name, :reload) { lib.reload })
           after_reload(lib)
           puts "Reloaded library #{library}: Added #{Boson.commands.size - command_size} commands" if options[:verbose]
         end
