@@ -3,6 +3,8 @@ Description
 
 Contains libraries of ruby commands/snippets, some original and some copied.
 These libraries are managed and run by my command framework, [boson](http://github.com/cldwalker/boson).
+Note, boson-related commands are only compatible with
+[boson2](http://github.com/cldwalker/boson/tree/boson2).
 Despite what the project name implies, all these commands can be used within ripl(irb) or from the
 commandline thanks to boson.
 
@@ -67,4 +69,3 @@ To see all the command goodies available to you:
 
     # from commandline
     bash> boson libraries
-
