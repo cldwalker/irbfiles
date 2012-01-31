@@ -1,7 +1,7 @@
 module BosonCommand
   # Returns a method's file and line no for a given command
   def method_location(command)
-    !Boson.can_invoke?(command) && Boson::Runner.autoload_command(command)
+    !Boson.can_invoke?(command) && Boson::BareRunner.autoload_command(command)
     return nil unless (cmd = Boson::Command.find(command))
     if RUBY_VERSION < '1.9'
       Boson::MethodInspector.mod_store[cmd.library.module][:method_locations][cmd.name] rescue nil
@@ -29,7 +29,7 @@ module BosonCommand
     matching_whitespace = lines[index][/^\s+/]
     while lines[index] && (lines[index] !~ /^#{matching_whitespace}end/)
       method_lines << lines[index]
-      index +=1 
+      index +=1
     end
     (method_lines << lines[index]).join("")
   end

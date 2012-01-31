@@ -19,13 +19,13 @@ module MethMissing
         puts "Multiple methods match: #{meths.join(', ')}"
       elsif (meths.size == 1) && respond_to?(meths[0])
         new_meth = meths[0]
-        puts "Found method #{new_meth}" if Boson::Runner.verbose?
+        puts "Found method #{new_meth}" if Boson.verbose
         MethMissing.update_bin_runner(meth.to_s, new_meth) if Boson.in_shell
         send(new_meth, *args)
       else
         # meths == 1 : for methods loaded by autoloader
         new_meth = meths.size == 1 ? meths[0] : meth
-        puts "Found method #{new_meth}" if Boson::Runner.verbose?
+        puts "Found method #{new_meth}" if Boson.verbose
         MethMissing.update_bin_runner(meth.to_s, new_meth.to_s) if Boson.in_shell && meth != new_meth
         original_method_missing.bind(self).call(new_meth.to_sym,*args)
       end

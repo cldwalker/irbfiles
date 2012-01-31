@@ -40,7 +40,7 @@ class ::Boson::OptionCommand
 
   def call_arg_filter(arg_name, arg)
     new_arg = send("#{arg_name}_argument", arg)
-    puts "argument: #{arg.inspect} -> #{new_arg.inspect}" if Boson::Runner.verbose?
+    puts "argument: #{arg.inspect} -> #{new_arg.inspect}" if Boson.verbose
     new_arg
   end
 
@@ -48,7 +48,7 @@ class ::Boson::OptionCommand
     options.each do |name,value|
       if respond_to?("#{name}_option")
         options[name] = send("#{name}_option", value)
-        puts "option: #{value.inspect} -> #{options[name].inspect}" if Boson::Runner.verbose?
+        puts "option: #{value.inspect} -> #{options[name].inspect}" if Boson.verbose
       end
     end
   end

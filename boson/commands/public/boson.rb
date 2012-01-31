@@ -45,7 +45,7 @@ module BosonLib
 
   # List libraries that haven't been loaded yet
   def unloaded_libraries
-    (Boson::Runner.all_libraries - Boson.libraries.map {|e| e.name }).sort
+    (Boson::BareRunner.all_libraries - Boson.libraries.map {|e| e.name }).sort
   end
 
   # Prints stats about boson's index
