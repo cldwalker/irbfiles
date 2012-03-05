@@ -9,10 +9,10 @@
 - exp/plugins/my_pipe_options
 - personal/hirb
 :bin_defaults:
-- exp/plugins/current_option_command
-- exp/plugins/url_libraries
-- exp/plugins/auto_pipe
-- exp/plugins/translate_bin_args
+# - exp/plugins/current_option_command
+# - exp/plugins/url_libraries
+# - exp/plugins/auto_pipe
+# - exp/plugins/translate_bin_args
 :console_defaults:
 - public/completion
 - personal/alias
@@ -168,8 +168,8 @@
       generate: ActionController::Routing::Routes.generate
       db_version: ActiveRecord::Migrator.current_version
   exp/delicious:
-    :dependencies:
-    - exp/plugins/object_namespace
+    # :dependencies:
+    # - exp/plugins/object_namespace
     :object_namespace: true
     :commands:
     - bundles_all
@@ -190,8 +190,8 @@
     - mwhich
     - mgrep
   exp/highline:
-    :dependencies:
-    - exp/plugins/object_namespace
+    # :dependencies:
+    # - exp/plugins/object_namespace
     :commands:
     - agree
     - ask
