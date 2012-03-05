@@ -1,4 +1,5 @@
 .gitignore
 boson/config/index.marshal
 boson/config/main.pstore.yml
+boson/.more_commands
 *.swp

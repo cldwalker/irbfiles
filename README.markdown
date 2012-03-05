@@ -3,8 +3,6 @@ Description
 
 Contains libraries of ruby commands/snippets, some original and some copied.
 These libraries are managed and run by my command framework, [boson](http://github.com/cldwalker/boson).
-Note, boson-related commands are only compatible with
-[boson2](http://github.com/cldwalker/boson/tree/boson2).
 Despite what the project name implies, all these commands can be used within ripl(irb) or from the
 commandline thanks to boson.
 
@@ -55,7 +53,7 @@ Install
 If you want to use boson in ripl(irb) as a I do:
 
 * Clone this project: git clone git://github.com/cldwalker/irbfiles.git
-* Install [boson](http://github.com/cldwalker/boson): gem install boson
+* Install [boson](http://github.com/cldwalker/boson): gem install boson boson-more
 * Save your ~/.irbrc to somewhere else temporarily. *Important* since the next step will symlink
   over this file.
 * Run symlink_files.rb to symlink to ~/.boson and ~/.irbrc
