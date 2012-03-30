@@ -28,7 +28,7 @@ module Release
   # Bumps version in a version file and checks in to git
   def bump(options={})
     new_version = bump_file(options)
-    system "git commit -am 'Bumped to version #{new_version}'"
+    system "git commit -am 'Bump to version #{new_version}'"
   end
 
   def bump_file(options)
