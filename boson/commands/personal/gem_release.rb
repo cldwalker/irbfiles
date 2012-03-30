@@ -68,25 +68,6 @@ module GemRelease
     end
   end
 
-  #List of ruby versions
-  def rubies
-    rvm_ruby = File.expand_path "~/.rvm/bin/ruby-"
-    { "system"=>'/usr/bin/ruby', '1.9.2'=>"#{rvm_ruby}1.9.2-p136", '1.8.7'=>"#{rvm_ruby}1.8.7-p249",
-      "jruby" => 'jruby-1.5.6'}
-  end
-
-  # Only works in system ruby
-  # @desc Dumps list of gems across ruby versions
-  def gem_dump
-    gem_path = File.expand_path "~/.rvm/rubies/ruby-%s/bin/gem"
-    rubies.map {|version,path|
-      path = path[/\d\.\d\.\d/] ? gem_path % path[/\d\.\d\.\d-[^\/]+$/] : '/usr/bin/gem'
-      body = `#{path} list`
-      File.open(File.expand_path("~/.gems/#{version}"), 'w') {|f| f.write body }
-      [version, body.split("\n").size]
-    }
-  end
-
   # Publish pages in website directory to gh-pages branch
   def publish
     raise "Can't publish if doc/ exists" if File.exists?('doc')
