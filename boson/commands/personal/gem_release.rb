@@ -56,6 +56,7 @@ module GemRelease
   # @options :commit=>:boolean
   # Syncs gemspec description to readme's desc
   def sync_description(options={})
+    return puts("No README.rdoc found to sync") unless File.exists?('README.rdoc')
     desc = readme_description
     return if current_gemspec.description == desc
     desc = desc.include?('"') ? "%[#{desc}]" : %["#{desc}"]
