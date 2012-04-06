@@ -32,7 +32,7 @@ module Release
   end
 
   def bump_file(options)
-    version_file = options[:file] || Dir['**/version.rb'][0] ||
+    version_file = options[:file] || Dir['lib/**/version.rb'][0] ||
       Dir['lib/**/*.rb'][0] || raise("No version file found")
     version_string = File.read(version_file)
     new_version = nil
