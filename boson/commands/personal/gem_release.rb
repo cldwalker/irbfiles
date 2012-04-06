@@ -3,17 +3,21 @@ module GemRelease
     {:dependencies=>['public/release', 'exp/paz', 'exp/readme', 'personal/system_misc']}
   end
 
-  # @options :test => true, :sync => true
+  # @options :test => true, :sync => true, :bare => false
   # Checklist to run before releasing a gem
   def pre_release(options={})
     raise "Repo not clean" if !`git status -s`.empty?
+    options.update(test: false, sync: false) if options[:bare]
+
     puts "Sync description from readme to gemspec..."
     sync_description(:commit=>true) if options[:sync]
 
-    puts "Check deps.rip..."
-    deps_rip
-    deps_rip :dev=>true
-    system "git commit -m 'Update deps.rip' ." if !`git status -s`.empty?
+    unless options[:bare]
+      puts "Check deps.rip..."
+      deps_rip
+      deps_rip :dev=>true
+      system "git commit -m 'Update deps.rip' ." if !`git status -s`.empty?
+    end
 
     puts "Check backup files to delete..."
     delete_backups unless Dir.glob('**/*~', File::FNM_DOTMATCH).empty?
