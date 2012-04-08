@@ -31,7 +31,7 @@ module GemRelease
       raise files.inspect
     end
 
-    if options[:test] && File.directory?('test') || File.directory?('spec')
+    if options[:test] && (File.directory?('test') || File.directory?('spec'))
       system('rbenv travis')
     end
   end
