@@ -7,13 +7,21 @@ module Github
   #  :values=>[:homepage, :name, :forks, :private, :watchers, :fork, :url, :description, :owner, :open_issues, :created_at, :pushed_at]},
   #  :max_fields=>{:default=>{:homepage=>0.2, :url=>0.1} }
   # @options :user=>{:default=>'cldwalker', :desc=>'Github user' },
-  #  [:forks,:F]=>{:type=>:boolean, :desc=>'Display forked repositories'}
+  #  [:forks,:F]=>{:type=>:boolean, :desc=>'Display forked repositories'},
+  #  :interesting => {:type => :boolean, :desc => 'Display all repositories except for unpopular forks'}
   # @config :menu=>{:command=>:browser, :default_field=>:url}
   # Displays a user's repositories
   def user_repos(options={})
     repos = github_get("/repos/show/#{options[:user]}")['repositories']
     return puts("Invalid user '#{options[:user]}'") unless repos
-    !options[:forks] ? repos.select {|e| ! e[:fork] } : repos
+    if options[:forks]
+      repos
+    elsif options[:interesting]
+      forks, originals = repos.partition {|e| e[:fork] }
+      originals + forks.select {|e| e[:watchers] > 3 }
+    else
+      repos.select {|e| ! e[:fork] }
+    end
   end
 
   # @render_options :fields=>[:repo, :description, :created_at]
