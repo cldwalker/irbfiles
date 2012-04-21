@@ -67,14 +67,6 @@ module Release
     nil
   end
 
-  # Uninstall, rebuild and install gem in current directory
-  def re_gem
-    rubygem = current_gem
-    system("gem uninstall --force #{rubygem}")
-    system("rake gem")
-    system("gem install pkg/#{rubygem}-#{version}.gem")
-  end
-
   # @options :user=>'CLDWALKER', :html=>:boolean
   # Build manpage
   def build_man(rubygem=current_gem, options={})
