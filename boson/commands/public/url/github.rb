@@ -67,7 +67,7 @@ module GithubUrl
     if user_repo.nil?
       user_repo = `git config remote.origin.url`.chomp.gsub(%r{.git$|^git@github.com:|^git://github.com/}, '')
       # TODO: gitconfig url translation only for me, how to translate ~/.gitconfig urls for anyone?
-      user_repo.sub!(/^gh:/, '')
+      user_repo.sub!(/^(gh|github):/, '')
       user_repo.sub!(/^\w+/, options[:user]) if options[:user]
     elsif !user_repo['/']
       user_repo = "#{options[:user]}/#{user_repo}"
