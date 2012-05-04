@@ -1,13 +1,20 @@
 module Release
-  # @options :rubygem=>'', :version=>:numeric
+  # @options :rubygem=>'', :version=>:numeric, :all_gems => :boolean
   # Releases gem
   def release(options={})
     options[:rubygem] = current_gem if options[:rubygem].empty?
     options[:version] ||= version
     system "git push origin master"
     tag_release(options[:version])
-    system 'rake gem'
-    system "gem push pkg/#{options[:rubygem]}-#{options[:version]}.gem"
+    if options[:all_gems]
+      system 'rake all_gems'
+      Dir["pkg/#{options[:rubygem]}-#{options[:version]}*.gem"].each do |rubygem|
+        system "gem push #{rubygem}"
+      end
+    else
+      system 'rake gem'
+      system "gem push pkg/#{options[:rubygem]}-#{options[:version]}.gem"
+    end
   end
 
   # Prints gem version
