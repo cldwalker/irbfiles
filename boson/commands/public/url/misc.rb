@@ -20,6 +20,11 @@ module MiscUrl
     "http://rubygems.org/gems/#{rubygem}"
   end
 
+  # Display info on clojars.org
+  def jar(name)
+    "https://clojars.org/#{name}"
+  end
+
   def manpage(cmd)
     "http://man.cx/#{cmd}"
   end
