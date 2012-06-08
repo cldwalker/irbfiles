@@ -25,6 +25,11 @@ module MiscUrl
     "https://clojars.org/#{name}"
   end
 
+  # Display core class API on clojure.org
+  def ccore(name)
+    "http://clojure.github.com/clojure/clojure.#{name}-api.html"
+  end
+
   def manpage(cmd)
     "http://man.cx/#{cmd}"
   end
