@@ -17,6 +17,17 @@ module Release
     end
   end
 
+  # Releases to clojars.org
+  def clojar_release(version)
+    name = File.basename Dir.pwd
+    if system("lein pom") && system("lein jar")
+      system("git push origin master && git tag v#{version}")
+      cmd = "scp pom.xml target/#{name}-#{version}.jar clojars@clojars.org:"
+      puts cmd
+      system cmd
+    end
+  end
+
   # Prints gem version
   def version
     current_gemspec.version.to_s
