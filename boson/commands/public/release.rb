@@ -20,8 +20,8 @@ module Release
   # Releases to clojars.org
   def clojar_release(version)
     name = File.basename Dir.pwd
-    if system("lein pom") && system("lein jar")
-      system("git push origin master && git tag v#{version}")
+    if system("lein clean") && system("lein pom") && system("lein jar")
+      system("git push origin master && git tag v#{version} && git push --tags")
       cmd = "scp pom.xml target/#{name}-#{version}.jar clojars@clojars.org:"
       puts cmd
       system cmd
