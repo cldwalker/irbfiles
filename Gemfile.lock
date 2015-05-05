@@ -1,0 +1,47 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    alias (0.2.3)
+    bond (0.5.1)
+    boson (1.3.0)
+    boson-more (0.3.1)
+      boson (>= 1.3.0)
+    crypt (2.0)
+    highline (1.7.2)
+    hirb (0.7.3)
+    keychain (0.2.3)
+      crypt (>= 1.1.4)
+      highline (>= 1.4.0)
+    menu (0.1.0)
+    method_lister (0.3.2)
+    ripl (0.7.1)
+      bond (~> 0.5.1)
+    ripl-after_rc (0.1.0)
+      ripl (>= 0.2.0)
+    ripl-color_error (0.1.1)
+      ripl (>= 0.2.0)
+    ripl-commands (0.2.1)
+      ripl (>= 0.2.9)
+    ripl-i18n (0.3.2)
+      ripl (>= 0.5.0)
+    ripl-ripper (0.1.0)
+      ripl (>= 0.3.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  alias
+  bond
+  boson
+  boson-more
+  hirb
+  keychain
+  menu
+  method_lister
+  ripl
+  ripl-after_rc
+  ripl-color_error
+  ripl-commands
+  ripl-i18n
+  ripl-ripper
