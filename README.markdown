@@ -52,16 +52,15 @@ Install
 If you want to use boson in ripl(irb) as a I do:
 
 * Clone this project: git clone git://github.com/cldwalker/irbfiles.git
-* Install [boson](http://github.com/cldwalker/boson): gem install boson boson-more
+* Install [boson](http://github.com/cldwalker/boson) and all the library dependencies: `bundle
+  install`
 * Save your ~/.irbrc to somewhere else temporarily. *Important* since the next step will symlink
   over this file.
 * Run install.rb to symlink to ~/.boson and ~/.irbrc
-* This irbrc uses a lot of gems. To instally them all, use [rip](http://github.com/defunkt/rip):
-  `rip install http://github.com/cldwalker/dotfiles/raw/9a2b64d02fa0719502c6ee59efdf7a0cfca03899/.rip_envs/irb.rip`
 
 To see all the command goodies available to you:
 
-    # from ripl
+    # from bundle exec ripl
     >> libraries
 
     # from commandline

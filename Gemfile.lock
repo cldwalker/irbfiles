@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/cldwalker/ripl-misc
+  revision: ef784ff726c514e982da87c3e8c617d79f5f40e3
+  specs:
+    ripl-misc (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -39,5 +45,6 @@ DEPENDENCIES
   ripl-color_error
   ripl-commands
   ripl-i18n
+  ripl-misc!
   ripl-ripper
   ruby-termios
