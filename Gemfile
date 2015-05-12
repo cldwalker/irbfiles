@@ -7,6 +7,7 @@ gem 'hirb'
 gem 'menu'
 gem 'ruby-termios'
 gem 'method_lister'
+gem 'lightning'
 
 # Commandline tools
 #gem 'wolf'
