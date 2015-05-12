@@ -5,9 +5,8 @@ gem 'alias'
 gem 'bond'
 gem 'hirb'
 gem 'menu'
-#gem 'termios'
+gem 'ruby-termios'
 gem 'method_lister'
-gem 'keychain'
 
 # Commandline tools
 #gem 'wolf'
