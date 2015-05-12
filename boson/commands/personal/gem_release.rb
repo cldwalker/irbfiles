@@ -12,13 +12,6 @@ module GemRelease
     puts "Sync description from readme to gemspec..."
     sync_description(:commit=>true) if options[:sync]
 
-    unless options[:bare]
-      puts "Check deps.rip..."
-      deps_rip
-      deps_rip :dev=>true
-      system "git commit -m 'Update deps.rip' ." if !`git status -s`.empty?
-    end
-
     puts "Check backup files to delete..."
     delete_backups unless Dir.glob('**/*~', File::FNM_DOTMATCH).empty?
 

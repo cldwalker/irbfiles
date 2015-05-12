@@ -96,7 +96,7 @@ module SystemMisc
     end
   end
 
-  # @options :directories=>{:type=>:array, :default=>['~/.rip/*/*/*'] }, :delete=>:boolean
+  # @options :directories=>{:type=>:array}, :delete=>:boolean
   # Delete empty directories
   def delete_empty_dirs(options={})
     dirs = Dir.glob(options[:directories].map {|e| File.expand_path(e)+'/'})

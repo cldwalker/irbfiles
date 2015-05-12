@@ -78,7 +78,6 @@ module Release
     Rcov::RcovTask.new do |t|
       t.libs << 'test'
       t.test_files = FileList['test/**/{spec_*,*_test,*_spec}.rb']
-      t.rcov_opts = ["-T -x '/Library/Ruby/*,#{File.expand_path('~/.rip/*')}'"]
       t.verbose = true
     end
     rake 'rcov'
@@ -97,25 +96,6 @@ module Release
   # Detect current gem's name
   def current_gem
     File.basename Dir.pwd
-  end
-
-  # @options :dev=>:boolean
-  # Creates deps.rip from gemspec for runtime or dev dependencies
-  def deps_rip(options={})
-    type = options[:dev] ? :development : :runtime
-    file = 'deps.rip'
-    if options[:dev]
-      dir = %w{test spec features}.find {|e| File.exists?(e) }
-      return warn('No test directory found for a development deps.rip') unless dir
-      file = "#{dir}/#{file}"
-    end
-
-    deps = current_gemspec.dependencies.select {|e| e.type == type }.map {|e|
-      [e.name, e.requirements_list.join(' ').gsub(/\s*/, '')] }
-    if deps.size > 0
-      File.open(file, 'w') {|f| f.write deps.map {|e| e.join(' ') }.join("\n") }
-      file
-    end
   end
 
   private
