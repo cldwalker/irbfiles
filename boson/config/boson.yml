@@ -97,10 +97,6 @@
         :desc: Detect modules, gems and kernel methods loaded
       any_const_get:
         :desc: Converts a string to a constant if it exists
-      edit:
-        :options:
-          :editor:
-            :default: mvim -v
   public/site/gemcutter:
     :commands:
       gem_search:
