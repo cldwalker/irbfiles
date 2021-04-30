@@ -47,16 +47,17 @@ If you want to install a boson library using boson:
     bash> boson install http://github.com/cldwalker/irbfiles/raw/master/boson/commands/public/irb_core.rb
 
 Install
-=====
+=======
 
 If you want to use boson in ripl(irb) as a I do:
 
-* Clone this project: git clone git://github.com/cldwalker/irbfiles.git
+* Clone this project: `git clone git://github.com/cldwalker/irbfiles.git`
 * Install [boson](http://github.com/cldwalker/boson) and all the library dependencies: `bundle
-  install`
+  install --system`. You can leave off `--system` but then you will need to run
+  `bundle exec` in this directory to use any of the commandline tools like lightning.
 * Save your ~/.irbrc to somewhere else temporarily. *Important* since the next step will symlink
   over this file.
-* Run install.rb to symlink to ~/.boson and ~/.irbrc
+* `ruby install.rb` to symlink to ~/.boson and ~/.irbrc
 
 To see all the command goodies available to you:
 
