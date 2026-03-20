@@ -5,7 +5,6 @@ gem 'alias'
 gem 'bond'
 gem 'hirb'
 gem 'menu'
-gem 'ruby-termios'
 gem 'method_lister'
 gem 'lightning'
 
