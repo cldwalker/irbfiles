@@ -22,3 +22,5 @@ gem 'ripl-commands'
 gem 'ripl-after_rc'
 gem 'ripl-i18n'
 gem 'ripl-misc', :git => 'https://github.com/cldwalker/ripl-misc'
+
+gem "file_exists", "~> 0.2.0"
